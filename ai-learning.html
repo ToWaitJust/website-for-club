@@ -847,7 +847,14 @@
             wrap.style.transform = '';
             const span = document.getElementById('zoomLevel' + id.charAt(5));
             if (span) span.textContent = '100%';
-        }
+    }
+
+</script>
+<script src="/feedback.js"></script>
+<div id="feedback-container"></div>
+<script>
+  FeedbackBox.mount(document.getElementById('feedback-container'), 'ai-learning', '团队 AI+IT 学习规划');
+</script>
 
 </body>
 </html>
