@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>团队 AI+IT 学习规划 · 正式版</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, sans-serif;
+            background: #f5f8fc;
+            color: #1e2b45;
+            padding: 2rem 1.5rem;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .main-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .main-header h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #0a2a5e;
+            letter-spacing: -0.5px;
+        }
+        .main-header p {
+            font-size: 1.15rem;
+            color: #3a5270;
+            margin-top: 0.3rem;
+        }
+        .badge-time {
+            background: #d32f2f;
+            color: #fff;
+            padding: 0.15rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 0.4rem;
+        }
+
+        .section-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2rem 2.2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 16px rgba(0, 20, 40, 0.06);
+            border: 1px solid #e7edf5;
+        }
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #0a2a5e;
+            border-left: 6px solid #1e5a9e;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .section-title small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #4c6a8c;
+        }
+        .sub-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a3f6a;
+            margin: 1.8rem 0 1rem 0;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px dashed #d0ddea;
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 0.8rem 0 1.2rem;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background: #fff;
+        }
+        th {
+            background: #ecf1f8;
+            color: #0a2a5e;
+            font-weight: 600;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 2px solid #cdd9e9;
+        }
+        td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #e9edf4;
+            vertical-align: top;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .resource-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 1.8rem;
+            background: #f2f6fd;
+            padding: 0.8rem 1.5rem;
+            border-radius: 14px;
+            margin: 0.8rem 0 0.2rem;
+        }
+        .resource-list a {
+            color: #1a5a9e;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted transparent;
+            transition: 0.2s;
+        }
+        .resource-list a:hover {
+            border-bottom-color: #1a5a9e;
+            color: #0d3b70;
+        }
+
+        /* 衔接说明框 - 正式风格 */
+        .transition-box {
+            background: #f6f9fe;
+            border-left: 5px solid #3a7bb5;
+            padding: 0.7rem 1.6rem;
+            border-radius: 8px;
+            margin: 1rem 0 1.2rem 0;
+            color: #1e3a5f;
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+        .transition-box strong {
+            color: #0a2a5e;
+        }
+
+        .tech-bg-box {
+            background: #eef6fe;
+            border-left: 6px solid #1e5a9e;
+            padding: 1rem 1.8rem;
+            border-radius: 14px;
+            margin: 1.2rem 0;
+        }
+        .milestone-box {
+            background: #eaf5e9;
+            padding: 1rem 1.8rem;
+            border-radius: 14px;
+            margin-top: 1rem;
+            border-left: 6px solid #2e7d32;
+        }
+        .alert-box {
+            background: #f0f5ff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+        }
+
+        /* 图表容器 */
+        .chart-container {
+            background: #ffffff;
+            border-radius: 18px;
+            border: 1px solid #e2e8f2;
+            padding: 1rem 1rem 0.5rem 1rem;
+            margin: 1.5rem 0 0.5rem;
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0.6rem;
+        }
+        .chart-header .chart-label {
+            font-weight: 600;
+            color: #1a3f6a;
+            font-size: 1.05rem;
+        }
+        .zoom-controls {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+        .zoom-controls button {
+            background: #fff;
+            border: 1px solid #c8d4e5;
+            border-radius: 30px;
+            width: 32px;
+            height: 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a3f6a;
+            cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .zoom-controls button:hover {
+            background: #e4ecf9;
+            border-color: #1a5a9e;
+        }
+        .zoom-controls .zoom-reset {
+            width: auto;
+            padding: 0 1rem;
+            font-size: 0.8rem;
+        }
+        .zoom-controls span {
+            font-size: 0.85rem;
+            color: #3a5a7a;
+            min-width: 38px;
+            text-align: center;
+        }
+        .chart-scroll-box {
+            overflow: auto;
+            width: 100%;
+            min-height: 450px;
+            max-height: 750px;
+            background: #ffffff;
+            border-radius: 12px;
+        }
+        .chart-scroll-box .mermaid-wrap {
+            transform-origin: top left;
+            transition: transform 0.15s ease;
+            width: 100%;
+            height: 100%;
+            min-height: 450px;
+        }
+        .chart-scroll-box .mermaid-wrap svg {
+            display: block;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 400px;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .section-card {
+                padding: 1.5rem 1rem;
+            }
+            .main-header h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            td,
+            th {
+                padding: 0.5rem 0.7rem;
+                font-size: 0.85rem;
+            }
+            .chart-scroll-box {
+                min-height: 280px;
+                max-height: 420px;
+            }
+        }
+
+        .hr-light {
+            margin: 2rem 0 1rem;
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #c8d4e5, transparent);
+        }
+        .footer-note {
+            text-align: center;
+            color: #5a7a9a;
+            padding: 1.2rem 0 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        /* ===== Timeline（替换 Mermaid 图1） ===== */
+        .timeline-cards { display: flex; align-items: stretch; gap: 0.6rem; padding: 0.5rem 0; }
+        .tl-card { flex: 1; background: #fff; border: 1px solid #e2e8f2; border-radius: 14px; padding: 1.2rem 1rem; min-width: 0; }
+        .tl-head { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid #eef2f7; }
+        .tl-badge { display: inline-block; padding: 0.25rem 0.9rem; border-radius: 20px; font-size: 0.82rem; font-weight: 600; }
+        .tl-badge.blue { background: #e1f5fe; color: #01579b; }
+        .tl-badge.orange { background: #fff3e0; color: #e65100; }
+        .tl-badge.purple { background: #f3e5f5; color: #7b1fa2; }
+        .tl-label { font-size: 0.9rem; font-weight: 600; color: #0a2a5e; }
+        .tl-node { margin-bottom: 0.7rem; padding: 0.65rem 0.8rem; background: #f8fafc; border-radius: 10px; border-left: 3px solid #1e5a9e; }
+        .tl-card:nth-child(5) .tl-node { border-left-color: #e65100; }
+        .tl-card:nth-child(7) .tl-node { border-left-color: #7b1fa2; }
+        .tl-node:last-child { margin-bottom: 0; }
+        .tl-node strong { display: block; font-size: 0.9rem; color: #0a2a5e; margin-bottom: 0.2rem; }
+        .tl-node span { display: block; font-size: 0.82rem; color: #4c6a8c; line-height: 1.5; }
+        .tl-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #4f46e5; font-weight: 700; flex-shrink: 0; }
+        @media (max-width: 700px) {
+            .timeline-cards { flex-direction: column; }
+            .tl-arrow { transform: rotate(90deg); padding: 0.3rem 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- 页眉 -->
+        <header class="main-header">
+            <h1>团队 AI+IT 学习规划 · 正式版</h1>
+            <p>软件开发技术栈（≤200h）→ AI 工程化进阶（不限时）</p>
+            <span class="badge-time">⚡ 核心约束：阶段 1-8 总学时 ≤ 200 小时</span>
+        </header>
+
+        <!-- 0. 逻辑链路总览 -->
+        <section class="section-card">
+            <div class="section-title">🔗 学习路径逻辑总览</div>
+            <p style="line-height:1.8; font-size:1.02rem;">
+                本规划按照 <strong>“语言能力 → 数据持久化 → 业务框架 → 前端交互 → 跨端扩展 → 交付运维 → 全局整合”</strong> 的螺旋上升路径设计。
+                每个阶段既是对上一阶段的实践验证，又是下一阶段的必要前置。
+                各阶段之间的<strong>衔接说明</strong>阐释了知识依赖关系，确保学习过程平滑递进，避免跳跃。
+            </p>
+            <div style="margin-top:1rem; background:#eef2f7; padding:0.7rem 1.5rem; border-radius:14px;">
+                <strong>🎯 最终目标：</strong> 从具备独立全栈开发能力，到能够运用 AI 工程化手段驱动产品持续迭代，形成完整的技术与工程化闭环。
+            </div>
+        </section>
+
+        <!-- 1. 核心原则 -->
+        <section class="section-card">
+            <div class="section-title">📌 一、核心原则</div>
+
+            <div class="sub-title">1.1 小项目精简，快速进入实战</div>
+            <p style="margin-bottom:1rem; line-height:1.7;">阶段性完成 <strong>2～3 个小型项目</strong>，掌握核心开发流程后直接参与真实商业项目。减少纯理论学习时间，在实战中加速成长。</p>
+
+            <div class="sub-title">1.2 技术栈学习阶段严格控制 AI 介入</div>
+            <p style="margin-bottom:0.8rem; line-height:1.7;">在阶段 1-8 中，<strong>AI 仅作为辅助学习工具</strong>（答疑、解释概念、提示方向），不得进入“接管”级别。所有代码需手动编写，所有异常需亲手排查，以建立扎实的工程基础。</p>
+            <p style="background:#e9f0f9; padding:0.7rem 1.5rem; border-radius:12px; line-height:1.7;"><strong>✅ 实施方式</strong>：AI 充当 7×24 小时答疑助教，但核心技能必须通过手动编码和调试内化。</p>
+
+            <div class="sub-title">1.3 Redis 学习定位</div>
+            <p style="line-height:1.7;">Redis 学习目标为 <strong>“理解用途、掌握基本用法、熟悉常见问题及排查方向”</strong>，不深入底层原理或源码分析。</p>
+
+            <div class="sub-title">1.4 芋道（Yudao）框架的技术底色</div>
+            <div class="tech-bg-box">
+                <p style="line-height:1.8;"><strong>🔹 芋道框架基于阿里巴巴技术栈构建</strong>，整合了 Spring Cloud Alibaba、Nacos、Sentinel、Dubbo、RocketMQ 等阿里系核心组件，编码规范遵循《阿里巴巴 Java 开发手册》。学习芋道即学习国内头部互联网企业的开发范式，有助于团队对接行业标准。</p>
+            </div>
+        </section>
+
+        <!-- 2. AI 介入程度演变（流程图1） -->
+        <section class="section-card">
+            <div class="section-title">📈 二、AI 介入程度演变</div>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <span class="chart-label">时间线：从辅助学习到自我进化</span>
+                    <div class="zoom-controls">
+                        <button onclick="zoomChart('chart1', 0.8)">−</button>
+                        <span id="zoomLevel1">100%</span>
+                        <button onclick="zoomChart('chart1', 1.2)">+</button>
+                        <button class="zoom-reset" onclick="resetZoom('chart1')">重置</button>
+                    </div>
+                </div>
+                <div class="chart-scroll-box" id="chart1">
+                    <div class="mermaid-wrap" id="chart1-wrap">
+                        <div class="timeline-cards" style="display:flex;gap:18px;">
+                            <div class="tl-card" style="flex:1;background:#fff;border-radius:16px;padding:16px 18px;border:1px solid rgba(0,0,0,.06);box-shadow:0 6px 22px rgba(0,40,120,.08);">
+                                <div class="tl-head" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                                    <span style="background:#0071e3;color:#fff;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;">阶段 1-8</span>
+                                    <span style="font-weight:700;color:#0a2a5e;font-size:15px;">技术栈学习</span>
+                                </div>
+                                <div class="tl-node" style="background:#f5f8fc;border-left:4px solid #0071e3;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#0a2a5e;margin-bottom:3px;">AI 辅助学习</strong><span style="display:block;color:#4c6a8c;font-size:13px;">7×24 答疑助教 · 解释概念、提示方向</span></div>
+                                <div class="tl-node" style="background:#f5f8fc;border-left:4px solid #0071e3;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#0a2a5e;margin-bottom:3px;">代码手写</strong><span style="display:block;color:#4c6a8c;font-size:13px;">不进入"接管"级别</span></div>
+                            </div>
+                            <div class="tl-arrow" style="display:flex;align-items:center;justify-content:center;font-size:22px;color:#4f46e5;font-weight:800;">→</div>
+                            <div class="tl-card" style="flex:1;background:#fff;border-radius:16px;padding:16px 18px;border:1px solid rgba(0,0,0,.06);box-shadow:0 6px 22px rgba(0,40,120,.08);">
+                                <div class="tl-head" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                                    <span style="background:#fff3e0;color:#b45309;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;">阶段 9-10</span>
+                                    <span style="font-weight:700;color:#0a2a5e;font-size:15px;">AI 接管</span>
+                                </div>
+                                <div class="tl-node" style="background:#fff7ed;border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#0a2a5e;margin-bottom:3px;">AI 部分接管</strong><span style="display:block;color:#4c6a8c;font-size:13px;">DSPy 生成 SQL/API · LangGraph 工作流编排</span></div>
+                                <div class="tl-node" style="background:#fff7ed;border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#0a2a5e;margin-bottom:3px;">AI 全环节接管</strong><span style="display:block;color:#4c6a8c;font-size:13px;">CrewAI 多 Agent · 需求→代码→部署</span></div>
+                            </div>
+                            <div class="tl-arrow" style="display:flex;align-items:center;justify-content:center;font-size:22px;color:#4f46e5;font-weight:800;">→</div>
+                            <div class="tl-card" style="flex:1;background:#fff;border-radius:16px;padding:16px 18px;border:1px solid rgba(0,0,0,.06);box-shadow:0 6px 22px rgba(0,40,120,.08);">
+                                <div class="tl-head" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                                    <span style="background:#f5f3ff;color:#7c3aed;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;">阶段 11-13</span>
+                                    <span style="font-weight:700;color:#0a2a5e;font-size:15px;">自我进化</span>
+                                </div>
+                                <div class="tl-node" style="background:#faf5ff;border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#0a2a5e;margin-bottom:3px;">AI 自循环</strong><span style="display:block;color:#4c6a8c;font-size:13px;">Harness 反馈闭环</span></div>
+                                <div class="tl-node" style="background:#faf5ff;border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#0a2a5e;margin-bottom:3px;">AI 自我进化</strong><span style="display:block;color:#4c6a8c;font-size:13px;">AgentEvolver / SCOPE</span></div>
+                                <div class="tl-node" style="background:#faf5ff;border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#0a2a5e;margin-bottom:3px;">产品落地</strong><span style="display:block;color:#4c6a8c;font-size:13px;">AI 全流程驱动</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 阶段 1-8 详细内容（带衔接说明） -->
+        <section class="section-card">
+            <div class="section-title">🛠️ 三、软件开发技术栈学习（阶段 1-8）<small>≤ 200h</small></div>
+            <div class="alert-box">⚠️ 本阶段 AI 严格限定为 <strong>“辅助学习”</strong>，所有代码手写，异常亲手排查。</div>
+
+            <!-- 阶段1 -->
+            <div class="sub-title">阶段 1：Java 核心速通（12h）</div>
+            <div class="transition-box"><strong>衔接说明：</strong> Java 是后续所有后端框架的语法基石。本阶段聚焦 OOP、集合、IO 和并发基础，为 Spring Boot 的依赖注入、AOP 等特性提供前置认知。小项目①将语法知识落地为可运行的工具，培养编码手感。</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th><th>AI 辅助方式</th></tr></thead>
+                    <tbody>
+                        <tr><td>语言基础 + OOP</td><td>4h</td><td>类、接口、抽象类、继承、多态、枚举、泛型</td><td>AI 解释语法差异</td></tr>
+                        <tr><td>集合框架 + 异常</td><td>3h</td><td>ArrayList/LinkedList、HashMap、HashSet、自定义异常</td><td>AI 分析集合选型</td></tr>
+                        <tr><td>IO + 并发入门</td><td>3h</td><td>NIO、线程池、Future、CompletableFuture</td><td>AI 解释并发概念</td></tr>
+                        <tr><td><strong>小项目①</strong></td><td>2h</td><td>命令行「待办事项管理工具」</td><td>AI 辅助 Code Review</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="resource-list">
+                <span>📚 推荐：</span>
+                <a href="https://github.com/Snailclimb/JavaGuide" target="_blank">JavaGuide (GitHub)</a>
+                <a href="https://javaguide.cn" target="_blank">JavaGuide 官网</a>
+            </div>
+
+            <!-- 阶段2 -->
+            <div class="sub-title">阶段 2：数据库 + Maven（12h）</div>
+            <div class="transition-box"><strong>衔接说明：</strong> 业务系统的核心在于数据。本阶段从 SQL 和表设计切入，同时掌握 Maven 项目构建，为后续集成 Spring Boot 和芋道框架提供“数据底座”与“构建工具”支撑。小项目②直接设计电商数据库，即时应用。</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th><th>AI 辅助方式</th></tr></thead>
+                    <tbody>
+                        <tr><td>Maven 实战</td><td>2h</td><td>pom.xml 继承/聚合、依赖冲突</td><td>AI 解释依赖传递</td></tr>
+                        <tr><td>MySQL 基础与进阶</td><td>7h</td><td>DDL/DML、JOIN、EXPLAIN、索引、事务隔离</td><td>AI 辅助分析执行计划</td></tr>
+                        <tr><td>表设计实战</td><td>2h</td><td>范式、主外键设计</td><td>AI 辅助 ER 图校验</td></tr>
+                        <tr><td><strong>小项目②</strong></td><td>1h</td><td>「商品管理系统」数据库 + 5 条核心查询</td><td>AI 审核索引设计</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="resource-list">
+                <span>📚 推荐：</span>
+                <a href="https://github.com/shizhengLi/mysql-learning" target="_blank">mysql-learning (GitHub)</a>
+            </div>
+
+            <!-- 阶段3 -->
+            <div class="sub-title">阶段 3：Spring Boot + 芋道后端架构（40h）</div>
+            <div class="transition-box"><strong>衔接说明：</strong> 具备 Java 和数据库基础后，自然进入业务框架层。Spring Boot 简化了企业级开发，芋道在此基础上提供 RBAC、多租户、代码生成等成熟方案。本阶段将前两阶段知识融合为可运行的后端服务，小项目③直接产出模块化功能，为前端提供 API 支撑。</div>
+            <div style="background:#f0f7ff; padding:0.7rem 1.5rem; border-radius:10px; margin-bottom:1rem; border-left:4px solid #ff6a00;">
+                <strong>🔸 芋道技术栈核心：</strong> Spring Boot + Spring Cloud Alibaba + Nacos + Sentinel + MyBatis-Plus + Redis + RocketMQ（可选）。
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th><th>AI 辅助方式</th></tr></thead>
+                    <tbody>
+                        <tr><td>Spring Boot 核心</td><td>7h</td><td>自动配置、Bean 生命周期、AOP、事务</td><td>AI 解释自动配置机制</td></tr>
+                        <tr><td>芋道后端项目结构</td><td>5h</td><td>分层、代码生成器、模块划分</td><td>AI 辅助理解分层</td></tr>
+                        <tr><td>RBAC + 数据权限 + MyBatis-Plus</td><td>9h</td><td>权限注解、条件构造器、分页</td><td>AI 辅助生成模板代码</td></tr>
+                        <tr><td><strong>小项目③</strong></td><td>7h</td><td>「客户管理模块」（权限+日志+导入导出）</td><td>AI 辅助接口设计</td></tr>
+                        <tr><td>芋道高阶能力</td><td>7h</td><td>多租户、定时任务、文件上传、工作流</td><td>AI 辅助排查配置问题</td></tr>
+                        <tr><td>后端代码重构</td><td>5h</td><td>统一异常处理、全局响应封装</td><td>AI 辅助识别坏味道</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="resource-list">
+                <span>📚 推荐：</span>
+                <a href="https://github.com/YunaiV/yudao-cloud" target="_blank">yudao-cloud (GitHub)</a>
+                <a href="https://gitee.com/zhijiantianya/yudao-cloud" target="_blank">yudao-cloud (Gitee)</a>
+                <a href="https://cloud.iocoder.cn/quick-start/" target="_blank">芋道云快速启动</a>
+                <a href="https://cloud.iocoder.cn/video/" target="_blank">芋道云视频教程</a>
+                <a href="http://dashboard.yudao.iocoder.cn" target="_blank">在线演示</a>
+            </div>
+
+            <!-- 阶段4 -->
+            <div class="sub-title">阶段 4：Redis 快速上手（5h）</div>
+            <div class="transition-box"><strong>衔接说明：</strong> 后端服务在高并发场景下依赖缓存加速。Redis 作为最常用的缓存中间件，与芋道框架无缝集成。本阶段安排在核心后端之后，既能理解缓存的价值，又不会过早分散精力。学完后即可在芋道中配置和使用 Redis。</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th><th>AI 辅助方式</th></tr></thead>
+                    <tbody>
+                        <tr><td>概念与场景</td><td>1.5h</td><td>缓存/会话/分布式锁、五大数据结构</td><td>AI 解释场景选型</td></tr>
+                        <tr><td>芋道集成与调用</td><td>2h</td><td>RedisTemplate、@Cacheable</td><td>AI 生成 Key 设计参考</td></tr>
+                        <tr><td>常见问题与排错</td><td>1.5h</td><td>超时、穿透/击穿/雪崩、慢日志</td><td>AI 辅助排查</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 阶段5 -->
+            <div class="sub-title">阶段 5：前端基础 + 芋道前端架构（35h）</div>
+            <div class="transition-box"><strong>衔接说明：</strong> 后端 API 就绪后，需要前端才能呈现完整产品。本阶段从 HTML/CSS/JS 出发，直指 Vue3 + TypeScript，并深入芋道前端（Vite + Ant Design Vue）。这与后端学习形成“前后对称”，使团队具备全栈视野。小项目④开发数据仪表盘，与后端模块联调，打通前后端闭环。</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th><th>AI 辅助方式</th></tr></thead>
+                    <tbody>
+                        <tr><td>HTML5 + CSS3</td><td>5h</td><td>语义化、Flex/Grid、响应式</td><td>AI 解释布局特性</td></tr>
+                        <tr><td>JavaScript ES6+</td><td>5h</td><td>箭头函数、Promise/async、闭包、模块化</td><td>AI 辅助理解异步</td></tr>
+                        <tr><td>Vue3 组合式 API</td><td>9h</td><td>响应式、生命周期、watch、自定义 Hooks</td><td>AI 生成组合函数参考</td></tr>
+                        <tr><td>TypeScript 进阶</td><td>5h</td><td>类型守卫、泛型约束、工具类型</td><td>AI 补全类型定义</td></tr>
+                        <tr><td>芋道前端架构</td><td>6h</td><td>Vite、Ant Design Vue、Axios、路由权限</td><td>AI 排查跨域鉴权</td></tr>
+                        <tr><td><strong>小项目④</strong></td><td>5h</td><td>「数据监控仪表盘」（ECharts + 轮询）</td><td>AI 辅助性能优化</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 阶段6 -->
+            <div class="sub-title">阶段 6：UniApp 跨端开发（12h）</div>
+            <div class="transition-box"><strong>衔接说明：</strong> 移动端是互联网产品的必备渠道。UniApp 基于 Vue 语法，与芋道前端同源，可复用大量组件逻辑。本阶段将前端能力延伸至小程序/H5/App，小项目⑤基于芋道商城模板，直接实践多端适配，为产品全平台覆盖打下基础。</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th><th>AI 辅助方式</th></tr></thead>
+                    <tbody>
+                        <tr><td>环境与项目结构</td><td>2.5h</td><td>pages.json、manifest.json、条件编译</td><td>AI 辅助多端配置</td></tr>
+                        <tr><td>核心 API 与组件</td><td>5h</td><td>uni.request、路由、存储、表单/地图</td><td>AI 生成交互参考</td></tr>
+                        <tr><td><strong>小项目⑤</strong></td><td>3h</td><td>「积分签到」活动页面（基于芋道模板）</td><td>AI 解决小程序兼容</td></tr>
+                        <tr><td>打包与调试</td><td>1.5h</td><td>真机调试、H5/App 打包</td><td>AI 排查签名权限</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 阶段7 -->
+            <div class="sub-title">阶段 7：部署与测试（25h）</div>
+            <div class="transition-box"><strong>衔接说明：</strong> 产品开发完成只是起点，交付上线的能力同样关键。本阶段涵盖 Linux、Docker、Nginx、JUnit 和 Postman，将前面的代码成果部署到真实服务器，并通过自动化测试保证质量。小项目⑥为已开发的用户模块编写单元测试和接口测试，强化质量意识。</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th><th>AI 辅助方式</th></tr></thead>
+                    <tbody>
+                        <tr><td>Linux 与网络</td><td>5h</td><td>文件权限、进程、SSH、防火墙、crontab</td><td>AI 排查资源占用</td></tr>
+                        <tr><td>Docker 容器化</td><td>7h</td><td>Dockerfile、镜像分层、数据卷、docker-compose</td><td>AI 生成 Dockerfile</td></tr>
+                        <tr><td>Nginx 配置</td><td>5h</td><td>反向代理、负载均衡、gzip、HTTPS</td><td>AI 生成 Nginx 配置</td></tr>
+                        <tr><td>测试体系</td><td>6h</td><td>JUnit5（Mockito）、Postman/Newman、集成测试</td><td>AI 生成边界测试</td></tr>
+                        <tr><td><strong>小项目⑥</strong></td><td>2h</td><td>用户管理模块单元测试 + 接口测试</td><td>AI 生成测试数据</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 阶段8 -->
+            <div class="sub-title">阶段 8：全栈整合与代码质量复盘（15h）</div>
+            <div class="transition-box"><strong>衔接说明：</strong> 前七个阶段分别构建了不同的能力模块，本阶段承担“总装”角色。从全局视角梳理全链路请求，并关注安全、性能、代码规范等非功能性需求。团队互审前三个小项目，形成统一编码规范。此阶段完成后，团队具备完整的全栈交付能力，可立即进入真实项目开发。</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th><th>AI 辅助方式</th></tr></thead>
+                    <tbody>
+                        <tr><td>全链路调用复盘</td><td>5h</td><td>前端→网关→拦截器→业务→ORM→缓存→返回</td><td>AI 辅助绘制时序图</td></tr>
+                        <tr><td>安全与性能</td><td>5h</td><td>JWT 续签、接口幂等性、SQL 慢查询、首屏优化</td><td>AI 生成压测报告分析</td></tr>
+                        <tr><td>团队代码互审</td><td>5h</td><td>审查小项目①~③，制定编码规范</td><td>AI 扫描代码异味</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="milestone-box">
+                <strong>✅ 里程碑：</strong> 完成阶段 1-8 后，全栈能力达成。总用时约 <strong>156 小时</strong>（≤200h），剩余时间可巩固或直接参与真实项目。
+            </div>
+        </section>
+
+        <!-- 4. 阶段1-8 学习路径图（流程图2） -->
+        <section class="section-card">
+            <div class="section-title">🗺️ 四、阶段 1-8 学习路径图</div>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <span class="chart-label">技术栈依赖与里程碑</span>
+                    <div class="zoom-controls">
+                        <button onclick="zoomChart('chart2', 0.8)">−</button>
+                        <span id="zoomLevel2">100%</span>
+                        <button onclick="zoomChart('chart2', 1.2)">+</button>
+                        <button class="zoom-reset" onclick="resetZoom('chart2')">重置</button>
+                    </div>
+                </div>
+                <div class="chart-scroll-box" id="chart2">
+                    <div class="mermaid-wrap" id="chart2-wrap">
+                        <svg viewBox="0 0 960 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Segoe UI','PingFang SC',sans-serif;">
+                            <defs>
+                                <linearGradient id="grad-blue" x1="0" x2="1"><stop offset="0%" stop-color="#0ea5e9"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient>
+                                <linearGradient id="grad-orange" x1="0" x2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#d97706"/></linearGradient>
+                                <linearGradient id="grad-purple" x1="0" x2="1"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient>
+                                <linearGradient id="grad-green" x1="0" x2="1"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#16a34a"/></linearGradient>
+                                <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1 L10,5 L0,9z" fill="#3b82f6"/></marker>
+                                <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1 L10,5 L0,9z" fill="#16a34a"/></marker>
+                                <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity="0.08"/></filter>
+                            </defs>
+                            <rect width="960" height="520" fill="#fafbfc" rx="18"/>
+
+                            <rect x="40" y="30" width="880" height="90" rx="14" fill="url(#grad-blue)" filter="url(#cardShadow)"/>
+                            <text x="80" y="60" fill="#fff" font-size="14" font-weight="800">阶段 1-2 · 基础层</text>
+                            <text x="80" y="82" fill="rgba(255,255,255,0.8)" font-size="12">12h + 12h = 24h</text>
+                            <rect x="320" y="48" width="180" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="410" y="76" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">Java 核心速通</text>
+                            <text x="410" y="94" text-anchor="middle" fill="#64748b" font-size="10">OOP · 集合 · IO · 并发</text>
+                            <line x1="500" y1="73" x2="536" y2="73" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow-blue)"/>
+                            <rect x="540" y="48" width="180" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="630" y="76" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">MySQL + Maven</text>
+                            <text x="630" y="94" text-anchor="middle" fill="#64748b" font-size="10">SQL · 表设计 · 依赖管理</text>
+
+                            <line x1="480" y1="120" x2="480" y2="156" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+                            <rect x="40" y="160" width="880" height="90" rx="14" fill="url(#grad-orange)" filter="url(#cardShadow)"/>
+                            <text x="80" y="190" fill="#fff" font-size="14" font-weight="800">阶段 3-4 · 后端与缓存</text>
+                            <text x="80" y="212" fill="rgba(255,255,255,0.8)" font-size="12">40h + 5h = 45h</text>
+                            <rect x="300" y="178" width="155" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="378" y="206" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">Spring Boot</text>
+                            <text x="378" y="224" text-anchor="middle" fill="#64748b" font-size="10">自动配置 · AOP · 事务</text>
+                            <line x1="455" y1="203" x2="491" y2="203" stroke="#d97706" stroke-width="2" marker-end="url(#arrow-blue)"/>
+                            <rect x="495" y="178" width="155" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="573" y="206" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">芋道后端架构</text>
+                            <text x="573" y="224" text-anchor="middle" fill="#64748b" font-size="10">RBAC · 多租户 · 代码生成</text>
+                            <line x1="650" y1="203" x2="686" y2="203" stroke="#d97706" stroke-width="2" marker-end="url(#arrow-blue)"/>
+                            <rect x="690" y="178" width="140" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="760" y="206" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">Redis 快速上手</text>
+                            <text x="760" y="224" text-anchor="middle" fill="#64748b" font-size="10">缓存 · 场景 · 排错</text>
+
+                            <line x1="480" y1="250" x2="480" y2="286" stroke="#d97706" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+                            <rect x="40" y="290" width="880" height="90" rx="14" fill="url(#grad-purple)" filter="url(#cardShadow)"/>
+                            <text x="80" y="320" fill="#fff" font-size="14" font-weight="800">阶段 5-6 · 前端与跨端</text>
+                            <text x="80" y="342" fill="rgba(255,255,255,0.8)" font-size="12">35h + 12h = 47h</text>
+                            <rect x="300" y="308" width="155" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="378" y="336" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">Vue3 + TypeScript</text>
+                            <text x="378" y="354" text-anchor="middle" fill="#64748b" font-size="10">组合式 API · 芋道前端</text>
+                            <line x1="455" y1="333" x2="491" y2="333" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-blue)"/>
+                            <rect x="495" y="308" width="155" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="573" y="336" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">芋道前端架构</text>
+                            <text x="573" y="354" text-anchor="middle" fill="#64748b" font-size="10">Vite · Ant Design · Axios</text>
+                            <line x1="650" y1="333" x2="686" y2="333" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-blue)"/>
+                            <rect x="690" y="308" width="140" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="760" y="336" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">UniApp 跨端</text>
+                            <text x="760" y="354" text-anchor="middle" fill="#64748b" font-size="10">小程序 · H5 · App</text>
+
+                            <line x1="480" y1="380" x2="480" y2="416" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+                            <rect x="40" y="420" width="880" height="90" rx="14" fill="url(#grad-green)" filter="url(#cardShadow)"/>
+                            <text x="80" y="450" fill="#fff" font-size="14" font-weight="800">阶段 7-8 · 部署与整合</text>
+                            <text x="80" y="472" fill="rgba(255,255,255,0.8)" font-size="12">25h + 15h = 40h</text>
+                            <rect x="300" y="438" width="170" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="385" y="466" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">部署运维</text>
+                            <text x="385" y="484" text-anchor="middle" fill="#64748b" font-size="10">Linux · Docker · Nginx</text>
+                            <line x1="470" y1="463" x2="506" y2="463" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-blue)"/>
+                            <rect x="510" y="438" width="170" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
+                            <text x="595" y="466" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="700">全栈整合与复盘</text>
+                            <text x="595" y="484" text-anchor="middle" fill="#64748b" font-size="10">全链路调用 · 安全 · 代码互审</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. AI 高阶阶段（9-13） -->
+        <section class="section-card">
+            <div class="section-title">🤖 五、AI 工程化高阶学习（阶段 9-13）<small>不限学时</small></div>
+            <div style="background:#fff1e6; padding:0.7rem 1.5rem; border-radius:12px; margin-bottom:1.5rem;">
+                ⚠️ 前置条件：<strong>必须 100% 完成阶段 1-8</strong>。本阶段涉及 Agent、Harness、自进化等前沿领域。
+            </div>
+
+            <!-- 整体过渡 -->
+            <div class="transition-box"><strong>衔接说明：</strong> 团队具备扎实的全栈能力后，学习重心从“实现功能”转向“用 AI 自动化实现功能”。阶段 9-10 引入 DSPy、LangGraph、CrewAI，让 AI 承担重复性编码工作；阶段 11 构建“反馈-优化”循环；阶段 12 探索自我进化；阶段 13 将所有能力整合到真实产品中，形成“AI 驱动开发”的终极形态。</div>
+
+            <div class="sub-title">阶段 9：AI 部分接管 + 开发流定制化（建议 20h）</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th></tr></thead>
+                    <tbody>
+                        <tr><td>DSPy 编程模型</td><td>6h</td><td>Signature、Module、Optimizer</td></tr>
+                        <tr><td>LangGraph 状态机</td><td>6h</td><td>StateGraph、节点路由、断点续跑</td></tr>
+                        <tr><td>Prompt 工程体系</td><td>4h</td><td>结构化模板、Few-shot 检索</td></tr>
+                        <tr><td>实战演练</td><td>4h</td><td>重构「消息通知模块」</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="resource-list">
+                <span>📚 推荐：</span>
+                <a href="https://dspy.ai" target="_blank">DSPy 官网</a>
+                <a href="https://github.com/stanfordnlp/dspy" target="_blank">DSPy GitHub</a>
+                <a href="https://docs.langchain.com/oss/python/langgraph/overview" target="_blank">LangGraph 官方文档</a>
+                <a href="https://github.com/langchain-ai/langgraph" target="_blank">LangGraph GitHub</a>
+            </div>
+
+            <div class="sub-title">阶段 10：AI 全环节接管（建议 16h）</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th></tr></thead>
+                    <tbody>
+                        <tr><td>CrewAI 深度实践</td><td>6h</td><td>Agent 角色、任务链、工具集成</td></tr>
+                        <tr><td>全链路自动化</td><td>6h</td><td>PRD→DDL→后端→前端→Dockerfile</td></tr>
+                        <tr><td>质量护栏</td><td>4h</td><td>自动代码审查、安全扫描 Agent</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="resource-list">
+                <span>📚 推荐：</span>
+                <a href="https://docs.crewai.com" target="_blank">CrewAI 官方文档</a>
+                <a href="https://docs.crewai.com/quickstart" target="_blank">CrewAI Quickstart</a>
+            </div>
+
+            <div class="sub-title">阶段 11：AI 自循环（建议 16h）</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th></tr></thead>
+                    <tbody>
+                        <tr><td>Harness 架构</td><td>4h</td><td>Agent = Model + Harness（工具、上下文、沙箱）</td></tr>
+                        <tr><td>反馈闭环设计</td><td>6h</td><td>AI 开发 → 人工审查 → AI 修正</td></tr>
+                        <tr><td>可观测性实战</td><td>6h</td><td>LangSmith / Arize 接入</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="resource-list">
+                <span>📚 推荐：</span>
+                <a href="https://smith.langchain.com" target="_blank">LangSmith 官网</a>
+                <a href="https://docs.langchain.com/langsmith" target="_blank">LangSmith Docs</a>
+                <a href="https://arize.com" target="_blank">Arize AI</a>
+            </div>
+
+            <div class="sub-title">阶段 12：AI 自我进化（建议 16h）</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>模块</th><th>学时</th><th>核心内容</th></tr></thead>
+                    <tbody>
+                        <tr><td>学术框架研读</td><td>6h</td><td>AgentEvolver、SCOPE、EvolveR</td></tr>
+                        <tr><td>多 Agent 协作</td><td>6h</td><td>Supervisor + 4 子 Agent</td></tr>
+                        <tr><td>原型实现</td><td>4h</td><td>基于 SCOPE 的 Prompt 自动进化</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="resource-list">
+                <span>📚 推荐：</span>
+                <a href="https://github.com/modelscope/AgentEvolver" target="_blank">AgentEvolver (阿里)</a>
+                <a href="https://github.com/adhd8k/agent-evolver" target="_blank">agent-evolver</a>
+                <a href="https://github.com/JarvisPei/SCOPE" target="_blank">SCOPE (华为)</a>
+                <a href="https://arxiv.org/abs/2510.16079" target="_blank">EvolveR (ICML 2026)</a>
+            </div>
+
+            <div class="sub-title">阶段 13：综合产品实战（建议 40h+）</div>
+            <p style="line-height:1.7;">基于芋道开发完整互联网产品（在线社区 / 工单审批 / 活动报名），将阶段 9-12 的 AI 能力全部投入实战验证。</p>
+        </section>
+
+        <!-- 6. 完整学习路径总图（流程图3） -->
+        <section class="section-card">
+            <div class="section-title">🧩 六、完整学习路径总图</div>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <span class="chart-label">技术栈（≤200h）→ AI 工程化（不限时）</span>
+                    <div class="zoom-controls">
+                        <button onclick="zoomChart('chart3', 0.8)">−</button>
+                        <span id="zoomLevel3">100%</span>
+                        <button onclick="zoomChart('chart3', 1.2)">+</button>
+                        <button class="zoom-reset" onclick="resetZoom('chart3')">重置</button>
+                    </div>
+                </div>
+                <div class="chart-scroll-box" id="chart3">
+                    <div class="mermaid-wrap" id="chart3-wrap">
+                        <svg viewBox="0 0 1020 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Segoe UI','PingFang SC',sans-serif;">
+                            <defs>
+                                <marker id="arrL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1 L10,5 L0,9z" fill="#334155"/></marker>
+                                <filter id="gateShadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.1"/></filter>
+                                <filter id="boxShadow" x="-8%" y="-12%" width="116%" height="140%"><feDropShadow dx="0" dy="6" stdDeviated="10" flood-opacity="0.08"/></filter>
+                            </defs>
+
+                            <rect x="10" y="30" width="360" height="200" rx="16" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.5" filter="url(#boxShadow)"/>
+                            <rect x="10" y="30" width="360" height="48" rx="16" fill="#0ea5e9"/>
+                            <rect x="10" y="52" width="360" height="26" fill="#0ea5e9"/>
+                            <text x="190" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">技术栈（≤200h）</text>
+                            <rect x="30" y="100" width="100" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
+                            <text x="80" y="122" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="700">Java / DB</text>
+                            <text x="80" y="140" text-anchor="middle" fill="#64748b" font-size="10">阶段 1-2</text>
+                            <line x1="130" y1="125" x2="154" y2="125" stroke="#334155" stroke-width="1.5" marker-end="url(#arrL)"/>
+                            <rect x="158" y="100" width="110" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
+                            <text x="213" y="122" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700">Spring Boot</text>
+                            <text x="213" y="140" text-anchor="middle" fill="#64748b" font-size="10">芋道后端 · Redis</text>
+                            <line x1="268" y1="125" x2="292" y2="125" stroke="#334155" stroke-width="1.5" marker-end="url(#arrL)"/>
+                            <rect x="296" y="100" width="54" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
+                            <text x="323" y="122" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700">Vue</text>
+                            <text x="323" y="140" text-anchor="middle" fill="#64748b" font-size="10">UniApp</text>
+                            <line x1="350" y1="125" x2="374" y2="125" stroke="#334155" stroke-width="1.5" marker-end="url(#arrL)"/>
+                            <rect x="378" y="100" width="62" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
+                            <text x="409" y="122" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700">部署</text>
+                            <text x="409" y="140" text-anchor="middle" fill="#64748b" font-size="10">整合</text>
+                            <text x="190" y="182" text-anchor="middle" fill="#475569" font-size="11">产出小项目项目①~⑥ · 全栈交付能力</text>
+
+                            <polygon points="520,78 580,130 520,182 460,130" fill="#ef4444" filter="url(#gateShadow)"/>
+                            <text x="520" y="128" text-anchor="middle" fill="#fff" font-size="12" font-weight="800">硬性</text>
+                            <text x="520" y="144" text-anchor="middle" fill="#fff" font-size="12" font-weight="800">门槛</text>
+
+                            <line x1="440" y1="130" x2="460" y2="130" stroke="#334155" stroke-width="1.8" marker-end="url(#arrL)"/>
+                            <line x1="580" y1="130" x2="600" y2="130" stroke="#334155" stroke-width="1.8" marker-end="url(#arrL)"/>
+
+                            <rect x="600" y="30" width="410" height="200" rx="16" fill="#fef7ee" stroke="#fed7aa" stroke-width="1.5" filter="url(#boxShadow)"/>
+                            <rect x="600" y="30" width="410" height="48" rx="16" fill="#f97316"/>
+                            <rect x="600" y="52" width="410" height="26" fill="#f97316"/>
+                            <text x="805" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">AI 工程化 & 产品落地（不限时）</text>
+                            <rect x="620" y="100" width="95" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
+                            <text x="668" y="122" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="700">AI 接管</text>
+                            <text x="668" y="140" text-anchor="middle" fill="#64748b" font-size="10">DSPy · LangGraph</text>
+                            <line x1="715" y1="125" x2="739" y2="125" stroke="#334155" stroke-width="1.5" marker-end="url(#arrL)"/>
+                            <rect x="743" y="100" width="80" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
+                            <text x="783" y="122" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="700">自循环</text>
+                            <text x="783" y="140" text-anchor="middle" fill="#64748b" font-size="10">Harness</text>
+                            <line x1="823" y1="125" x2="847" y2="125" stroke="#334155" stroke-width="1.5" marker-end="url(#arrL)"/>
+                            <rect x="851" y="100" width="95" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
+                            <text x="899" y="122" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="700">自我进化</text>
+                            <text x="899" y="140" text-anchor="middle" fill="#64748b" font-size="10">SCOPE · Evolver</text>
+                            <line x1="946" y1="125" x2="970" y2="125" stroke="#334155" stroke-width="1.5" marker-end="url(#arrL)"/>
+                            <rect x="974" y="100" width="36" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
+                            <text x="992" y="122" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700">产品</text>
+                            <text x="805" y="182" text-anchor="middle" fill="#475569" font-size="11">CrewAI · AgentEvolver · AI 全流程驱动</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. 总学时对比 -->
+        <section class="section-card">
+            <div class="section-title">📊 七、总学时对比</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>学习阶段</th><th>内容范围</th><th>学时约束</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>阶段 1-8（技术栈）</strong></td><td>Java、MySQL、Spring Boot、芋道、Redis、Vue3+TS、UniApp、部署、整合</td><td><strong>≤ 200h</strong></td></tr>
+                        <tr><td>阶段 9-12（AI 进阶）</td><td>DSPy、LangGraph、CrewAI、Harness、AgentEvolver/SCOPE</td><td>建议 68h，<strong>不设上限</strong></td></tr>
+                        <tr><td>阶段 13（产品打磨）</td><td>完整产品 + AI 全流程驱动</td><td>建议 40h+，<strong>不限时</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top:1.5rem; background:#eef2f7; padding:0.8rem 1.8rem; border-radius:14px;">
+                <p style="font-weight:500;">📌 总学习时长（含全部）：视团队消化能力，约 300h+。</p>
+            </div>
+        </section>
+
+        <hr class="hr-light">
+        <div class="footer-note">
+            <p>各阶段之间的<strong>衔接说明</strong>阐述了知识递进关系，保障学习路径的连贯性。</p>
+            <p>流程图支持滚动查看，可使用 <strong>+ / -</strong> 按钮缩放细节。所有资源链接有效。</p>
+        </div>
+
+    </div>
+
+    <script>
+        // 加载提示：Mermaid 加载完毕前显示
+        // 简单缩放（适配 SVG / CSS 图表）
+        function zoomChart(id, factor) {
+            const wrap = document.getElementById(id + '-wrap');
+            if (!wrap) return;
+            let scale = parseFloat(wrap.dataset.scale || '1') * factor;
+            scale = Math.min(3, Math.max(0.3, scale));
+            wrap.dataset.scale = scale;
+            wrap.style.transform = 'scale(' + scale + ')';
+            wrap.style.transformOrigin = 'top left';
+            const span = document.getElementById('zoomLevel' + id.charAt(5));
+            if (span) span.textContent = Math.round(scale * 100) + '%';
+        }
+        function resetZoom(id) {
+            const wrap = document.getElementById(id + '-wrap');
+            if (!wrap) return;
+            wrap.dataset.scale = '1';
+            wrap.style.transform = '';
+            const span = document.getElementById('zoomLevel' + id.charAt(5));
+            if (span) span.textContent = '100%';
+        }
+
+</body>
+</html>
