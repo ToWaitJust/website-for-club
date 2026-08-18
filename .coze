@@ -1,4 +1,6 @@
 [project]
+sub_id = "b968b883"
+name = "infinite-productivity"
 entrypoint = "index.html"
 requires = [ "nodejs-24" ]
 project_type = "web"
@@ -6,18 +8,20 @@ template = "native-static"
 version = "0.0.35"
 appliedPatches = [ ]
 
+[preview]
+preview_enable = "enabled"
+
 [dev]
-build = [ "pnpm", "install" ]
-run = [
-  "sh",
-  "-c",
-  "node server.js"
-]
+build = ["bash", "scripts/build.sh"]
+run = ["bash", "scripts/run.sh"]
+
+[deploy.profile]
+kind = "service"
+flavor = "web"
 
 [deploy]
-build = [ "pnpm", "install" ]
-run = [
-  "sh",
-  "-c",
-  "node server.js"
-]
+build = ["bash", "scripts/deploy_build.sh"]
+run = ["bash", "scripts/deploy_run.sh"]
+
+[subprojects]
+path = ["."]
