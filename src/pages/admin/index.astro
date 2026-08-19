@@ -1,0 +1,34 @@
+---
+import '../../styles/global.css';
+import AdminPanel from '../../components/admin/AdminPanel.vue';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Console · AI+CLUB</title>
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5/index.min.css"
+    />
+  </head>
+  <body class="min-h-screen bg-[#0a0f1e]">
+    <!-- 背景光斑 -->
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden">
+      <div
+        class="absolute -top-40 left-1/4 h-[28rem] w-[28rem] rounded-full bg-accent/20 blur-[120px]"
+      ></div>
+      <div
+        class="absolute -bottom-40 right-1/4 h-[24rem] w-[24rem] rounded-full bg-accent-soft/15 blur-[120px]"
+      ></div>
+    </div>
+
+    <main class="relative z-10 mx-auto max-w-5xl px-5 py-10">
+      <AdminPanel client:load />
+    </main>
+  </body>
+</html>

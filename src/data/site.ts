@@ -36,7 +36,7 @@ export const site = {
     { label: 'AI+IT', href: '/business/ai-it/', match: '^/business/ai-it' },
     { label: 'AI+Biz', href: '/business/ai-biz/', match: '^/business/ai-biz' },
     { label: 'AI+Embed', href: '/business/ai-embed/', match: '^/business/ai-embed' },
-    { label: 'Admin', href: '/admin/', match: '^/admin', external: true },
+    { label: 'Admin', href: '/admin/', match: '^/admin' },
   ],
 };
 
