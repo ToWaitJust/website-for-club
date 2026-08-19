@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import FeedbackBox from '../components/FeedbackBox.vue';
+import { site } from '../data/site';
 
 interface Props {
   title: string;
@@ -9,6 +11,7 @@ interface Props {
 }
 
 const { title, description = '福州大学 AI+社团集成门户' } = Astro.props;
+const pageKey = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -30,6 +33,8 @@ const { title, description = '福州大学 AI+社团集成门户' } = Astro.prop
     <Nav />
     <main class="flex-1">
       <slot />
+      <!-- 全站统一反馈信箱 -->
+      <FeedbackBox client:load page={pageKey} apiBase={site.apiBase} />
     </main>
     <Footer />
   </body>

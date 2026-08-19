@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import RegisterForm from '../../../components/RegisterForm.vue';
+import { businessLines, site } from '../../../data/site';
+import { getBusinessContents } from '../../../lib/business';
+
+export async function getStaticPaths() {
+  const contents = getBusinessContents();
+  return contents.map((content) => ({
+    params: { slug: content.slug },
+    props: { content },
+  }));
+}
+
+const { content } = Astro.props;
+const line = businessLines.find((l) => l.slug === content.slug)!;
+---
+
+<BaseLayout
+  title={`Register · ${line.name} · AI+CLUB`}
+  description={`${line.name} 业务线报名`}
+>
+  <section
+    class="relative overflow-hidden pt-32 pb-14 text-center"
+    style="background: radial-gradient(ellipse 90% 70% at 50% -30%, #16244d 0%, #0d1526 55%, #0a0f1e 100%)"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute left-1/2 top-0 h-60 w-[32rem] -translate-x-1/2 rounded-full blur-[100px]"
+      style={`background: radial-gradient(ellipse, ${line.accent}30 0%, transparent 70%)`}
+    ></div>
+    <div class="relative container-site">
+      <p class="font-display text-sm uppercase tracking-[0.35em] text-slate-400">
+        Join {line.name}
+      </p>
+      <h1 class="mt-2 font-display text-5xl font-bold tracking-tight text-white">
+        {line.name} · Register
+      </h1>
+      <p class="mt-3 text-slate-400">{line.tagline}</p>
+    </div>
+  </section>
+
+  <section class="container-site -mt-8 pb-6">
+    <RegisterForm
+      client:load
+      businessLine={line.slug}
+      businessName={line.name}
+      apiBase={site.apiBase}
+      open={line.registerOpen}
+    />
+  </section>
+</BaseLayout>
