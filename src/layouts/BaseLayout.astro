@@ -19,6 +19,12 @@ const { title, description = '福州大学 AI+社团集成门户' } = Astro.prop
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <!-- Space Grotesk 展示字体(jsdelivr CDN,失败自动回退系统字体) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5/index.min.css"
+    />
   </head>
   <body class="min-h-screen flex flex-col">
     <Nav />

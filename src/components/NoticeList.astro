@@ -11,19 +11,19 @@ const { notices } = Astro.props;
 <div class="glass-card rounded-xl p-6">
   {
     notices.length ? (
-      <ul class="divide-y divide-black/5">
+      <ul class="divide-y divide-white/5">
         {notices.map((n) => (
           <li class="py-3 first:pt-1 last:pb-1">
             <div class="flex items-baseline justify-between gap-4">
-              <h3 class="font-semibold">{n.title}</h3>
+              <h3 class="font-display font-semibold tracking-wide">{n.title}</h3>
               <time class="shrink-0 text-xs text-muted">{n.date}</time>
             </div>
-            {n.content && <p class="mt-1 text-sm text-ink-soft">{n.content}</p>}
+            {n.content && <p class="mt-1 text-sm text-slate-300">{n.content}</p>}
           </li>
         ))}
       </ul>
     ) : (
-      <p class="text-sm text-muted">暂无公告</p>
+      <p class="text-sm text-muted">No announcements</p>
     )
   }
 </div>

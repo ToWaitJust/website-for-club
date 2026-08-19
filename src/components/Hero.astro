@@ -2,36 +2,49 @@
 import { site } from '../data/site';
 ---
 
-<section class="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0b1220] via-[#101b33] to-bg px-6 text-center">
+<section
+  class="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden px-6 text-center"
+  style="background: radial-gradient(ellipse 120% 80% at 50% -20%, #16244d 0%, #0d1526 45%, #0a0f1e 100%)"
+>
   <!-- 网格背景 -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute inset-0 opacity-[0.35]"
-    style="background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 75%);"
+    class="pointer-events-none absolute inset-0 opacity-40"
+    style="background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%);"
   ></div>
 
-  <!-- 浮动光斑 -->
+  <!-- 品牌光斑:让玻璃卡片有内容可模糊 -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute left-[12%] top-[22%] h-64 w-64 animate-float rounded-full bg-accent/20 blur-[90px]"
+    class="pointer-events-none absolute left-[8%] top-[18%] h-80 w-80 animate-pulse-slow rounded-full blur-[100px]"
+    style="background: radial-gradient(circle, rgba(59,130,246,.32) 0%, transparent 70%)"
   ></div>
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute right-[10%] top-[35%] h-72 w-72 animate-float rounded-full bg-accent-soft/20 blur-[100px]"
-    style="animation-delay: -4s"
+    class="pointer-events-none absolute right-[6%] top-[30%] h-96 w-96 animate-pulse-slow rounded-full blur-[120px]"
+    style="background: radial-gradient(circle, rgba(167,139,250,.26) 0%, transparent 70%); animation-delay: -2s"
+  ></div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute bottom-[10%] left-[28%] h-72 w-72 animate-pulse-slow rounded-full blur-[110px]"
+    style="background: radial-gradient(circle, rgba(52,211,153,.18) 0%, transparent 70%); animation-delay: -4s"
   ></div>
 
   <!-- 内容 -->
   <div class="relative animate-fade-up">
     <div
-      class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-accent to-accent-soft text-2xl text-white shadow-lg"
+      class="mx-auto mb-7 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-accent via-accent-soft to-ai-embed text-2xl font-bold text-white shadow-lg"
+      style="box-shadow: 0 8px 40px rgba(59,130,246,.35)"
     >♾</div>
-    <h1
-      class="font-display text-5xl font-bold tracking-tight text-white sm:text-6xl"
-    >{site.name}</h1>
-    <p class="mt-3 bg-gradient-to-r from-blue-300 via-violet-300 to-emerald-300 bg-clip-text text-xl font-medium text-transparent">
-      {site.slogan}
+    <p class="mb-2 font-display text-sm uppercase tracking-[0.35em] text-slate-400">
+      {site.school} · {site.brandZh}
     </p>
-    <p class="mt-2 text-sm text-slate-400">{site.school} · 让每个想法成为现实</p>
+    <h1 class="font-display text-6xl font-bold tracking-tight text-white sm:text-7xl">
+      {site.brand}
+    </h1>
+    <p class="mt-4 font-display text-xl font-medium tracking-wide text-gradient-brand sm:text-2xl">
+      {site.sloganEn}
+    </p>
+    <p class="mt-3 text-sm text-slate-400">{site.sloganZh}</p>
   </div>
 </section>

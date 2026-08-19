@@ -13,43 +13,55 @@ const { line } = Astro.props;
   class="glass-card group relative block rounded-xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
   style={`--card-accent: ${line.accent}`}
 >
-  <!-- 顶部品牌色条 -->
+  <!-- 顶部品牌色光条 -->
   <span
-    class="absolute inset-x-0 top-0 h-1 rounded-t-xl"
+    class="absolute inset-x-0 top-0 h-[2px] rounded-t-xl transition-all duration-300 group-hover:h-[3px]"
+    style={`background: linear-gradient(90deg, transparent, ${line.accent}, transparent)`}
+  ></span>
+
+  <!-- hover 品牌色光晕 -->
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-10 left-1/2 h-32 w-40 -translate-x-1/2 rounded-full opacity-0 blur-[60px] transition-opacity duration-500 group-hover:opacity-40"
     style={`background: ${line.accent}`}
   ></span>
 
   <!-- 报名状态徽章 -->
   <span
-    class={`absolute right-5 top-5 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-      line.registerOpen ? 'bg-success/10 text-success' : 'bg-black/5 text-muted'
+    class={`absolute right-5 top-5 rounded-full px-2.5 py-0.5 font-display text-[11px] font-semibold uppercase tracking-wider ${
+      line.registerOpen
+        ? 'border border-ai-embed/30 bg-ai-embed/10 text-ai-embed'
+        : 'border border-white/10 bg-white/5 text-muted'
     }`}
   >
-    {line.registerOpen ? '报名中' : '待开放'}
+    {line.registerOpen ? 'Open' : 'Soon'}
   </span>
 
   <div
     class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg text-2xl"
-    style={`background: ${line.accent}1f`}
+    style={`background: ${line.accent}26; box-shadow: 0 0 24px ${line.accent}33`}
   >
     {line.icon}
   </div>
 
-  <h3 class="text-xl font-semibold">{line.name}</h3>
-  <p class="mt-0.5 text-sm font-medium" style={`color: ${line.accent}`}>
-    {line.tagline}
-  </p>
-  <p class="mt-2 text-sm leading-relaxed text-muted">{line.desc}</p>
+  <h3 class="font-display text-xl font-semibold tracking-wide">{line.name}</h3>
+  <p class="mt-0.5 font-display text-sm text-slate-400">{line.tagline}</p>
+  <p class="mt-2.5 text-sm leading-relaxed text-slate-300">{line.desc}</p>
 
   <div class="mt-4 flex flex-wrap gap-1.5">
     {
       line.features.map((f) => (
-        <span class="rounded-full bg-black/5 px-2.5 py-0.5 text-xs opacity-85">{f}</span>
+        <span class="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs text-slate-300">
+          {f}
+        </span>
       ))
     }
   </div>
 
-  <div class="mt-5 text-sm font-semibold" style={`color: ${line.accent}`}>
-    进入业务线 →
+  <div
+    class="mt-6 flex items-center gap-1 font-display text-sm font-medium transition-transform duration-300 group-hover:translate-x-1"
+    style={`color: ${line.accent}`}
+  >
+    Explore <span aria-hidden="true">→</span>
   </div>
 </a>

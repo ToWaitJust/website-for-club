@@ -1,5 +1,6 @@
-/* ─── 全局样式:设计 token + Tailwind ─────────────────────────────────
-   规范依据: docs/03-DESIGN-SPEC.md */
+/* ─── 全局样式:深色主题 + 设计 token ────────────────────────────────
+   规范依据: docs/03-DESIGN-SPEC.md(深色版本)
+   视觉方向:全站深色高级感,玻璃拟态,品牌色点缀 */
 
 @tailwind base;
 @tailwind components;
@@ -7,17 +8,19 @@
 
 @layer base {
   :root {
-    --ink: #1d1d1f;
-    --ink-2: #3a3a3c;
-    --muted: #86868b;
-    --bg: #f5f5f7;
-    --surface: #ffffff;
-    --accent: #2563eb;
-    --accent-2: #7c3aed;
-    --line: rgba(0, 0, 0, 0.08);
-    --line-strong: rgba(0, 0, 0, 0.16);
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
-    --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.05), 0 16px 48px rgba(0, 0, 0, 0.1);
+    --bg: #0a0f1e;
+    --bg-2: #0d1526;
+    --ink: #f5f5f7;
+    --ink-2: #a1a1aa;
+    --muted: #71717a;
+    --surface: rgba(255, 255, 255, 0.05);
+    --surface-strong: rgba(255, 255, 255, 0.09);
+    --accent: #3b82f6;
+    --accent-2: #a78bfa;
+    --line: rgba(255, 255, 255, 0.1);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.45), 0 16px 48px rgba(0, 0, 0, 0.5);
   }
 
   html {
@@ -27,6 +30,11 @@
   body {
     @apply bg-bg font-sans text-ink antialiased;
     line-height: 1.6;
+  }
+
+  ::selection {
+    background: rgba(59, 130, 246, 0.35);
+    color: #fff;
   }
 
   /* 尊重系统减弱动效设置 */
@@ -45,16 +53,24 @@
     @apply mx-auto w-full max-w-[1120px] px-6;
   }
 
+  /* 真·玻璃拟态:深色半透明 + 强模糊 + 微边框 */
   .glass-card {
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: var(--shadow-card);
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #1d1d1f 0%, #515154 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(90deg, #60a5fa, #a78bfa 50%, #34d399);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;

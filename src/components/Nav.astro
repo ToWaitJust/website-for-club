@@ -5,13 +5,15 @@ const pathname = Astro.url.pathname;
 const isActive = (match: string) => new RegExp(match).test(pathname);
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 h-14 border-b border-line bg-white/80 backdrop-blur-xl">
+<header
+  class="fixed inset-x-0 top-0 z-50 h-14 border-b border-white/10 bg-[#0a0f1e]/70 backdrop-blur-xl"
+>
   <div class="container-site flex h-full items-center justify-between">
     <a href="/" class="flex items-center gap-2 font-semibold no-underline text-ink">
       <span
-        class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-soft text-sm text-white"
+        class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-soft text-sm font-bold text-white"
       >AI</span>
-      <span class="hidden sm:inline">{site.name}</span>
+      <span class="hidden font-display tracking-wide sm:inline">{site.brand}</span>
     </a>
 
     <nav aria-label="主导航">
@@ -25,8 +27,8 @@ const isActive = (match: string) => new RegExp(match).test(pathname);
                   href={item.href}
                   class={`rounded-lg px-3 py-2 text-sm no-underline transition-colors ${
                     active
-                      ? 'font-semibold text-accent'
-                      : 'text-ink hover:bg-black/5'
+                      ? 'bg-white/10 font-semibold text-white'
+                      : 'text-slate-300 hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   {item.label}

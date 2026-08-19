@@ -7,30 +7,47 @@ import { businessLines, notices } from '../data/site';
 ---
 
 <BaseLayout
-  title="AI+社团 · 福州大学"
-  description="AI+社团集成门户 - AI+IT / AI+业务 / AI+嵌入式 三条业务线信息展示、报名与反馈"
+  title="AI+CLUB · 福州大学"
+  description="AI+CLUB 集成门户 - AI+IT / AI+业务 / AI+嵌入式 三条业务线信息展示、报名与反馈"
 >
   <Hero />
 
   <!-- 业务线 -->
-  <section class="container-site relative -mt-10 pb-4">
-    <h2 class="mb-5 text-center text-2xl font-semibold tracking-tight text-gradient">
-      三条业务线
-    </h2>
-    <div class="grid gap-5 md:grid-cols-3">
-      {
-        businessLines.map((line) => (
-          <div class="animate-fade-up" style={`animation-delay: ${businessLines.indexOf(line) * 100}ms`}>
-            <BizCard line={line} />
-          </div>
-        ))
-      }
+  <section class="container-site relative -mt-14 pb-6">
+    <!-- 区域光晕:让卡片毛玻璃有效果 -->
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 -top-20 mx-auto h-64 max-w-2xl rounded-full opacity-60 blur-[120px]"
+      style="background: radial-gradient(ellipse, rgba(59,130,246,.16) 0%, transparent 70%)"
+    ></div>
+
+    <div class="relative">
+      <div class="mb-6 text-center">
+        <h2 class="font-display text-sm uppercase tracking-[0.3em] text-slate-400">
+          Our Tracks
+        </h2>
+        <p class="mt-1 text-xl font-semibold text-white">三条业务线</p>
+      </div>
+      <div class="grid gap-5 md:grid-cols-3">
+        {
+          businessLines.map((line) => (
+            <div
+              class="animate-fade-up"
+              style={`animation-delay: ${businessLines.indexOf(line) * 100}ms`}
+            >
+              <BizCard line={line} />
+            </div>
+          ))
+        }
+      </div>
     </div>
   </section>
 
   <!-- 公告 -->
-  <section class="container-site mt-14">
-    <h2 class="mb-4 text-xl font-semibold tracking-tight">最新公告</h2>
+  <section class="container-site mt-16">
+    <h2 class="mb-4 font-display text-sm uppercase tracking-[0.3em] text-slate-400">
+      Announcements
+    </h2>
     <div class="mx-auto max-w-3xl">
       <NoticeList notices={notices} />
     </div>

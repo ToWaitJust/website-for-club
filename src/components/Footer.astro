@@ -2,12 +2,15 @@
 import { site } from '../data/site';
 ---
 
-<footer class="mt-16 border-t border-line py-8 text-center text-xs text-muted">
+<footer class="mt-20 border-t border-white/10 py-10 text-center text-xs text-muted">
   <div class="container-site">
-    <div>{site.school} · {site.name}</div>
-    <div class="mt-1">
-      QQ 群 {site.contact.qqGroup} ｜ 微信 {site.contact.wechat} ｜ {site.contact.email}
+    <p class="font-display tracking-[0.25em] uppercase text-slate-400">{site.brand}</p>
+    <div class="mt-2">
+      {site.school} · {site.brandZh} ｜ QQ 群 {site.contact.qqGroup} ｜ 微信 {site.contact.wechat}
     </div>
-    <div class="mt-2 opacity-60">© {new Date().getFullYear()} {site.name}</div>
+    <div class="mt-2 opacity-70">
+      Infinite Progress · Absolute Productivity · Create Value
+    </div>
+    <div class="mt-2 opacity-60">© {new Date().getFullYear()} {site.brand}</div>
   </div>
 </footer>
