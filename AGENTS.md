@@ -14,28 +14,14 @@
 ## 目录结构
 
 ```
-portal/
-├── index.html                   # 首页:三业务线入口 + 公告
-├── business/
-│   ├── ai-it/                   # AI+IT 业务线
-│   │   ├── index.html           # 业务线主页(渲染 content/business/ai-it.md)
-│   │   ├── learning-plan.html   # 学习规划长文档(独立视觉体系)
-│   │   └── register.html        # 报名页
-│   ├── ai-biz/                  # AI+业务(同构模板)
-│   └── ai-embed/                # AI+嵌入式(同构模板)
-├── ops/index.html               # 运营方案内部文档
-├── assets/
-│   ├── css/main.css             # 门户统一样式
-│   ├── css/nav.css              # 文档页专用导航样式
-│   └── js/
-│       ├── app.js               # 导航/数据加载/轻量 Markdown 渲染
-│       ├── register.js          # 报名组件 → yudao API
-│       └── feedback.js          # 反馈组件 → yudao API
-├── content/
-│   ├── site.json                # 站点配置:导航/业务线/公告/API 地址
-│   └── business/*.md            # 业务线简介内容
-├── scripts/dev-server.js        # 本地预览(生产用 Nginx)
-└── docs/                        # 架构 / yudao / 部署文档
+portal/                          # 目标:重构为 Astro 工程(见 docs/02-TECH-DESIGN.md)
+├── index.html                   # 首页(当前静态版,待迁移)
+├── business/                    # 三业务线(当前静态版,待迁移)
+├── ops/index.html               # 运营方案(待迁移)
+├── assets/                      # 样式与组件(待迁移)
+├── content/                     # 数据文件(site.json + 业务线 md,迁移后进 src/content)
+├── scripts/dev-server.js        # 本地预览(迁移后由 astro dev 替代)
+└── docs/                        # 工程文档体系(唯一事实来源)
 ```
 
 ## 数据流
@@ -63,14 +49,18 @@ portal/
 
 | 任务 | 操作 |
 |------|------|
-| 改公告 | 编辑 `content/site.json` 的 `notices` 数组(或接入 yudao 公告 API 后改后台) |
-| 改业务线简介 | 编辑 `content/business/<slug>.md` |
-| 开放/关闭报名 | 改 `site.json` 中 `registerOpen` 字段(后续由后台接口下发) |
-| 本地预览 | `npm run dev` → http://localhost:5000 |
-| 上线 | 静态文件同步到服务器 Nginx 目录,详见 `docs/DEPLOY.md` |
+| 了解需求全貌 | 读 `docs/01-PRD.md` |
+| 了解技术方案 | 读 `docs/02-TECH-DESIGN.md` |
+| 前端视觉规范 | 读 `docs/03-DESIGN-SPEC.md` |
+| 前后端接口对齐 | 读 `docs/04-API-CONTRACT.md` |
+| 阶段与验收 | 读 `docs/05-ROADMAP.md` |
+| 部署上线 | 读 `docs/DEPLOY.md` |
+| yudao 实操 | 读 `docs/YUDAO_BACKEND.md` |
 
 ## 长期约束
 
-- 门户保持零构建、零前端框架,内容数据化。
+- **门户目标栈**:Astro + Vue islands + Tailwind,静态构建输出(见 02/03)。
 - 动态数据(报名/反馈)一律走 yudao API,门户不直连数据库。
-- 长文档(学习规划/运营方案)保留独立视觉体系,只挂统一导航。
+- 长文档(学习规划/运营方案)以 Markdown + Mermaid 形式维护。
+- 新增业务线 = content 加 md + site.ts 加配置 + 后台加记录,核心代码零改动。
+- 当前仓库仍是迁移前的静态版本,迁移映射关系见 `docs/02-TECH-DESIGN.md §2.3`。
