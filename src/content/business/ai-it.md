@@ -20,7 +20,7 @@ AI+IT 是社团的核心技术业务线,面向想要系统掌握"编程 + AI"能
 | 6-8 | UniApp 跨端 + 部署测试 + 全栈整合复盘 | 52h |
 | 9-13 | AI 工程化进阶(DSPy / LangGraph / Harness) | 不限时 |
 
-> 完整版见 [学习规划 · 正式版](/business/ai-it/learning-plan/)
+> 完整版见 [学习规划 · 正式版](/docs/learning-plan.html)
 
 ## 你能获得
 
