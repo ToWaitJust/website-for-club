@@ -97,6 +97,10 @@ Invoke-WebRequest -Uri "http://localhost:48080/admin-api/system/dict-data/simple
 | 7 | MySQL SOURCE 导入中文路径 SQL 报 `Failed to open file`(路径乱码) | mysql 客户端读文件用 GBK 代码页 | SQL 复制到无中文路径(如 `D:\dev-tools\tmp\`)再 SOURCE |
 | 8 | 改代码重启后仍是旧行为 | 只 compile 未 install | `mvn install -pl <模块> -am -DskipTests` 后再启动 |
 | 9 | 编译下载依赖慢 | 默认中央仓库 | settings.xml 已加阿里云镜像(`D:\dev-tools\maven\conf\settings.xml`) |
+| 10 | 新模块 Controller 接口全 404(`请求地址不存在`) | **Controller 的 `@RequestMapping` 写了 `/admin-api` 前缀**。yudao 框架 `WebProperties` 会给 `**.controller.admin.**` 包自动加 `/admin-api` 前缀,写重复了 | Controller 里只写 `/club/xxx`,不要带 `/admin-api`(对照 `yudao-module-system` 的 `@RequestMapping("/system/auth")` 写法) |
+| 11 | club 接口返回 200 但 body 是 `code:404` | yudao 对未注册路由统一返回 HTTP 200 + body code=404,`curl -w %{http_code}` 会误判"成功" | 判断接口成功要看 body 里的 `code==0`,不能只看 HTTP 状态码 |
+| 12 | `mvn package` 后 fat jar 里仍是旧模块 jar | `package`(非 clean)时若源码无变化,repackage 可能沿用旧依赖缓存 | 改完依赖模块后:**先 `mvn install -pl <模块> -am -DskipTests`,再 `mvn clean package -pl yudao-server -DskipTests`**(clean 必须带) |
+| 13 | 验证新模块是否被加载/路由是否注册 | 黑盒测试慢 | 临时加 `ApplicationRunner` 探针类打印 `beanDefinitionNames` 和 `RequestMappingHandlerMapping.getHandlerMethods()`,定位后删除(本次定位"前缀重复"就靠它) |
 
 ---
 
