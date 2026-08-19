@@ -1,96 +1,27 @@
+# 依赖与构建
 node_modules
 dist
-.DS_Store
-*.swp
-.git/*
-__pycache__/
-*.pyc
-.venv/*
-*.o
-*.a
-/vendor
-*.egg-info/
-/.env
-.env
-.cozeproj/reduction
-.preview
-
-# JS/TS bundlers & build outputs
-.next
-.nuxt
-.turbo
-.vercel
-.parcel-cache
-.cache
-coverage
-storybook-static
-
-# Package manager artifacts
 .pnp*
 .npm
 
-# Python tooling
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.tox/
+# 环境变量
+.env
+.env.local
+.env.*.local
 
-# Go tooling
-bin/
-*.test
-
-# Editor / IDE
+# 编辑器 / IDE
 .vscode/
 .idea/
 *.iml
 
-# OS / misc
+# 操作系统
+.DS_Store
 Thumbs.db
 ehthumbs.db
 
-# Logs
-output.log
+# 日志
 *.log
-*.log.*
 logs/
 
-# 视频文件
-*.mp4
-*.avi
-*.mov
-*.wmv
-*.flv
-*.mkv
-*.webm
-*.m4v
-*.mpeg
-*.mpg
-*.3gp
-*.f4v
-*.rmvb
-*.vob
-
-# 归档文件
-*.iso
-*.dmg
-*.rar
-*.zip
-*.gz
-
-# 文档类也默认加入
-*.pdf
-*.docx
-*.doc
-*.xlsx
-*.xls
-*.ppt
-*.pptx
-*.xlsx
-*.csv
-
-# Preview files
-.preview
-
-# CodeGraph index
-.codegraph
-.codegraph/
+# 本地临时文件
+temp_screenshot.png

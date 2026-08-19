@@ -15,9 +15,9 @@
             font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, sans-serif;
             background: #f5f8fc;
             color: #1e2b45;
-            padding: 2rem 1.5rem;
+            padding: calc(2rem + 56px) 1.5rem 2rem;
         }
-        .container {
+        .doc-container {
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -302,9 +302,16 @@
             .tl-arrow { transform: rotate(90deg); padding: 0.3rem 0; }
         }
     </style>
+    <link rel="stylesheet" href="/assets/css/nav.css">
 </head>
 <body>
-    <div class="container">
+    <nav class="site-nav">
+        <div class="container">
+            <a class="brand" href="/"><span class="logo">AI</span><span class="name">AI+社团</span></a>
+            <ul class="nav-links"></ul>
+        </div>
+    </nav>
+    <div class="doc-container">
 
         <!-- 页眉 -->
         <header class="main-header">
@@ -850,10 +857,13 @@
     }
 
 </script>
-<script src="/feedback.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/feedback.js"></script>
 <div id="feedback-container"></div>
 <script>
-  FeedbackBox.mount(document.getElementById('feedback-container'), 'ai-learning', '团队 AI+IT 学习规划');
+  App.init().then(() => {
+    FeedbackBox.mount(document.getElementById('feedback-container'), 'ai-learning', '团队 AI+IT 学习规划');
+  });
 </script>
 
 </body>

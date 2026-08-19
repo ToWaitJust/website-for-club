@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI+嵌入式 · AI+社团</title>
+<meta name="description" content="AI+嵌入式业务线 - AI 与硬件结合的创新实践">
+<link rel="stylesheet" href="/assets/css/main.css">
+<style>
+  :root { --line-accent: #0f9d58; }
+  .action-bar { text-align: center; margin: 2.5rem 0 0.5rem; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a class="brand" href="/"><span class="logo">AI</span><span class="name">AI+社团</span></a>
+    <ul class="nav-links"></ul>
+  </div>
+</nav>
+
+<main class="page">
+  <header class="page-header">
+    <div class="ph-icon">🔧</div>
+    <h1>AI+嵌入式 业务线</h1>
+    <p class="ph-tagline">AI 与硬件结合的创新实践</p>
+  </header>
+
+  <div class="md-body" id="mdContent">
+    <p style="color:var(--muted)">内容加载中…</p>
+  </div>
+
+  <div class="action-bar">
+    <a class="btn" href="/business/ai-embed/register.html">立即报名</a>
+  </div>
+
+  <div id="feedback-container"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>福州大学 · AI+社团 · AI+嵌入式 业务线</div>
+  </div>
+</footer>
+
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/feedback.js"></script>
+<script>
+  App.init({ markdown: '#mdContent', markdownSrc: '/content/business/ai-embed.md' })
+    .then(() => {
+      FeedbackBox.mount(document.getElementById('feedback-container'), 'ai-embed', 'AI+嵌入式 业务线');
+    });
+</script>
+</body>
+</html>

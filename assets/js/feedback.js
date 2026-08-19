@@ -1,5 +1,7 @@
 // ─── 反馈信箱组件 ──────────────────────────────────────────────────────
-// 用法：在页面底部调用 FeedbackBox.mount(containerElement, pageName)
+// 用法: FeedbackBox.mount(containerElement, pageKey, pageLabel)
+// 数据: POST {apiBase}/admin-api/club/feedback  (yudao 公开接口 @PermitAll)
+// yudao 统一响应: { code: 0, data: ..., msg: '...' }  → code === 0 为成功
 
 const FeedbackBox = (() => {
   const STYLES = `
@@ -7,37 +9,16 @@ const FeedbackBox = (() => {
       max-width: 720px;
       margin: 4rem auto 2rem;
       padding: 2.5rem 2rem;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-      font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--surface, #fff);
+      border-radius: var(--radius-lg, 18px);
+      box-shadow: var(--shadow, 0 2px 16px rgba(0,0,0,0.06));
+      border: 1px solid var(--line, rgba(0,0,0,0.08));
     }
-    .feedback-box h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1d1d1f;
-      margin: 0 0 0.4rem;
-    }
-    .feedback-box .sub {
-      font-size: 0.92rem;
-      color: #86868b;
-      margin: 0 0 1.6rem;
-      line-height: 1.5;
-    }
-    .feedback-box .sub strong {
-      color: #1d1d1f;
-      font-weight: 600;
-    }
-    .feedback-box .field {
-      margin-bottom: 1.2rem;
-    }
-    .feedback-box .field label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #1d1d1f;
-      margin-bottom: 0.35rem;
-    }
+    .feedback-box h2 { font-size: 1.4rem; font-weight: 600; color: var(--ink, #1d1d1f); margin: 0 0 0.4rem; }
+    .feedback-box .sub { font-size: 0.92rem; color: var(--muted, #86868b); margin: 0 0 1.6rem; line-height: 1.5; }
+    .feedback-box .sub strong { color: var(--ink, #1d1d1f); font-weight: 600; }
+    .feedback-box .field { margin-bottom: 1.2rem; }
+    .feedback-box .field label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--ink, #1d1d1f); margin-bottom: 0.35rem; }
     .feedback-box .field input,
     .feedback-box .field textarea {
       width: 100%;
@@ -49,29 +30,19 @@ const FeedbackBox = (() => {
       outline: none;
       transition: border-color 0.25s, box-shadow 0.25s;
       box-sizing: border-box;
+      background: #fff;
+      color: var(--ink, #1d1d1f);
     }
     .feedback-box .field input:focus,
     .feedback-box .field textarea:focus {
-      border-color: #0071e3;
+      border-color: var(--accent, #0071e3);
       box-shadow: 0 0 0 3px rgba(0,113,227,0.15);
     }
-    .feedback-box .field textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-    .feedback-box .field .hint {
-      font-size: 0.8rem;
-      color: #86868b;
-      margin-top: 0.3rem;
-    }
-    .feedback-box .btn-row {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-    }
+    .feedback-box .field textarea { resize: vertical; min-height: 100px; }
+    .feedback-box .btn-row { display: flex; gap: 0.75rem; align-items: center; }
     .feedback-box .btn-submit {
       padding: 0.7rem 2rem;
-      background: #0071e3;
+      background: var(--accent, #0071e3);
       color: #fff;
       border: none;
       border-radius: 40px;
@@ -79,21 +50,15 @@ const FeedbackBox = (() => {
       font-weight: 600;
       cursor: pointer;
       transition: background 0.25s, transform 0.15s;
+      font-family: inherit;
     }
-    .feedback-box .btn-submit:hover { background: #0077ed; }
+    .feedback-box .btn-submit:hover { opacity: 0.92; }
     .feedback-box .btn-submit:active { transform: scale(0.97); }
-    .feedback-box .btn-submit:disabled {
-      background: #a0c8f0;
-      cursor: not-allowed;
-      transform: none;
-    }
-    .feedback-box .msg {
-      font-size: 0.9rem;
-      padding: 0.5rem 0;
-    }
+    .feedback-box .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .feedback-box .msg { font-size: 0.9rem; padding: 0.5rem 0; }
     .feedback-box .msg.success { color: #1d8a3a; }
     .feedback-box .msg.error { color: #d32f2f; }
-    .feedback-box .msg.info { color: #0071e3; }
+    .feedback-box .msg.info { color: var(--accent, #0071e3); }
   `;
 
   function injectStyles() {
@@ -111,7 +76,7 @@ const FeedbackBox = (() => {
         <h2>📬 反馈信箱</h2>
         <p class="sub">
           我们正在持续优化<strong>${pageLabel}</strong>。
-          你的每一条建议——无论是学习规划、运营方案还是社团建设——都在帮助我们变得更好 ✨
+          你的每一条建议——无论是学习规划、活动安排还是社团建设——都在帮助我们变得更好 ✨
         </p>
         <div class="field">
           <label for="fb-name">您的姓名</label>
@@ -120,7 +85,6 @@ const FeedbackBox = (() => {
         <div class="field">
           <label for="fb-content">反馈内容</label>
           <textarea id="fb-content" placeholder="请畅所欲言… 哪些地方可以优化？有什么新想法？"></textarea>
-          <div class="hint">💡 您的每一条反馈都会认真阅读和记录</div>
         </div>
         <div class="btn-row">
           <button class="btn-submit" id="fb-submit">提交反馈</button>
@@ -153,24 +117,26 @@ const FeedbackBox = (() => {
       msg.textContent = '正在提交…';
 
       try {
-        const res = await fetch('/api/feedback', {
+        const data = await App.loadSiteData();
+        const apiBase = (data.site && data.site.apiBase) || '/yudao-api';
+        const res = await fetch(`${apiBase}/admin-api/club/feedback`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, content, page: pageKey }),
+          body: JSON.stringify({ page: pageKey, name, content }),
         });
-        const data = await res.json();
-        if (data.success) {
+        const result = await res.json();
+        if (result && result.code === 0) {
           msg.className = 'msg success';
-          msg.textContent = data.message || '感谢您的反馈！🎉';
+          msg.textContent = result.msg || '感谢您的反馈！🎉';
           nameInput.value = '';
           contentInput.value = '';
         } else {
           msg.className = 'msg error';
-          msg.textContent = data.error || '提交失败，请稍后再试';
+          msg.textContent = (result && result.msg) || '提交失败，请稍后再试';
         }
       } catch {
         msg.className = 'msg error';
-        msg.textContent = '网络错误，请稍后再试';
+        msg.textContent = '网络错误，请稍后再试（若后台服务未部署，反馈暂不可用）';
       } finally {
         btn.disabled = false;
         btn.textContent = '提交反馈';
@@ -180,6 +146,7 @@ const FeedbackBox = (() => {
 
   return {
     mount(container, pageKey, pageLabel) {
+      if (!container) return;
       injectStyles();
       render(container, pageLabel);
       bindEvents(container, pageKey);

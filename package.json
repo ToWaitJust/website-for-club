@@ -1,13 +1,11 @@
 {
-  "name": "infinite-productivity",
-  "version": "1.0.0",
+  "name": "club-portal",
+  "version": "2.0.0",
   "private": true,
+  "description": "社团集成式门户 - 三条业务线(AI+IT / AI+业务 / AI+嵌入式)信息展示、报名、反馈",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js",
-    "build": ""
+    "dev": "node scripts/dev-server.js",
+    "preview": "node scripts/dev-server.js"
   },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.112.3"
-  }
+  "dependencies": {}
 }

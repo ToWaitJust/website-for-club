@@ -1,0 +1,71 @@
+/* ─── 公共导航样式(独立版) ─────────────────────────────────────────────
+   供拥有独立视觉体系的文档页(学习规划 / 运营方案)引用。
+   只含导航组件,不含 reset 与 body 样式,避免与文档页自身样式冲突。 */
+
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+}
+.site-nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.site-nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.site-nav .brand .logo {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0071e3, #40a9ff);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem;
+}
+.site-nav .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-nav .nav-links a {
+  display: block;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #1d1d1f;
+  text-decoration: none;
+  transition: background 0.2s;
+  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+.site-nav .nav-links a:hover { background: rgba(0, 0, 0, 0.05); }
+.site-nav .nav-links a.active { color: #0071e3; font-weight: 600; }
+.site-nav .nav-links a.external::after {
+  content: '↗';
+  font-size: 0.75rem;
+  margin-left: 0.2rem;
+  opacity: 0.6;
+}
+
+@media (max-width: 760px) {
+  .site-nav .nav-links a { padding: 0.4rem 0.5rem; font-size: 0.8rem; }
+  .site-nav .brand span.name { display: none; }
+}

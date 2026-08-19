@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI+IT 报名 · AI+社团</title>
+<meta name="description" content="AI+IT 业务线报名">
+<link rel="stylesheet" href="/assets/css/main.css">
+<style>
+  :root { --line-accent: #0071e3; }
+  .page { padding-top: 2.5rem; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a class="brand" href="/"><span class="logo">AI</span><span class="name">AI+社团</span></a>
+    <ul class="nav-links"></ul>
+  </div>
+</nav>
+
+<main class="page">
+  <header class="page-header">
+    <div class="ph-icon">💻</div>
+    <h1>AI+IT 报名</h1>
+    <p class="ph-tagline">加入 AI+IT,从零到一掌握全栈 + AI</p>
+  </header>
+
+  <div id="register-container"></div>
+  <div style="text-align:center; margin-top:1.5rem;">
+    <a href="/business/ai-it/">← 返回业务线主页</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>福州大学 · AI+社团 · AI+IT 业务线</div>
+  </div>
+</footer>
+
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/register.js"></script>
+<script>
+  App.init().then(() => {
+    RegisterBox.mount(document.getElementById('register-container'), {
+      businessLine: 'ai-it',
+      businessName: 'AI+IT',
+      open: true,
+    });
+  });
+</script>
+</body>
+</html>

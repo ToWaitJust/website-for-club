@@ -3,424 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infinite Productivity</title>
+<title>AI+社团 · 福州大学</title>
+<meta name="description" content="AI+社团门户 - AI+IT / AI+业务 / AI+嵌入式 三条业务线信息展示、报名与反馈入口">
+<link rel="stylesheet" href="/assets/css/main.css">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg: #f5f5f7;
-    --surface: #ffffff;
-    --ink: #1d1d1f;
-    --muted: #86868b;
-    --accent: #0071e3;
-    --accent-hover: #0077ed;
-    --radius: 18px;
-    --radius-sm: 12px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
-    --shadow: 0 4px 20px rgba(0,0,0,0.06);
-    --shadow-hover: 0 12px 48px rgba(0,0,0,0.10);
-    --transition: 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-
-  body {
-    font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-  }
-
-  /* ========== LANDING VIEW ========== */
-  #landing {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    padding: 2rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    background: var(--bg);
-  }
-  #landing.hidden {
-    opacity: 0;
-    transform: scale(0.96);
-    pointer-events: none;
-  }
-
-  /* Hero */
-  .hero {
-    text-align: center;
-    margin-bottom: 3.5rem;
-    animation: fadeUp 0.8s ease both;
-  }
-  .hero .logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #0071e3, #40a9ff);
-    color: #fff;
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 4px 16px rgba(0,113,227,0.3);
-  }
-  .hero h1 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #1d1d1f 0%, #515154 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.15;
-  }
-  .hero p {
-    font-size: 1.1rem;
-    color: var(--muted);
-    margin-top: 0.5rem;
-    font-weight: 400;
-    letter-spacing: 0.01em;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Cards */
-  .cards {
-    display: flex;
-    gap: 1.5rem;
-    max-width: 820px;
-    width: 100%;
-    animation: fadeUp 0.8s ease 0.15s both;
-  }
-
-  .card {
-    flex: 1;
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 2rem;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    transition: all var(--transition);
-    border: 1px solid rgba(0,0,0,0.04);
-    position: relative;
-    overflow: hidden;
-    user-select: none;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    border-radius: var(--radius) var(--radius) 0 0;
-  }
-  .card:nth-child(1)::before { background: linear-gradient(90deg, #0071e3, #40a9ff); }
-  .card:nth-child(2)::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
-
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-    border-color: rgba(0,0,0,0.08);
-  }
-  .card:active {
-    transform: translateY(-1px);
-    transition-duration: 0.1s;
-  }
-
-  .card .icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  .card:nth-child(1) .icon { background: #e8f4fd; color: #0071e3; }
-  .card:nth-child(2) .icon { background: #f0eaff; color: #8b5cf6; }
-
-  .card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-    letter-spacing: -0.01em;
-  }
-  .card .desc {
-    font-size: 0.9rem;
-    color: var(--muted);
-    line-height: 1.5;
-    margin-bottom: 1.2rem;
-  }
-  .card .meta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-  .card .meta .tag {
-    display: inline-block;
-    padding: 0.15rem 0.55rem;
-    border-radius: 20px;
-    font-weight: 500;
-    font-size: 0.72rem;
-  }
-  .card:nth-child(1) .meta .tag { background: #e8f4fd; color: #0071e3; }
-  .card:nth-child(2) .meta .tag { background: #f0eaff; color: #8b5cf6; }
-
-  .card .arrow {
-    position: absolute;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    color: #c7c7cc;
-    transition: all var(--transition);
-  }
-  .card:hover .arrow {
-    color: var(--accent);
-    transform: translateX(3px);
-  }
-
-  /* Footer */
-  .footer {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
-
-  /* ========== DOCUMENT VIEW ========== */
-  #doc-view {
-    display: none;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    background: #fff;
-    animation: docIn 0.5s ease both;
-  }
-  #doc-view.active {
-    display: flex;
-  }
-
-  @keyframes docIn {
-    from { opacity: 0; transform: scale(0.96); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  /* Doc Nav Bar */
-  .doc-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.6rem 1.2rem;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    flex-shrink: 0;
-    z-index: 5;
-  }
-  .doc-nav .back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--accent);
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
-    transition: background 0.2s;
-    font-family: inherit;
-  }
-  .doc-nav .back-btn:hover {
-    background: rgba(0,113,227,0.08);
-  }
-  .doc-nav .doc-title {
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .doc-nav .doc-badge {
-    font-size: 0.7rem;
-    padding: 0.15rem 0.5rem;
-    border-radius: 20px;
-    background: #f0eaff;
-    color: #8b5cf6;
-    font-weight: 500;
-    margin-left: 0.5rem;
-  }
-  .doc-nav .doc-badge.blue {
-    background: #e8f4fd;
-    color: #0071e3;
-  }
-
-  /* Doc Frame */
-  .doc-frame {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-  }
-  .doc-frame iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-  }
-
-  /* ========== RESPONSIVE ========== */
-  @media (max-width: 680px) {
-    #landing { padding: 1.5rem; justify-content: flex-start; padding-top: 3rem; }
-    .hero { margin-bottom: 2rem; }
-    .hero h1 { font-size: 2rem; }
-    .hero p { font-size: 0.95rem; }
-    .cards { flex-direction: column; gap: 1rem; }
-    .card { padding: 1.5rem; }
-    .card .arrow { display: none; }
-    .doc-nav { padding: 0.5rem 0.8rem; }
-    .doc-nav .doc-title { font-size: 0.8rem; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  }
+  .page-main { padding: 1rem 0 0; }
+  .section { margin-bottom: 3rem; }
+  .notices-wrap { max-width: 860px; margin: 0 auto; }
 </style>
 </head>
 <body>
 
-<!-- ====== LANDING ====== -->
-<div id="landing">
-  <div class="hero">
-    <div class="logo">♾</div>
-    <h1>Infinite Productivity</h1>
-    <p>知识 · 规划 · 成长</p>
+<nav class="site-nav">
+  <div class="container">
+    <a class="brand" href="/"><span class="logo">AI</span><span class="name">AI+社团</span></a>
+    <ul class="nav-links"></ul>
   </div>
+</nav>
 
-  <div class="cards">
-    <div class="card" data-doc="ai-learning.html" data-title="AI+IT 学习规划 · 正式版" data-badge="正式版" data-badge-class="blue">
-      <div class="icon">📘</div>
-      <h3>AI+IT 学习规划</h3>
-      <div class="desc">从零到一的系统化学习路线，涵盖 AI 与 IT 核心技能，配套 8 个阶段体系与实战项目</div>
-      <div class="meta">
-        <span class="tag">正式版</span>
-        <span>· 8 阶段 · 3 流程图</span>
+<main class="page-main">
+  <section class="hero">
+    <div class="logo-badge">♾</div>
+    <h1>AI+社团</h1>
+    <p>AI+IT · AI+业务 · AI+嵌入式</p>
+  </section>
+
+  <section class="section container">
+    <h2 class="section-title">三条业务线</h2>
+    <div class="biz-cards" id="bizCards">
+      <p class="empty" style="color:var(--muted)">加载中…</p>
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2 class="section-title">最新公告</h2>
+    <div class="notices-wrap">
+      <div class="notices" id="noticeBox">
+        <p class="empty">加载中…</p>
       </div>
-      <div class="arrow">→</div>
     </div>
-    <div class="card" data-doc="operation.html" data-title="运营方案 · V2.3" data-badge="V2.3" data-badge-class="">
-      <div class="icon">📋</div>
-      <h3>运营方案</h3>
-      <div class="desc">完整运营体系设计，包含积分矩阵、赛事体系、风险预案与 22 项待办清单</div>
-      <div class="meta">
-        <span class="tag">V2.3</span>
-        <span>· 4 流程图 · 12 风险预案</span>
-      </div>
-      <div class="arrow">→</div>
-    </div>
-  </div>
+  </section>
+</main>
 
-  <div class="footer">福州大学 · AI+社团</div>
-</div>
-
-<!-- ====== DOCUMENT VIEW ====== -->
-<div id="doc-view">
-  <div class="doc-nav">
-    <button class="back-btn" id="backBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-      返回
-    </button>
-    <div>
-      <span class="doc-title" id="docTitle"></span>
-      <span class="doc-badge" id="docBadge"></span>
-    </div>
-    <div style="width:64px"></div>
+<footer class="site-footer">
+  <div class="container">
+    <div>福州大学 · AI+社团</div>
+    <div class="contact">QQ 群 / 微信 / 邮箱 见运营后台公告</div>
   </div>
-  <div class="doc-frame">
-    <iframe id="docIframe" src="" title="Document"></iframe>
-  </div>
-</div>
+</footer>
 
+<script src="/assets/js/app.js"></script>
 <script>
-  const landing = document.getElementById('landing');
-  const docView = document.getElementById('doc-view');
-  const docIframe = document.getElementById('docIframe');
-  const docTitle = document.getElementById('docTitle');
-  const docBadge = document.getElementById('docBadge');
-  const backBtn = document.getElementById('backBtn');
-
-  // Card click → open document
-  document.querySelectorAll('.card').forEach(function(card) {
-    card.addEventListener('click', function() {
-      const src = this.getAttribute('data-doc');
-      const title = this.getAttribute('data-title');
-      const badge = this.getAttribute('data-badge');
-      const badgeClass = this.getAttribute('data-badge-class');
-
-      docIframe.src = src;
-      docTitle.textContent = title;
-      docBadge.textContent = badge;
-      docBadge.className = 'doc-badge' + (badgeClass ? ' ' + badgeClass : '');
-
-      landing.classList.add('hidden');
-      docView.classList.add('active');
-      document.title = title + ' · Infinite Productivity';
-    });
-  });
-
-  // Back button → return to landing
-  backBtn.addEventListener('click', function() {
-    docView.classList.remove('active');
-    landing.classList.remove('hidden');
-    document.title = 'Infinite Productivity';
-    // 延迟清除 iframe 以保留滚动位置
-    setTimeout(function() {
-      if (!docView.classList.contains('active')) {
-        docIframe.src = '';
-      }
-    }, 300);
-  });
-
-  // Keyboard shortcut: Escape → back
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && docView.classList.contains('active')) {
-      backBtn.click();
+  // 首页卡片由 site.json 数据驱动:新增业务线只改 content/site.json,无需改本页
+  (async function initHome() {
+    const data = await App.init({ notices: '#noticeBox' });
+    const cards = document.getElementById('bizCards');
+    const lines = data.businessLines || [];
+    if (!lines.length) {
+      cards.innerHTML = '<p class="empty" style="color:var(--muted)">暂无业务线数据</p>';
+      return;
     }
-  });
+    cards.innerHTML = lines.map((b) => `
+      <a class="biz-card" href="${b.path}" style="--card-accent:${b.accent}">
+        <span class="register-badge ${b.registerOpen ? '' : 'closed'}">${b.registerOpen ? '报名中' : '待开放'}</span>
+        <div class="icon">${b.icon}</div>
+        <h3>${b.name}</h3>
+        <div class="tagline">${b.tagline}</div>
+        <div class="desc">${b.desc}</div>
+        <div class="features">${(b.features || []).map((f) => `<span>${f}</span>`).join('')}</div>
+        <div class="go">进入业务线 →</div>
+      </a>
+    `).join('');
+  })();
 </script>
-<script src="/feedback.js"></script>
-<div id="feedback-container"></div>
-<script>
-  FeedbackBox.mount(document.getElementById('feedback-container'), 'home', '首页 · Infinite Productivity');
-</script>
-
 </body>
 </html>

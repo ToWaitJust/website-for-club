@@ -39,6 +39,7 @@ body {
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  padding-top: 56px;
 }
 
 .doc {
@@ -423,8 +424,15 @@ footer p { font-size: 0.82rem; color: var(--muted); }
   h3 { font-size: 1.05rem; }
 }
 </style>
+<link rel="stylesheet" href="/assets/css/nav.css">
 </head>
 <body>
+<nav class="site-nav">
+  <div class="container">
+    <a class="brand" href="/"><span class="logo">AI</span><span class="name">AI+社团</span></a>
+    <ul class="nav-links"></ul>
+  </div>
+</nav>
 <div class="doc">
 
   <!-- ===== COVER ===== -->
@@ -1494,10 +1502,13 @@ footer p { font-size: 0.82rem; color: var(--muted); }
 
 
 
-<script src="/feedback.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/feedback.js"></script>
 <div id="feedback-container"></div>
 <script>
-  FeedbackBox.mount(document.getElementById('feedback-container'), 'operation', '运营方案 · 孵化营 & AI+IT 社团');
+  App.init().then(() => {
+    FeedbackBox.mount(document.getElementById('feedback-container'), 'operation', '运营方案 · 孵化营 & AI+IT 社团');
+  });
 </script>
 
 </body>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI+IT · AI+社团</title>
+<meta name="description" content="AI+IT 业务线 - 从零到一的系统化学习路线,Java 全栈 + AI 工程化">
+<link rel="stylesheet" href="/assets/css/main.css">
+<style>
+  :root { --line-accent: #0071e3; }
+  .action-bar { text-align: center; margin: 2.5rem 0 0.5rem; }
+  .sub-links { text-align: center; margin-top: 1rem; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a class="brand" href="/"><span class="logo">AI</span><span class="name">AI+社团</span></a>
+    <ul class="nav-links"></ul>
+  </div>
+</nav>
+
+<main class="page">
+  <header class="page-header">
+    <div class="ph-icon">💻</div>
+    <h1>AI+IT 业务线</h1>
+    <p class="ph-tagline">从零到一的系统化学习路线</p>
+  </header>
+
+  <div class="md-body" id="mdContent">
+    <p style="color:var(--muted)">内容加载中…</p>
+  </div>
+
+  <div class="action-bar">
+    <a class="btn" href="/business/ai-it/register.html">立即报名</a>
+  </div>
+  <div class="sub-links">
+    <a href="/business/ai-it/learning-plan.html">📘 查看完整学习规划</a>
+  </div>
+
+  <div id="feedback-container"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>福州大学 · AI+社团 · AI+IT 业务线</div>
+  </div>
+</footer>
+
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/feedback.js"></script>
+<script>
+  App.init({ markdown: '#mdContent', markdownSrc: '/content/business/ai-it.md' })
+    .then(() => {
+      FeedbackBox.mount(document.getElementById('feedback-container'), 'ai-it', 'AI+IT 业务线');
+    });
+</script>
+</body>
+</html>
