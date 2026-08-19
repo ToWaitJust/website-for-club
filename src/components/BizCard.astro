@@ -1,0 +1,55 @@
+---
+import type { BusinessLine } from '../data/site';
+
+interface Props {
+  line: BusinessLine;
+}
+
+const { line } = Astro.props;
+---
+
+<a
+  href={line.path}
+  class="glass-card group relative block rounded-xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+  style={`--card-accent: ${line.accent}`}
+>
+  <!-- 顶部品牌色条 -->
+  <span
+    class="absolute inset-x-0 top-0 h-1 rounded-t-xl"
+    style={`background: ${line.accent}`}
+  ></span>
+
+  <!-- 报名状态徽章 -->
+  <span
+    class={`absolute right-5 top-5 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+      line.registerOpen ? 'bg-success/10 text-success' : 'bg-black/5 text-muted'
+    }`}
+  >
+    {line.registerOpen ? '报名中' : '待开放'}
+  </span>
+
+  <div
+    class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg text-2xl"
+    style={`background: ${line.accent}1f`}
+  >
+    {line.icon}
+  </div>
+
+  <h3 class="text-xl font-semibold">{line.name}</h3>
+  <p class="mt-0.5 text-sm font-medium" style={`color: ${line.accent}`}>
+    {line.tagline}
+  </p>
+  <p class="mt-2 text-sm leading-relaxed text-muted">{line.desc}</p>
+
+  <div class="mt-4 flex flex-wrap gap-1.5">
+    {
+      line.features.map((f) => (
+        <span class="rounded-full bg-black/5 px-2.5 py-0.5 text-xs opacity-85">{f}</span>
+      ))
+    }
+  </div>
+
+  <div class="mt-5 text-sm font-semibold" style={`color: ${line.accent}`}>
+    进入业务线 →
+  </div>
+</a>

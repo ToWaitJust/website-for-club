@@ -1,0 +1,37 @@
+---
+import { site } from '../data/site';
+---
+
+<section class="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0b1220] via-[#101b33] to-bg px-6 text-center">
+  <!-- 网格背景 -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 opacity-[0.35]"
+    style="background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 75%);"
+  ></div>
+
+  <!-- 浮动光斑 -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute left-[12%] top-[22%] h-64 w-64 animate-float rounded-full bg-accent/20 blur-[90px]"
+  ></div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute right-[10%] top-[35%] h-72 w-72 animate-float rounded-full bg-accent-soft/20 blur-[100px]"
+    style="animation-delay: -4s"
+  ></div>
+
+  <!-- 内容 -->
+  <div class="relative animate-fade-up">
+    <div
+      class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-accent to-accent-soft text-2xl text-white shadow-lg"
+    >♾</div>
+    <h1
+      class="font-display text-5xl font-bold tracking-tight text-white sm:text-6xl"
+    >{site.name}</h1>
+    <p class="mt-3 bg-gradient-to-r from-blue-300 via-violet-300 to-emerald-300 bg-clip-text text-xl font-medium text-transparent">
+      {site.slogan}
+    </p>
+    <p class="mt-2 text-sm text-slate-400">{site.school} · 让每个想法成为现实</p>
+  </div>
+</section>

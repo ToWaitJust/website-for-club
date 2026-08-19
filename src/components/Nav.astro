@@ -1,0 +1,42 @@
+---
+import { site } from '../data/site';
+
+const pathname = Astro.url.pathname;
+const isActive = (match: string) => new RegExp(match).test(pathname);
+---
+
+<header class="fixed inset-x-0 top-0 z-50 h-14 border-b border-line bg-white/80 backdrop-blur-xl">
+  <div class="container-site flex h-full items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-semibold no-underline text-ink">
+      <span
+        class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-soft text-sm text-white"
+      >AI</span>
+      <span class="hidden sm:inline">{site.name}</span>
+    </a>
+
+    <nav aria-label="主导航">
+      <ul class="flex items-center gap-0.5">
+        {
+          site.nav.map((item) => {
+            const active = isActive(item.match);
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class={`rounded-lg px-3 py-2 text-sm no-underline transition-colors ${
+                    active
+                      ? 'font-semibold text-accent'
+                      : 'text-ink hover:bg-black/5'
+                  }`}
+                >
+                  {item.label}
+                  {item.external && <span class="ml-0.5 text-xs opacity-60">↗</span>}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

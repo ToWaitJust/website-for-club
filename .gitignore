@@ -9,6 +9,9 @@ dist
 .env.local
 .env.*.local
 
+# Astro 缓存
+.astro/
+
 # 编辑器 / IDE
 .vscode/
 .idea/

@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import BizCard from '../components/BizCard.astro';
+import NoticeList from '../components/NoticeList.astro';
+import { businessLines, notices } from '../data/site';
+---
+
+<BaseLayout
+  title="AI+社团 · 福州大学"
+  description="AI+社团集成门户 - AI+IT / AI+业务 / AI+嵌入式 三条业务线信息展示、报名与反馈"
+>
+  <Hero />
+
+  <!-- 业务线 -->
+  <section class="container-site relative -mt-10 pb-4">
+    <h2 class="mb-5 text-center text-2xl font-semibold tracking-tight text-gradient">
+      三条业务线
+    </h2>
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        businessLines.map((line) => (
+          <div class="animate-fade-up" style={`animation-delay: ${businessLines.indexOf(line) * 100}ms`}>
+            <BizCard line={line} />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- 公告 -->
+  <section class="container-site mt-14">
+    <h2 class="mb-4 text-xl font-semibold tracking-tight">最新公告</h2>
+    <div class="mx-auto max-w-3xl">
+      <NoticeList notices={notices} />
+    </div>
+  </section>
+</BaseLayout>

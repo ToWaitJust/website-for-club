@@ -1,0 +1,13 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="mt-16 border-t border-line py-8 text-center text-xs text-muted">
+  <div class="container-site">
+    <div>{site.school} · {site.name}</div>
+    <div class="mt-1">
+      QQ 群 {site.contact.qqGroup} ｜ 微信 {site.contact.wechat} ｜ {site.contact.email}
+    </div>
+    <div class="mt-2 opacity-60">© {new Date().getFullYear()} {site.name}</div>
+  </div>
+</footer>

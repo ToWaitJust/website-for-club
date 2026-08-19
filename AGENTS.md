@@ -14,14 +14,19 @@
 ## 目录结构
 
 ```
-portal/                          # 目标:重构为 Astro 工程(见 docs/02-TECH-DESIGN.md)
-├── index.html                   # 首页(当前静态版,待迁移)
-├── business/                    # 三业务线(当前静态版,待迁移)
-├── ops/index.html               # 运营方案(待迁移)
-├── assets/                      # 样式与组件(待迁移)
-├── content/                     # 数据文件(site.json + 业务线 md,迁移后进 src/content)
-├── scripts/dev-server.js        # 本地预览(迁移后由 astro dev 替代)
-└── docs/                        # 工程文档体系(唯一事实来源)
+portal/                          # Astro 工程(门户,当前主线)
+├── src/
+│   ├── pages/index.astro        # 首页(Hero + 三业务线卡片 + 公告)
+│   ├── layouts/BaseLayout.astro # 全局壳:导航/页脚/SEO
+│   ├── components/              # Nav / Footer / Hero / BizCard / NoticeList
+│   ├── data/site.ts             # 站点配置(导航/业务线/公告/API 地址)
+│   └── styles/global.css        # Tailwind + 设计 token
+├── public/                      # 静态资源
+├── astro.config.mjs
+├── tailwind.config.mjs
+├── archive/                     # 迁移前的静态版(参考,不再维护)
+├── docs/                        # 工程文档体系(唯一事实来源)
+└── deploy/                      # 部署配置参考
 ```
 
 ## 数据流
@@ -56,11 +61,14 @@ portal/                          # 目标:重构为 Astro 工程(见 docs/02-TEC
 | 阶段与验收 | 读 `docs/05-ROADMAP.md` |
 | 部署上线 | 读 `docs/DEPLOY.md` |
 | yudao 实操 | 读 `docs/YUDAO_BACKEND.md` |
+| 本地预览 | `npm run dev`(Astro 开发服务器) |
+| 生产构建 | `npm run build` → `dist/` |
 
 ## 长期约束
 
-- **门户目标栈**:Astro + Vue islands + Tailwind,静态构建输出(见 02/03)。
+- **门户栈**:Astro + Vue islands + Tailwind,静态构建输出(见 02/03)。
 - 动态数据(报名/反馈)一律走 yudao API,门户不直连数据库。
 - 长文档(学习规划/运营方案)以 Markdown + Mermaid 形式维护。
-- 新增业务线 = content 加 md + site.ts 加配置 + 后台加记录,核心代码零改动。
-- 当前仓库仍是迁移前的静态版本,迁移映射关系见 `docs/02-TECH-DESIGN.md §2.3`。
+- 新增业务线 = `src/data/site.ts` 加配置 + content 加 md + 后台加记录,核心组件零改动。
+- 迁移前的静态版保留在 `archive/`,仅作参考。
+- 业务线品牌色:ai-it `#2563eb` / ai-biz `#7c3aed` / ai-embed `#059669`。
