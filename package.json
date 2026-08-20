@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "preview:proxy": "node scripts/preview-proxy.mjs",
     "check": "astro check"
   },
   "dependencies": {
