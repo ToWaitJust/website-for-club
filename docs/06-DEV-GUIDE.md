@@ -101,6 +101,24 @@ Invoke-WebRequest -Uri "http://localhost:48080/admin-api/system/dict-data/simple
 | 11 | club 接口返回 200 但 body 是 `code:404` | yudao 对未注册路由统一返回 HTTP 200 + body code=404,`curl -w %{http_code}` 会误判"成功" | 判断接口成功要看 body 里的 `code==0`,不能只看 HTTP 状态码 |
 | 12 | `mvn package` 后 fat jar 里仍是旧模块 jar | `package`(非 clean)时若源码无变化,repackage 可能沿用旧依赖缓存 | 改完依赖模块后:**先 `mvn install -pl <模块> -am -DskipTests`,再 `mvn clean package -pl yudao-server -DskipTests`**(clean 必须带) |
 | 13 | 验证新模块是否被加载/路由是否注册 | 黑盒测试慢 | 临时加 `ApplicationRunner` 探针类打印 `beanDefinitionNames` 和 `RequestMappingHandlerMapping.getHandlerMethods()`,定位后删除(本次定位"前缀重复"就靠它) |
+| 14 | `astro dev` 启动即失败:`[safe-delete] 操作失败: ...node_modules\.vite\deps: Error during a trash operation` | 改过 `astro.config.mjs` 后 vite 要"重新优化依赖",需删除 `.vite/deps` 缓存,但该删除动作被外部安全策略(回收站操作)拦截 | 先手动清缓存再启动:`rm -rf node_modules/.vite`,然后 `npm run dev`。缓存是可重建产物,删除安全 |
+| 15 | 新加/改了 `src/middleware.ts`,但 `/yudao-api/*` 仍返回 Astro 404 页面 | **middleware 只在 dev server 启动时加载,不会热重载**;老进程没有它,所以请求没被拦截就直接走路由匹配 → 404 | 必须重启 dev server。判据:若 middleware 生效但后端挂了,返回的是 `code:503` 的 JSON(catch 分支);返回 **HTML 404 页面**说明 middleware 根本没加载 |
+| 16 | `taskkill /F /T /PID <dev server pid>` 报"拒绝访问",端口一直占着 | 该进程是被外部工具/平台后台任务托管启动的,进程树受保护,普通 taskkill 杀不掉 | 不要硬杀:改用 `npm run dev -- --port 4322` 换端口起新实例;或在启动它的那个终端/任务面板里停止 |
+
+### 端口约定(本机联调)
+
+| 端口 | 服务 | 备注 |
+|------|------|------|
+| 3306 | MySQL | 库 `yudao_club` |
+| 6379 | Redis | `D:\dev-tools\redis\redis-server.exe` |
+| 48080 | yudao-server | 启动必须显式 `--server.port=48080`(见易错点说明) |
+| 4321 / 4322 | Astro dev | 4321 被占时用 `--port 4322`;**API 代理靠 middleware,换端口不影响** |
+
+> 联调自检四连(全部返回 `code:0` 才算通):
+> 1. 后端直连登录 `POST :48080/admin-api/system/auth/login`
+> 2. 经门户代理登录 `POST :<astro端口>/yudao-api/admin-api/system/auth/login`
+> 3. 公开报名 `POST /yudao-api/admin-api/club/register`,字段 `businessLine/name/phone/major/grade/reason`
+> 4. 公开反馈 `POST /yudao-api/admin-api/club/feedback`,字段 **`page`/`name`/`content`**(三者都必填,少一个报"来源页面不能为空")
 
 ---
 

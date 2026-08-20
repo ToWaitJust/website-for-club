@@ -52,27 +52,51 @@ async function submit() {
 </script>
 
 <template>
-  <div class="glass-card mx-auto max-w-2xl rounded-xl p-7 sm:p-9">
+  <div
+    class="glass-card mx-auto max-w-[var(--form-max)] rounded-xl"
+    style="padding: var(--sp-8) var(--sp-6)"
+  >
     <template v-if="props.open">
-      <h2 class="font-display text-2xl font-semibold text-white">
+      <h2
+        class="font-display font-semibold text-white"
+        style="font-size: var(--fs-h2)"
+      >
         Join {{ props.businessName }}
       </h2>
-      <p class="mt-1.5 text-sm text-slate-400">
+      <p
+        class="text-slate-400"
+        style="font-size: var(--fs-sm); margin-top: var(--sp-1)"
+      >
         填写信息提交后,我们会在招新周期内通过微信 / 短信联系你。
       </p>
 
-      <form class="mt-7 grid gap-4 sm:grid-cols-2" @submit.prevent="submit">
-        <div v-for="f in fields" :key="f.key" class="sm:last:col-span-2" :class="{ 'sm:col-span-2': f.area }">
-          <label class="mb-1.5 block text-sm font-medium text-slate-300">
+      <!-- 窄屏单列 → sm 双列;gap 与上边距流式 -->
+      <form
+        class="grid gap-f4 sm:grid-cols-2"
+        style="margin-top: var(--sp-6)"
+        @submit.prevent="submit"
+      >
+        <div
+          v-for="f in fields"
+          :key="f.key"
+          class="min-w-0 sm:last:col-span-2"
+          :class="{ 'sm:col-span-2': f.area }"
+        >
+          <label
+            class="block font-medium text-slate-300"
+            style="font-size: var(--fs-sm); margin-bottom: var(--sp-1)"
+          >
             {{ f.label }} <span v-if="f.required" class="text-danger">*</span>
           </label>
+          <!-- 输入控件高度 ≥44px(触摸友好);字号由 global.css 统一控制(iOS 防缩放) -->
           <textarea
             v-if="f.area"
             v-model="form[f.key]"
             :placeholder="f.placeholder"
             :maxlength="f.max"
             rows="3"
-            class="w-full resize-y rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            class="w-full resize-y rounded-lg border border-white/10 bg-white/5 text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            style="padding: var(--sp-3) var(--sp-3); min-height: calc(var(--tap) * 1.8)"
           ></textarea>
           <input
             v-else
@@ -80,21 +104,27 @@ async function submit() {
             type="text"
             :placeholder="f.placeholder"
             :maxlength="f.max"
-            class="w-full rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            class="w-full rounded-lg border border-white/10 bg-white/5 text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
           />
         </div>
 
-        <div class="flex items-center gap-4 sm:col-span-2">
+        <!-- 窄屏纵向堆叠,提交按钮不被提示文字挤压 -->
+        <div
+          class="flex flex-col items-start gap-f3 sm:col-span-2 sm:flex-row sm:items-center sm:gap-f4"
+        >
           <button
             type="submit"
             :disabled="submitting"
-            class="rounded-full bg-gradient-to-r from-accent to-accent-soft px-8 py-2.5 font-display text-sm font-semibold text-white transition hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            class="tap-target w-full shrink-0 rounded-full bg-gradient-to-r from-accent to-accent-soft font-display font-semibold text-white transition hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            style="padding: var(--sp-3) var(--sp-8); font-size: var(--fs-sm)"
           >
             {{ submitting ? 'Submitting…' : 'Submit' }}
           </button>
           <span
             v-if="msg"
-            class="text-sm"
+            class="min-w-0"
+            style="font-size: var(--fs-sm)"
             :class="{ 'text-success': msg.type === 'success', 'text-danger': msg.type === 'error', 'text-slate-400': msg.type === 'info' }"
           >{{ msg.text }}</span>
         </div>
@@ -102,8 +132,16 @@ async function submit() {
     </template>
 
     <template v-else>
-      <p class="text-center font-display text-xl text-white">Registration Closed</p>
-      <p class="mt-2 text-center text-sm text-slate-400">
+      <p
+        class="text-center font-display text-white"
+        style="font-size: var(--fs-h3)"
+      >
+        Registration Closed
+      </p>
+      <p
+        class="text-center text-slate-400"
+        style="font-size: var(--fs-sm); margin-top: var(--sp-2)"
+      >
         {{ props.businessName }} 的报名通道当前关闭,请关注公告或加入咨询群。
       </p>
     </template>

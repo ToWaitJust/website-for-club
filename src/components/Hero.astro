@@ -2,49 +2,279 @@
 import { site } from '../data/site';
 ---
 
+<!-- Hero:min-h 用 dvh(移动端地址栏伸缩不跳动),高度为固定导航留白 -->
 <section
-  class="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden px-6 text-center"
-  style="background: radial-gradient(ellipse 120% 80% at 50% -20%, #16244d 0%, #0d1526 45%, #0a0f1e 100%)"
+  class="relative flex flex-col items-center justify-center overflow-hidden text-center"
+  style="min-height: 92dvh; padding: calc(var(--nav-h) + var(--sp-12)) var(--container-px) var(--sp-12); background: radial-gradient(ellipse 120% 80% at 50% -20%, #16244d 0%, #0d1526 45%, #0a0f1e 100%)"
 >
-  <!-- 网格背景 -->
+  <!-- 网格背景:网格尺寸随屏幕缩放,窄屏不会显得过密 -->
   <div
     aria-hidden="true"
     class="pointer-events-none absolute inset-0 opacity-40"
-    style="background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%);"
+    style="background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: clamp(32px, 7vw, 56px) clamp(32px, 7vw, 56px); mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%);"
   ></div>
 
-  <!-- 品牌光斑:让玻璃卡片有内容可模糊 -->
+  <!-- 粒子画布:漂浮光点 + 星座连线 + 鼠标吸引 + 点击爆发 -->
+  <canvas
+    id="hero-particles"
+    aria-hidden="true"
+    class="absolute inset-0 h-full w-full"
+  ></canvas>
+
+  <!-- 品牌光斑:尺寸用 --orb-*(随屏等比),定位用百分比 + translate 居中,
+       窄屏不会糊满、宽屏不会跑偏 -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute left-[8%] top-[18%] h-80 w-80 animate-pulse-slow rounded-full blur-[100px]"
-    style="background: radial-gradient(circle, rgba(59,130,246,.32) 0%, transparent 70%)"
+    class="orb animate-pulse-slow"
+    style="width: var(--orb-md); height: var(--orb-md); left: 8%; top: 18%; transform: translate(-20%, -20%); filter: blur(clamp(60px, 13vw, 100px)); background: radial-gradient(circle, rgba(59,130,246,.32) 0%, transparent 70%)"
   ></div>
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute right-[6%] top-[30%] h-96 w-96 animate-pulse-slow rounded-full blur-[120px]"
-    style="background: radial-gradient(circle, rgba(167,139,250,.26) 0%, transparent 70%); animation-delay: -2s"
+    class="orb animate-pulse-slow"
+    style="width: var(--orb-lg); height: var(--orb-lg); right: 6%; top: 30%; transform: translate(20%, -20%); filter: blur(clamp(70px, 15vw, 120px)); background: radial-gradient(circle, rgba(167,139,250,.26) 0%, transparent 70%); animation-delay: -2s"
   ></div>
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute bottom-[10%] left-[28%] h-72 w-72 animate-pulse-slow rounded-full blur-[110px]"
-    style="background: radial-gradient(circle, rgba(52,211,153,.18) 0%, transparent 70%); animation-delay: -4s"
+    class="orb animate-pulse-slow"
+    style="width: var(--orb-sm); height: var(--orb-sm); left: 28%; bottom: 10%; transform: translate(-30%, 20%); filter: blur(clamp(65px, 14vw, 110px)); background: radial-gradient(circle, rgba(52,211,153,.18) 0%, transparent 70%); animation-delay: -4s"
   ></div>
 
-  <!-- 内容 -->
-  <div class="relative animate-fade-up">
+  <!-- 内容:content-max 随屏放大铺满,大屏封顶防行长过长 -->
+  <div class="relative w-full max-w-[var(--content-max)] animate-fade-up">
+    <!-- 徽标:纯无限符号,多色渐变文字,尺寸随屏等比 -->
     <div
-      class="mx-auto mb-7 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-accent via-accent-soft to-ai-embed text-2xl font-bold text-white shadow-lg"
-      style="box-shadow: 0 8px 40px rgba(59,130,246,.35)"
-    >♾</div>
-    <p class="mb-2 font-display text-sm uppercase tracking-[0.35em] text-slate-400">
+      class="mx-auto flex items-center justify-center font-bold text-gradient-brand"
+      style="margin-bottom: var(--sp-6); font-size: clamp(64px, calc(140 * var(--rpx)), 120px); line-height: 1"
+    >
+      ♾
+    </div>
+
+    <p
+      class="font-display uppercase text-slate-400"
+      style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.18em, 0.9vw, 0.35em); margin-bottom: var(--sp-2)"
+    >
       {site.school} · {site.brandZh}
     </p>
-    <h1 class="font-display text-6xl font-bold tracking-tight text-white sm:text-7xl">
+
+    <!-- 巨标题:流式字号 40→76px;break-words 防超长英文撑破窄屏 -->
+    <h1
+      class="font-display font-bold tracking-tight text-white [text-wrap:balance]"
+      style="font-size: var(--fs-d1); line-height: 1.05; overflow-wrap: break-word"
+    >
       {site.brand}
     </h1>
-    <p class="mt-4 font-display text-xl font-medium tracking-wide text-gradient-brand sm:text-2xl">
+
+    <p
+      class="font-display font-medium text-gradient-brand [text-wrap:balance]"
+      style="font-size: var(--fs-h2); letter-spacing: 0.02em; margin-top: var(--sp-4)"
+    >
       {site.sloganEn}
     </p>
-    <p class="mt-3 text-sm text-slate-400">{site.sloganZh}</p>
+
+    <p class="text-slate-400" style="font-size: var(--fs-sm); margin-top: var(--sp-3)">
+      {site.sloganZh}
+    </p>
   </div>
 </section>
+
+<script>
+  // ─── Hero 粒子系统:漂浮光点 + 星座连线 + 鼠标吸引 + 点击爆发 ───
+  (function () {
+    const canvas = document.getElementById('hero-particles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let W = 0;
+    let H = 0;
+    let dpr = 1;
+    const COLORS = ['#60a5fa', '#a78bfa', '#34d399', '#f472b6', '#fbbf24'];
+    const parts = [];
+    const bursts = [];
+    let mouse = { x: -1e4, y: -1e4 };
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.clientWidth;
+      H = canvas.clientHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    const rand = (a, b) => a + Math.random() * (b - a);
+
+    function makeParticle() {
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: rand(1.4, 3.4),
+        vx: rand(-0.3, 0.3),
+        vy: rand(-0.3, 0.3),
+        c: COLORS[(Math.random() * COLORS.length) | 0],
+        tw: rand(0, Math.PI * 2),
+        tws: rand(0.008, 0.024),
+      };
+    }
+
+    function init() {
+      const count = Math.min(130, Math.floor((W * H) / 8000));
+      parts.length = 0;
+      for (let i = 0; i < count; i++) parts.push(makeParticle());
+    }
+
+    function spawnBurst(x, y) {
+      const n = 30;
+      for (let i = 0; i < n; i++) {
+        const a = (i / n) * Math.PI * 2 + rand(-0.18, 0.18);
+        const sp = rand(1.6, 6.5);
+        bursts.push({
+          x,
+          y,
+          vx: Math.cos(a) * sp,
+          vy: Math.sin(a) * sp,
+          life: 1,
+          dec: rand(0.012, 0.024),
+          c: COLORS[(Math.random() * COLORS.length) | 0],
+        });
+      }
+    }
+
+    const LINK = 130; // 星座连线最大距离
+    function step() {
+      ctx.clearRect(0, 0, W, H);
+
+      // 星座连线
+      for (let i = 0; i < parts.length; i++) {
+        const p = parts[i];
+        for (let j = i + 1; j < parts.length; j++) {
+          const q = parts[j];
+          const dx = p.x - q.x;
+          const dy = p.y - q.y;
+          const d = Math.hypot(dx, dy);
+          if (d < LINK) {
+            const a = (1 - d / LINK) * 0.4;
+            ctx.strokeStyle = `rgba(147,197,253,${a})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 粒子(带鼠标吸引 + 闪烁)
+      for (const p of parts) {
+        p.tw += p.tws;
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const md = Math.hypot(dx, dy);
+        if (md < 170 && md > 0.01) {
+          p.vx += (dx / md) * 0.03;
+          p.vy += (dy / md) * 0.03;
+        }
+        p.vx = Math.max(-0.7, Math.min(0.7, p.vx));
+        p.vy = Math.max(-0.7, Math.min(0.7, p.vy));
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < -20) p.x = W + 20;
+        else if (p.x > W + 20) p.x = -20;
+        if (p.y < -20) p.y = H + 20;
+        else if (p.y > H + 20) p.y = -20;
+
+        // 光晕
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 3.2, 0, Math.PI * 2);
+        ctx.fillStyle = p.c + '26';
+        ctx.fill();
+
+        // 核心光点(闪烁)
+        const twinkle = 0.5 + 0.5 * Math.sin(p.tw);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.c;
+        ctx.globalAlpha = 0.55 + 0.45 * twinkle;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+      // 点击爆发
+      for (let i = bursts.length - 1; i >= 0; i--) {
+        const b = bursts[i];
+        b.x += b.vx;
+        b.y += b.vy;
+        b.vx *= 0.985;
+        b.vy *= 0.985;
+        b.life -= b.dec;
+        if (b.life <= 0) {
+          bursts.splice(i, 1);
+          continue;
+        }
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = b.c;
+        ctx.globalAlpha = Math.max(b.life, 0);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function loop() {
+      step();
+      requestAnimationFrame(loop);
+    }
+
+    function onMove(e) {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    }
+    function onDown(e) {
+      const r = canvas.getBoundingClientRect();
+      spawnBurst(e.clientX - r.left, e.clientY - r.top);
+    }
+    function onLeave() {
+      mouse.x = -1e4;
+      mouse.y = -1e4;
+    }
+
+    // ─── 启动:布局未就绪(canvas 尺寸为 0)时轮询重试,自愈后正常渲染 ───
+    function boot() {
+      resize();
+      init();
+    }
+
+    const renderStatic = () => {
+      if (W > 0 && H > 0) step();
+    };
+
+    boot();
+    if (!(W > 0 && H > 0)) {
+      const retry = setInterval(() => {
+        boot();
+        if (reduceMotion) renderStatic();
+        if (W > 0 && H > 0) clearInterval(retry);
+      }, 80);
+      setTimeout(() => clearInterval(retry), 3000); // 最多兜底 3s
+    }
+
+    if (reduceMotion) {
+      renderStatic();
+      window.addEventListener('load', renderStatic);
+    } else {
+      // 动画循环内自愈:即便启动时尺寸异常,进入循环后也会恢复
+      const origStep = step;
+      step = function () {
+        if (W === 0 || H === 0) boot();
+        origStep();
+      };
+      window.addEventListener('resize', boot);
+      window.addEventListener('load', boot);
+      canvas.addEventListener('pointermove', onMove);
+      canvas.addEventListener('pointerdown', onDown);
+      canvas.addEventListener('pointerleave', onLeave);
+      loop();
+    }
+  })();
+</script>

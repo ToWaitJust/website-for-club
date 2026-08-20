@@ -32,49 +32,74 @@ async function submit() {
 </script>
 
 <template>
-  <div class="w-full max-w-sm">
-    <div class="glass-card rounded-2xl p-8">
+  <div class="w-full max-w-[var(--form-max)]">
+    <div class="glass-card rounded-2xl" style="padding: var(--sp-8) var(--sp-6)">
       <div class="flex flex-col items-center text-center">
         <span
-          class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-accent-soft font-display text-lg font-bold text-white"
-        >AI</span>
-        <h1 class="mt-4 font-display text-2xl font-semibold text-white">Admin Login</h1>
-        <p class="mt-1 text-sm text-slate-400">AI+CLUB 运营管理端</p>
+          class="flex items-center justify-center font-bold text-gradient-brand"
+          style="width: min(calc(88 * var(--rpx)), 96px); height: min(calc(88 * var(--rpx)), 96px); min-width: 40px; min-height: 40px; font-size: var(--fs-d2)"
+        >♾</span>
+        <h1
+          class="font-display font-semibold text-white"
+          style="font-size: var(--fs-h2); margin-top: var(--sp-4)"
+        >
+          Admin Login
+        </h1>
+        <p
+          class="text-slate-400"
+          style="font-size: var(--fs-sm); margin-top: var(--sp-1)"
+        >
+          AI+CLUB 运营管理端
+        </p>
       </div>
 
-      <form class="mt-7 space-y-4" @submit.prevent="submit">
+      <form class="grid gap-f4" style="margin-top: var(--sp-6)" @submit.prevent="submit">
         <div>
-          <label class="mb-1.5 block text-sm font-medium text-slate-300">用户名</label>
+          <label
+            class="block font-medium text-slate-300"
+            style="font-size: var(--fs-sm); margin-bottom: var(--sp-1)"
+          >
+            用户名
+          </label>
           <input
             v-model="username"
             type="text"
             autocomplete="username"
             placeholder="admin"
-            class="w-full rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            class="w-full rounded-lg border border-white/10 bg-white/5 text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
           />
         </div>
         <div>
-          <label class="mb-1.5 block text-sm font-medium text-slate-300">密码</label>
+          <label
+            class="block font-medium text-slate-300"
+            style="font-size: var(--fs-sm); margin-bottom: var(--sp-1)"
+          >
+            密码
+          </label>
           <input
             v-model="password"
             type="password"
             autocomplete="current-password"
             placeholder="••••••••"
-            class="w-full rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            class="w-full rounded-lg border border-white/10 bg-white/5 text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
           />
         </div>
 
         <button
           type="submit"
           :disabled="submitting"
-          class="w-full rounded-full bg-gradient-to-r from-accent to-accent-soft py-2.5 font-display text-sm font-semibold text-white transition hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          class="tap-target w-full rounded-full bg-gradient-to-r from-accent to-accent-soft font-display font-semibold text-white transition hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          style="padding: var(--sp-3) var(--sp-4); font-size: var(--fs-sm)"
         >
           {{ submitting ? 'Signing in…' : 'Sign In' }}
         </button>
 
         <p
           v-if="msg"
-          class="text-center text-sm"
+          class="text-center"
+          style="font-size: var(--fs-sm)"
           :class="{ 'text-danger': msg.type === 'error', 'text-slate-400': msg.type === 'info' }"
         >{{ msg.text }}</p>
       </form>
@@ -82,7 +107,8 @@ async function submit() {
 
     <a
       href="/"
-      class="mt-5 block text-center text-sm text-slate-400 transition hover:text-white"
+      class="block text-center text-slate-400 transition hover:text-white"
+      style="font-size: var(--fs-sm); margin-top: var(--sp-5)"
     >← Back to AI+CLUB</a>
   </div>
 </template>

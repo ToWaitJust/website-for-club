@@ -7,7 +7,10 @@ import AdminPanel from '../../components/admin/AdminPanel.vue';
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Admin Console · AI+CLUB</title>
     <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
@@ -16,18 +19,25 @@ import AdminPanel from '../../components/admin/AdminPanel.vue';
       href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5/index.min.css"
     />
   </head>
-  <body class="min-h-screen bg-[#0a0f1e]">
-    <!-- 背景光斑 -->
+  <body class="min-h-dvh bg-[#0a0f1e]">
+    <!-- 背景光斑:尺寸随屏等比,定位用百分比 -->
     <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden">
       <div
-        class="absolute -top-40 left-1/4 h-[28rem] w-[28rem] rounded-full bg-accent/20 blur-[120px]"
-      ></div>
+        class="absolute rounded-full bg-accent/20"
+        style="width: var(--orb-lg); height: var(--orb-lg); left: 25%; top: 0; transform: translate(-50%, -45%); filter: blur(clamp(70px, 15vw, 120px))"
+      >
+      </div>
       <div
-        class="absolute -bottom-40 right-1/4 h-[24rem] w-[24rem] rounded-full bg-accent-soft/15 blur-[120px]"
-      ></div>
+        class="absolute rounded-full bg-accent-soft/15"
+        style="width: var(--orb-md); height: var(--orb-md); right: 25%; bottom: 0; transform: translate(50%, 45%); filter: blur(clamp(70px, 15vw, 120px))"
+      >
+      </div>
     </div>
 
-    <main class="relative z-10 mx-auto max-w-5xl px-5 py-10">
+    <main
+      class="relative z-10 mx-auto w-full max-w-5xl"
+      style="padding: var(--sp-10) var(--container-px) calc(var(--sp-10) + var(--safe-b))"
+    >
       <AdminPanel client:load />
     </main>
   </body>

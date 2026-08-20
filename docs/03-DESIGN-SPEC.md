@@ -66,6 +66,52 @@
   hover:   0 2px 4px rgba(0,0,0,.05), 0 16px 48px rgba(0,0,0,.10)
 断点:768px(平板)/ 480px(手机);导航在 768px 收起为汉堡
 间距:4 的倍数(4/8/12/16/24/32/48/64/96)
+
+### 2.4 流式尺寸 Token(rpx / clamp)★ 一期新增
+
+> 所有尺寸(字号/间距/定位/光斑)一律走下面这套 token,**禁止在组件里写死 px**。
+> 实现见 `src/styles/global.css`(变量源) + `tailwind.config.mjs`(映射)。
+
+**rpx 单位**(装饰性按比例缩放,小程序 750 语义):
+```
+--rpx: 移动端  calc(min(100vw, 500px) / 750)          ← 视口≤500px 严格等比
+       桌面端  clamp(0.667px, 0.1117px + 0.0723vw, 1.5px)  ← ≥768px 缓增,封顶 1.5px(防 4K 过大)
+```
+用途:图标/徽章等"想随屏缩放"的元素,如 `width: calc(96 * var(--rpx))`,并配 `min-width:42px` 兜底。
+
+**流式字号阶梯**(全部 clamp,随视口平滑伸缩):
+```
+--fs-eyebrow: clamp(11px, 10.6px + 0.1vw, 13px)
+--fs-xs:      clamp(12px, 11.82px + 0.05vw, 12.5px)
+--fs-sm:      clamp(13px, 12.65px + 0.09vw, 14px)
+--fs-base:    clamp(15px, 14.65px + 0.09vw, 16px)
+--fs-h3:      clamp(17px, 15.94px + 0.28vw, 20px)
+--fs-h2:      clamp(20px, 17.18px + 0.75vw, 28px)
+--fs-d2:      clamp(30px, 23.66px + 1.69vw, 48px)
+--fs-d1:      clamp(40px, 27.32px + 3.38vw, 76px)   ← Hero 主标题(原 text-6xl 在 375px 会溢出)
+```
+Tailwind 映射:`text-fluid-eyebrow/xs/sm/base/h3/h2/d2/d1`。
+
+**流式间距阶梯**:
+```
+--sp-1:4px  --sp-2:8px  --sp-3:12px  --sp-4:16px
+--sp-5: clamp(20px,18.59px+0.375vw,24px)   --sp-6: clamp(24px,21.18px+0.75vw,32px)
+--sp-8: clamp(32px,26.37px+1.5vw,48px)     --sp-10:clamp(40px,31.55px+2.25vw,64px)
+--sp-12:clamp(48px,36.73px+3vw,80px)       --sp-16:clamp(64px,47.1px+4.5vw,112px)
+--sp-20:clamp(80px,57.46px+6vw,144px)
+```
+Tailwind 映射:`p-f1 ~ p-f20 / m-f* / gap-f*`。
+
+**布局 / 安全区 / 光斑**:
+```
+--nav-h:      clamp(52px, 47.8px + 1.13vw, 64px)   → Tailwind `h-nav`
+--container-max: 1120px(≥1920px 升 1280px)         → `.container-site` max-width
+--container-px:  clamp(16px, 10.37px + 1.5vw, 32px) → `.container-site` 左右 padding
+--safe-t/r/b/l:  env(safe-area-inset-*, 0px)        → 刘海/圆角屏安全区
+--orb-sm/md/lg:  clamp(160~340px / 180~380px / 200~440px) → 装饰光斑尺寸
+--tap:        44px                                 → 最小触控目标(`.tap-target`)
+```
+
 ```
 
 ---
@@ -144,10 +190,52 @@
 
 ---
 
-## 5. 响应式要点
+## 5. 响应式要点(适配落地规约)★ 一期新增
 
-- 768px:三卡片 → 单列;Hero 字号 48→32;导航 → 汉堡菜单
-- 480px:表单 padding 收窄;表格横向滚动容器
+> 核心原则:**一套代码,流式伸缩,不写死 px**。所有尺寸来自 §2.4 的 token。
+
+### 5.1 必须遵循
+
+| 维度 | 做法 | 反例(禁止) |
+|------|------|-----------|
+| 字号 | `text-fluid-*`(映射 --fs-*) | `text-6xl` / `text-[40px]`(小屏溢出) |
+| 间距 | `p-f* / m-f* / gap-f*` | `pt-32` / `px-20` 魔法数 |
+| 首屏顶部留白 | `.below-nav` 工具类(自动跟随 --nav-h) | 手写 `pt-32`(导航一改就错位) |
+| 绝对/固定定位 | `var(--sp-*)` + `%` + `translate` | `left-[40px] top-[80px]` 写死 |
+| 装饰光斑 | `--orb-*` + `blur(clamp(...))` | `h-80 w-80` / `w-[36rem]`(大屏失控) |
+| 容器 | `.container-site`(max-width + --container-px) | 裸 `max-w-3xl` 不带水平 padding |
+| 视口高度 | `min-h-dvh`(非 `vh`,防移动端地址栏跳动) | `min-h-screen` |
+| 导航高度 | `h-nav` | `h-14` / `h-16` |
+| 图标/徽章缩放 | `calc(N * var(--rpx))` + `min-width` 兜底 | 固定 `w-24` |
+| iOS 输入框 | `font-size:16px`(≥768 用 --fs-sm)防聚焦缩放 | 小于 16px |
+
+### 5.2 防横向溢出三板斧
+
+1. `html, body { overflow-x: clip }`(已落 global.css;勿改 `hidden`,会破坏 sticky)。
+2. 导航在移动端 `.no-scrollbar` 横向滚动(5 项不再挤爆 375px)。
+3. 数据表格在 `<lg` 改用**卡片布局**(已落 AdminPanel 报名/反馈列表);禁止 `min-w-[760px]` 横向滚动条。
+
+### 5.3 断点(Tailwind `screens`)
+
+```
+xs 375 / sm 640 / md 768 / lg 1024 / xl 1280 / 2xl 1536 / 3xl 1920
+```
+- `md`(768px):三卡片→单列;Hero 字号 `--fs-d1` 自动从 76→40 收敛;导航→横向滚动(非汉堡,一期简化)。
+- 桌面宽屏(>768px):`--rpx` 切缓增模式,装饰/图标温和放大但有 1.5px 封顶。
+
+### 5.4 安全区(刘海/圆角屏)
+
+- `BaseLayout` 已设 `viewport-fit=cover`;需贴边的导航/页脚用 `var(--safe-t/r/b/l)` 偏移。
+- 触控目标统一 `.tap-target`(≥44px),移动端可点性达标。
+
+### 5.5 自测矩阵(交付前过一遍)
+
+| 宽度 | 检查项 |
+|------|--------|
+| 320 / 375 | 无横向滚动条;导航可横滑;Hero 标题不换行溢出;表单单列 |
+| 768 | 卡片转单列临界点;导航横向滚动顺滑 |
+| 1440 | 桌面缓增生效;光斑/图标温和放大不突兀 |
+| 2560(4K) | `--rpx` 封顶 1.5px;容器居中不拉伸 |
 
 ---
 

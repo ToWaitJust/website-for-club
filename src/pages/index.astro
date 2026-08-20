@@ -12,29 +12,40 @@ import { businessLines, notices } from '../data/site';
 >
   <Hero />
 
-  <!-- 业务线 -->
-  <section class="container-site relative -mt-14 pb-6">
-    <!-- 区域光晕:让卡片毛玻璃有效果 -->
+  <!-- 业务线:负上边距用 --sp-* 流式,窄屏不会与 Hero 重叠过多 -->
+  <section
+    class="container-site relative"
+    style="margin-top: calc(-1 * var(--sp-10)); padding-bottom: var(--sp-6)"
+  >
+    <!-- 区域光晕:让卡片毛玻璃有内容可模糊 -->
     <div
       aria-hidden="true"
-      class="pointer-events-none absolute inset-x-0 -top-20 mx-auto h-64 max-w-2xl rounded-full opacity-60 blur-[120px]"
-      style="background: radial-gradient(ellipse, rgba(59,130,246,.16) 0%, transparent 70%)"
-    ></div>
+      class="pointer-events-none absolute inset-x-0 mx-auto rounded-full opacity-60"
+      style="top: calc(-1 * var(--sp-12)); height: var(--orb-sm); max-width: 42rem; filter: blur(clamp(70px, 15vw, 120px)); background: radial-gradient(ellipse, rgba(59,130,246,.16) 0%, transparent 70%)"
+    >
+    </div>
 
     <div class="relative">
-      <div class="mb-6 text-center">
-        <h2 class="font-display text-sm uppercase tracking-[0.3em] text-slate-400">
+      <div class="text-center" style="margin-bottom: var(--sp-6)">
+        <h2
+          class="font-display uppercase text-slate-400"
+          style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.16em, 0.8vw, 0.3em)"
+        >
           Our Tracks
         </h2>
-        <p class="mt-1 text-xl font-semibold text-white">三条业务线</p>
+        <p
+          class="font-semibold text-white"
+          style="font-size: var(--fs-h2); margin-top: var(--sp-1)"
+        >
+          AI+Everything
+        </p>
       </div>
-      <div class="grid gap-5 md:grid-cols-3">
+
+      <!-- 单列 → md 三列;gap 流式(加大间距,保证三卡清晰隔开) -->
+      <div class="grid gap-f12 md:grid-cols-3">
         {
-          businessLines.map((line) => (
-            <div
-              class="animate-fade-up"
-              style={`animation-delay: ${businessLines.indexOf(line) * 100}ms`}
-            >
+          businessLines.map((line, i) => (
+            <div class="animate-fade-up" style={`animation-delay: ${i * 100}ms`}>
               <BizCard line={line} />
             </div>
           ))
@@ -44,11 +55,14 @@ import { businessLines, notices } from '../data/site';
   </section>
 
   <!-- 公告 -->
-  <section class="container-site mt-16">
-    <h2 class="mb-4 font-display text-sm uppercase tracking-[0.3em] text-slate-400">
+  <section class="container-site" style="margin-top: var(--sp-16)">
+    <h2
+      class="font-display uppercase text-slate-400"
+      style="font-size: var(--fs-h3); letter-spacing: clamp(0.12em, 0.6vw, 0.22em); margin-bottom: var(--sp-4)"
+    >
       Announcements
     </h2>
-    <div class="mx-auto max-w-3xl">
+    <div class="ml-auto max-w-[var(--content-max)]">
       <NoticeList notices={notices} />
     </div>
   </section>

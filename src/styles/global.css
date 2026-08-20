@@ -1,6 +1,15 @@
-/* ─── 全局样式:深色主题 + 设计 token ────────────────────────────────
-   规范依据: docs/03-DESIGN-SPEC.md(深色版本)
-   视觉方向:全站深色高级感,玻璃拟态,品牌色点缀 */
+/* ─── 全局样式:深色主题 + 流式自适应基座 ──────────────────────────
+   规范依据: docs/03-DESIGN-SPEC.md(深色版本 + 自适应规范)
+   视觉方向:全站深色高级感,玻璃拟态,品牌色点缀
+
+   ★ 自适应总则(改样式前必读)
+   1. 字号/间距一律用 --fs-* / --sp-* 流式 token(或 Tailwind 的
+      text-fluid-* / p-f6 等映射类),不要写死 px。
+   2. 需要严格对齐 750 设计稿时用 rpx: calc(120 * var(--rpx))。
+   3. 绝对/固定定位的 left/right/top/bottom 用百分比或 --sp-* / rpx,
+      不要写死 px,否则窄屏错位、宽屏跑偏。
+   4. 全屏高度用 100dvh(不是 100vh),避免移动端地址栏伸缩导致跳动。
+   ------------------------------------------------------------------ */
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +17,7 @@
 
 @layer base {
   :root {
+    /* ══════ 颜色 ══════ */
     --bg: #0a0f1e;
     --bg-2: #0d1526;
     --ink: #f5f5f7;
@@ -21,15 +31,105 @@
     --line-strong: rgba(255, 255, 255, 0.18);
     --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
     --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.45), 0 16px 48px rgba(0, 0, 0, 0.5);
+
+    /* ══════ rpx:真·等比适配单位(对齐小程序 750 设计稿语义)══════
+       用法:width: calc(120 * var(--rpx));  → 设计稿 120rpx
+       策略:750rpx 始终 = 视口宽(无封顶)→ 整屏等比铺满。
+       组件宽度/间距/图标/光斑全部按此比例随屏缩放,左右严格对齐。
+       仅正文字号在 --fs-* 里用 clamp 设可读性上限,避免大屏巨字。 */
+    --rpx: calc(100vw / 750);
+
+    /* ══════ 流式字号阶梯(设计稿 px → rpx;大屏封顶防巨字)══════
+       格式 clamp(手机下限, 设计稿N*rpx随屏放大, 大屏上限) */
+    --fs-eyebrow: clamp(11px, calc(22 * var(--rpx)), 13px); /* 全大写小标签 */
+    --fs-xs:      clamp(12px, calc(24 * var(--rpx)), 14px);
+    --fs-sm:      clamp(13px, calc(26 * var(--rpx)), 15px);
+    --fs-base:    clamp(15px, calc(32 * var(--rpx)), 20px); /* 正文 */
+    --fs-h3:      clamp(17px, calc(40 * var(--rpx)), 28px);
+    --fs-h2:      clamp(20px, calc(56 * var(--rpx)), 40px);
+    --fs-d2:      clamp(30px, calc(80 * var(--rpx)), 60px); /* 页面主标题 */
+    --fs-d1:      clamp(40px, calc(112 * var(--rpx)), 96px); /* Hero 巨标题 */
+
+    /* ══════ 间距阶梯(rpx 等比,大屏 clamp 上限防巨化;上下左右一致 → 天然对齐)══════
+       设计稿 1px = 2rpx(750 网格)。如 16px = 32rpx。
+       clamp(手机下限, 设计稿N*rpx随屏放大, 大屏上限) → 大屏不再暴涨。 */
+    --sp-1:  clamp(3px,  calc(8 * var(--rpx)),   6px);
+    --sp-2:  clamp(6px,  calc(16 * var(--rpx)),  12px);
+    --sp-3:  clamp(10px, calc(24 * var(--rpx)),  16px);
+    --sp-4:  clamp(14px, calc(32 * var(--rpx)),  22px);
+    --sp-5:  clamp(16px, calc(40 * var(--rpx)),  28px);
+    --sp-6:  clamp(18px, calc(48 * var(--rpx)),  34px);
+    --sp-8:  clamp(24px, calc(64 * var(--rpx)),  48px);
+    --sp-10: clamp(32px, calc(80 * var(--rpx)),  60px);
+    --sp-12: clamp(36px, calc(96 * var(--rpx)),  72px);
+    --sp-16: clamp(48px, calc(128 * var(--rpx)), 96px);
+    --sp-20: clamp(60px, calc(160 * var(--rpx)), 120px);
+
+    /* ══════ 布局骨架 ══════ */
+    --nav-h: clamp(52px, 47.8px + 1.13vw, 64px); /* 导航不随 rpx 等比(否则大屏过高) */
+    --container-max: 100%;                         /* 整屏铺满,不再封顶 1120 */
+    --container-px: clamp(16px, calc(64 * var(--rpx)), 64px); /* 左右留白随屏增长,大屏封顶 */
+    /* 内部内容/卡片最大宽(随 rpx 放大铺满,大屏设可读性上限) */
+    --content-max: clamp(320px, calc(720 * var(--rpx)), 960px);
+    --form-max:    clamp(320px, calc(640 * var(--rpx)), 720px);
+
+    /* 移动端安全区(刘海/圆角屏);需配合 viewport-fit=cover */
+    --safe-t: env(safe-area-inset-top, 0px);
+    --safe-r: env(safe-area-inset-right, 0px);
+    --safe-b: env(safe-area-inset-bottom, 0px);
+    --safe-l: env(safe-area-inset-left, 0px);
+
+    /* ══════ 装饰光斑尺寸(随 rpx 等比铺满,大屏封顶防溢出)══════ */
+    --orb-sm: clamp(160px, calc(360 * var(--rpx)), 460px);
+    --orb-md: clamp(180px, calc(420 * var(--rpx)), 540px);
+    --orb-lg: clamp(200px, calc(500 * var(--rpx)), 640px);
+
+    /* 触摸目标最小尺寸(移动端可点区域不小于 44px) */
+    --tap: 44px;
   }
+
+  /* rpx 已改为无封顶整屏等比(见 :root --rpx);桌面/超宽屏不再单独覆盖 */
 
   html {
     scroll-behavior: smooth;
+    /* 防任何子元素意外横向溢出;clip 不会破坏 position:sticky */
+    overflow-x: clip;
+    /* 锚点跳转时避开固定导航 */
+    scroll-padding-top: calc(var(--nav-h) + var(--sp-4));
   }
 
   body {
     @apply bg-bg font-sans text-ink antialiased;
+    font-size: var(--fs-base);
     line-height: 1.6;
+    overflow-x: clip;
+    /* 横屏/刘海屏左右安全区兜底 */
+    padding-left: var(--safe-l);
+    padding-right: var(--safe-r);
+  }
+
+  /* 表单控件:iOS Safari 在 font-size < 16px 时聚焦会自动放大页面,
+     故移动端强制 16px;≥768px 才回到设计字号 */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+  @media (min-width: 768px) {
+    input,
+    textarea,
+    select {
+      font-size: var(--fs-sm);
+    }
+  }
+
+  /* 媒体元素永不撑破容器 */
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+    height: auto;
   }
 
   ::selection {
@@ -49,8 +149,23 @@
 }
 
 @layer components {
+  /* 站点容器:最大宽度 + 流式左右内边距(已含安全区) */
   .container-site {
-    @apply mx-auto w-full max-w-[1120px] px-6;
+    @apply mx-auto w-full;
+    max-width: var(--container-max);
+    padding-left: var(--container-px);
+    padding-right: var(--container-px);
+  }
+
+  /* 区块垂直节奏 */
+  .section-y {
+    padding-top: var(--sp-12);
+    padding-bottom: var(--sp-12);
+  }
+
+  /* 固定导航占位:任何非 Hero 页面的首屏区块套用,替代硬编码 pt-32 */
+  .below-nav {
+    padding-top: calc(var(--nav-h) + var(--sp-10) + var(--safe-t));
   }
 
   /* 真·玻璃拟态:深色半透明 + 强模糊 + 微边框 */
@@ -70,9 +185,60 @@
   }
 
   .text-gradient-brand {
-    background: linear-gradient(90deg, #60a5fa, #a78bfa 50%, #34d399);
+    background: linear-gradient(
+      100deg,
+      #38bdf8 0%,
+      #818cf8 22%,
+      #a78bfa 40%,
+      #f472b6 58%,
+      #fb923c 76%,
+      #34d399 94%
+    );
+    background-size: 220% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: text-gradient-flow 7s ease-in-out infinite;
+  }
+
+  /* 品牌多色渐变流动(减弱动效时由全局规则冻结) */
+  @keyframes text-gradient-flow {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* 装饰光斑基类:尺寸随屏幕等比,绝对定位由使用方给百分比 */
+  .orb {
+    @apply pointer-events-none absolute rounded-full;
+    width: var(--orb-md);
+    height: var(--orb-md);
+  }
+}
+
+@layer utilities {
+  /* 横向滚动容器隐藏滚动条(移动端导航用) */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 保证可点区域达到 44px(移动端);桌面端不强制 */
+  .tap-target {
+    min-height: var(--tap);
+    min-width: var(--tap);
+  }
+  @media (min-width: 768px) {
+    .tap-target {
+      min-height: 0;
+      min-width: 0;
+    }
   }
 }

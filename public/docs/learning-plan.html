@@ -14,8 +14,9 @@
         body {
             font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, sans-serif;
             background: #0a0f1e;
-            color: #1e2b45;
+            color: #dbe4f0;
             padding: calc(2rem + 48px) 1.5rem 2rem;
+            line-height: 1.7;
         }
         .doc-container {
             max-width: 1400px;
@@ -29,16 +30,16 @@
         .main-header h1 {
             font-size: 2.6rem;
             font-weight: 700;
-            color: #93c5fd;
+            color: #7dd3fc;
             letter-spacing: -0.5px;
         }
         .main-header p {
             font-size: 1.15rem;
-            color: #3a5270;
+            color: #94a3b8;
             margin-top: 0.3rem;
         }
         .badge-time {
-            background: #d32f2f;
+            background: linear-gradient(90deg, #ef4444, #b91c1c);
             color: #fff;
             padding: 0.15rem 1.2rem;
             border-radius: 40px;
@@ -46,21 +47,22 @@
             font-size: 0.9rem;
             display: inline-block;
             margin-top: 0.4rem;
+            box-shadow: 0 0 18px rgba(239, 68, 68, 0.35);
         }
 
         .section-card {
-            background: #101a2e;
+            background: linear-gradient(180deg, #101a2e 0%, #0d1526 100%);
             border-radius: 24px;
             padding: 2rem 2.2rem;
             margin-bottom: 2.5rem;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.40);
-            border: 1px solid #e7edf5;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .section-title {
             font-size: 1.7rem;
             font-weight: 700;
-            color: #93c5fd;
-            border-left: 6px solid #1e5a9e;
+            color: #7dd3fc;
+            border-left: 6px solid #3b82f6;
             padding-left: 1rem;
             margin-bottom: 1.5rem;
             display: flex;
@@ -71,97 +73,102 @@
         .section-title small {
             font-size: 1rem;
             font-weight: 400;
-            color: #a8c0dd;
+            color: #94a3b8;
         }
         .sub-title {
             font-size: 1.25rem;
             font-weight: 600;
-            color: #1a3f6a;
+            color: #e2e8f0;
             margin: 1.8rem 0 1rem 0;
             padding-bottom: 0.25rem;
-            border-bottom: 2px dashed #d0ddea;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.16);
         }
         .table-wrap {
             overflow-x: auto;
             margin: 0.8rem 0 1.2rem;
             border-radius: 14px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.95rem;
-            background: #101a2e;
+            background: transparent;
         }
         th {
-            background: #ecf1f8;
-            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.14);
+            color: #bfdbfe;
             font-weight: 600;
             padding: 0.8rem 1rem;
             text-align: left;
-            border-bottom: 2px solid #cdd9e9;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.35);
         }
         td {
             padding: 0.8rem 1rem;
-            border-bottom: 1px solid #e9edf4;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             vertical-align: top;
+            color: #dbe4f0;
         }
         tr:last-child td {
             border-bottom: none;
+        }
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .resource-list {
             display: flex;
             flex-wrap: wrap;
             gap: 0.6rem 1.8rem;
-            background: #f2f6fd;
+            background: rgba(255, 255, 255, 0.045);
             padding: 0.8rem 1.5rem;
             border-radius: 14px;
             margin: 0.8rem 0 0.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
         .resource-list a {
-            color: #1a5a9e;
+            color: #7dd3fc;
             text-decoration: none;
             font-weight: 500;
             border-bottom: 1px dotted transparent;
             transition: 0.2s;
         }
         .resource-list a:hover {
-            border-bottom-color: #1a5a9e;
-            color: #0d3b70;
+            border-bottom-color: #7dd3fc;
+            color: #bfdbfe;
         }
 
         /* 衔接说明框 - 正式风格 */
         .transition-box {
-            background: #f6f9fe;
-            border-left: 5px solid #3a7bb5;
+            background: rgba(59, 130, 246, 0.09);
+            border-left: 5px solid #60a5fa;
             padding: 0.7rem 1.6rem;
             border-radius: 8px;
             margin: 1rem 0 1.2rem 0;
-            color: #1e3a5f;
+            color: #cbd5e1;
             font-size: 0.98rem;
             line-height: 1.7;
         }
         .transition-box strong {
-            color: #93c5fd;
+            color: #7dd3fc;
         }
 
         .tech-bg-box {
-            background: #eef6fe;
-            border-left: 6px solid #1e5a9e;
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 6px solid #3b82f6;
             padding: 1rem 1.8rem;
             border-radius: 14px;
             margin: 1.2rem 0;
         }
         .milestone-box {
-            background: #eaf5e9;
+            background: rgba(52, 211, 153, 0.08);
             padding: 1rem 1.8rem;
             border-radius: 14px;
             margin-top: 1rem;
-            border-left: 6px solid #2e7d32;
+            border-left: 6px solid #34d399;
         }
         .alert-box {
-            background: #f0f5ff;
+            background: rgba(251, 191, 36, 0.08);
             padding: 0.7rem 1.5rem;
             border-radius: 12px;
             margin-bottom: 1.2rem;
@@ -169,9 +176,9 @@
 
         /* 图表容器 */
         .chart-container {
-            background: #101a2e;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 18px;
-            border: 1px solid #e2e8f2;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 1rem 1rem 0.5rem 1rem;
             margin: 1.5rem 0 0.5rem;
         }
@@ -184,7 +191,7 @@
         }
         .chart-header .chart-label {
             font-weight: 600;
-            color: #1a3f6a;
+            color: #e2e8f0;
             font-size: 1.05rem;
         }
         .zoom-controls {
@@ -193,14 +200,14 @@
             align-items: center;
         }
         .zoom-controls button {
-            background: #101a2e;
-            border: 1px solid #c8d4e5;
+            background: #0d1526;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 30px;
             width: 32px;
             height: 32px;
             font-size: 1.1rem;
             font-weight: 600;
-            color: #1a3f6a;
+            color: #e2e8f0;
             cursor: pointer;
             transition: 0.15s;
             display: flex;
@@ -208,8 +215,8 @@
             justify-content: center;
         }
         .zoom-controls button:hover {
-            background: #e4ecf9;
-            border-color: #1a5a9e;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #60a5fa;
         }
         .zoom-controls .zoom-reset {
             width: auto;
@@ -218,7 +225,7 @@
         }
         .zoom-controls span {
             font-size: 0.85rem;
-            color: #3a5a7a;
+            color: #94a3b8;
             min-width: 38px;
             text-align: center;
         }
@@ -227,7 +234,7 @@
             width: 100%;
             min-height: 450px;
             max-height: 750px;
-            background: #101a2e;
+            background: #0a0f1e;
             border-radius: 12px;
         }
         .chart-scroll-box .mermaid-wrap {
@@ -272,31 +279,31 @@
             margin: 2rem 0 1rem;
             border: 0;
             height: 1px;
-            background: linear-gradient(to right, transparent, #c8d4e5, transparent);
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.18), transparent);
         }
         .footer-note {
             text-align: center;
-            color: #5a7a9a;
+            color: #94a3b8;
             padding: 1.2rem 0 0.3rem;
             font-size: 0.9rem;
         }
 
         /* ===== Timeline（替换 Mermaid 图1） ===== */
         .timeline-cards { display: flex; align-items: stretch; gap: 0.6rem; padding: 0.5rem 0; }
-        .tl-card { flex: 1; background: #101a2e; border: 1px solid #e2e8f2; border-radius: 14px; padding: 1.2rem 1rem; min-width: 0; }
-        .tl-head { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid #eef2f7; }
+        .tl-card { flex: 1; background: #101a2e; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 1.2rem 1rem; min-width: 0; }
+        .tl-head { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
         .tl-badge { display: inline-block; padding: 0.25rem 0.9rem; border-radius: 20px; font-size: 0.82rem; font-weight: 600; }
-        .tl-badge.blue { background: #e1f5fe; color: #01579b; }
-        .tl-badge.orange { background: #fff3e0; color: #e65100; }
-        .tl-badge.purple { background: #f3e5f5; color: #7b1fa2; }
-        .tl-label { font-size: 0.9rem; font-weight: 600; color: #93c5fd; }
-        .tl-node { margin-bottom: 0.7rem; padding: 0.65rem 0.8rem; background: #f8fafc; border-radius: 10px; border-left: 3px solid #1e5a9e; }
-        .tl-card:nth-child(5) .tl-node { border-left-color: #e65100; }
-        .tl-card:nth-child(7) .tl-node { border-left-color: #7b1fa2; }
+        .tl-badge.blue { background: rgba(14, 165, 233, 0.18); color: #7dd3fc; }
+        .tl-badge.orange { background: rgba(249, 115, 22, 0.18); color: #fdba74; }
+        .tl-badge.purple { background: rgba(168, 85, 247, 0.18); color: #d8b4fe; }
+        .tl-label { font-size: 0.9rem; font-weight: 600; color: #7dd3fc; }
+        .tl-node { margin-bottom: 0.7rem; padding: 0.65rem 0.8rem; background: rgba(255, 255, 255, 0.045); border-radius: 10px; border-left: 3px solid #3b82f6; }
+        .tl-card:nth-child(5) .tl-node { border-left-color: #f97316; }
+        .tl-card:nth-child(7) .tl-node { border-left-color: #a855f7; }
         .tl-node:last-child { margin-bottom: 0; }
-        .tl-node strong { display: block; font-size: 0.9rem; color: #93c5fd; margin-bottom: 0.2rem; }
-        .tl-node span { display: block; font-size: 0.82rem; color: #a8c0dd; line-height: 1.5; }
-        .tl-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #4f46e5; font-weight: 700; flex-shrink: 0; }
+        .tl-node strong { display: block; font-size: 0.9rem; color: #7dd3fc; margin-bottom: 0.2rem; }
+        .tl-node span { display: block; font-size: 0.82rem; color: #94a3b8; line-height: 1.5; }
+        .tl-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #818cf8; font-weight: 700; flex-shrink: 0; }
         @media (max-width: 700px) {
             .timeline-cards { flex-direction: column; }
             .tl-arrow { transform: rotate(90deg); padding: 0.3rem 0; }
@@ -339,7 +346,7 @@
 
             <div class="sub-title">1.2 技术栈学习阶段严格控制 AI 介入</div>
             <p style="margin-bottom:0.8rem; line-height:1.7;">在阶段 1-8 中，<strong>AI 仅作为辅助学习工具</strong>（答疑、解释概念、提示方向），不得进入“接管”级别。所有代码需手动编写，所有异常需亲手排查，以建立扎实的工程基础。</p>
-            <p style="background:#e9f0f9; padding:0.7rem 1.5rem; border-radius:12px; line-height:1.7;"><strong>✅ 实施方式</strong>：AI 充当 7×24 小时答疑助教，但核心技能必须通过手动编码和调试内化。</p>
+            <p style="background:rgba(59,130,246,0.10); padding:0.7rem 1.5rem; border-radius:12px; line-height:1.7;"><strong>✅ 实施方式</strong>：AI 充当 7×24 小时答疑助教，但核心技能必须通过手动编码和调试内化。</p>
 
             <div class="sub-title">1.3 Redis 学习定位</div>
             <p style="line-height:1.7;">Redis 学习目标为 <strong>“理解用途、掌握基本用法、熟悉常见问题及排查方向”</strong>，不深入底层原理或源码分析。</p>
@@ -380,8 +387,8 @@
                                     <span style="background:#fff3e0;color:#b45309;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;">阶段 9-10</span>
                                     <span style="font-weight:700;color:#93c5fd;font-size:15px;">AI 接管</span>
                                 </div>
-                                <div class="tl-node" style="background:#fff7ed;border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#93c5fd;margin-bottom:3px;">AI 部分接管</strong><span style="display:block;color:#a8c0dd;font-size:13px;">DSPy 生成 SQL/API · LangGraph 工作流编排</span></div>
-                                <div class="tl-node" style="background:#fff7ed;border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#93c5fd;margin-bottom:3px;">AI 全环节接管</strong><span style="display:block;color:#a8c0dd;font-size:13px;">CrewAI 多 Agent · 需求→代码→部署</span></div>
+                                <div class="tl-node" style="background:rgba(217,119,6,0.14);border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#fdba74;margin-bottom:3px;">AI 部分接管</strong><span style="display:block;color:#e2e8f0;font-size:13px;">DSPy 生成 SQL/API · LangGraph 工作流编排</span></div>
+                                <div class="tl-node" style="background:rgba(217,119,6,0.14);border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#fdba74;margin-bottom:3px;">AI 全环节接管</strong><span style="display:block;color:#e2e8f0;font-size:13px;">CrewAI 多 Agent · 需求→代码→部署</span></div>
                             </div>
                             <div class="tl-arrow" style="display:flex;align-items:center;justify-content:center;font-size:22px;color:#4f46e5;font-weight:800;">→</div>
                             <div class="tl-card" style="flex:1;background:#101a2e;border-radius:16px;padding:16px 18px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 6px 22px rgba(0,40,120,.08);">
@@ -446,7 +453,7 @@
             <!-- 阶段3 -->
             <div class="sub-title">阶段 3：Spring Boot + 芋道后端架构（40h）</div>
             <div class="transition-box"><strong>衔接说明：</strong> 具备 Java 和数据库基础后，自然进入业务框架层。Spring Boot 简化了企业级开发，芋道在此基础上提供 RBAC、多租户、代码生成等成熟方案。本阶段将前两阶段知识融合为可运行的后端服务，小项目③直接产出模块化功能，为前端提供 API 支撑。</div>
-            <div style="background:#f0f7ff; padding:0.7rem 1.5rem; border-radius:10px; margin-bottom:1rem; border-left:4px solid #ff6a00;">
+            <div style="background:rgba(255,111,0,0.10); padding:0.7rem 1.5rem; border-radius:10px; margin-bottom:1rem; border-left:4px solid #ff6a00;">
                 <strong>🔸 芋道技术栈核心：</strong> Spring Boot + Spring Cloud Alibaba + Nacos + Sentinel + MyBatis-Plus + Redis + RocketMQ（可选）。
             </div>
             <div class="table-wrap">
@@ -576,17 +583,17 @@
                                 <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1 L10,5 L0,9z" fill="#16a34a"/></marker>
                                 <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity="0.08"/></filter>
                             </defs>
-                            <rect width="960" height="520" fill="#fafbfc" rx="18"/>
+                            <rect width="960" height="520" fill="#0d1526" rx="18"/>
 
                             <rect x="40" y="30" width="880" height="90" rx="14" fill="url(#grad-blue)" filter="url(#cardShadow)"/>
                             <text x="80" y="60" fill="#fff" font-size="14" font-weight="800">阶段 1-2 · 基础层</text>
                             <text x="80" y="82" fill="rgba(255,255,255,0.8)" font-size="12">12h + 12h = 24h</text>
-                            <rect x="320" y="48" width="180" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="410" y="76" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">Java 核心速通</text>
+                            <rect x="320" y="48" width="180" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="410" y="76" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">Java 核心速通</text>
                             <text x="410" y="94" text-anchor="middle" fill="#94a3b8" font-size="10">OOP · 集合 · IO · 并发</text>
                             <line x1="500" y1="73" x2="536" y2="73" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow-blue)"/>
-                            <rect x="540" y="48" width="180" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="630" y="76" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">MySQL + Maven</text>
+                            <rect x="540" y="48" width="180" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="630" y="76" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">MySQL + Maven</text>
                             <text x="630" y="94" text-anchor="middle" fill="#94a3b8" font-size="10">SQL · 表设计 · 依赖管理</text>
 
                             <line x1="480" y1="120" x2="480" y2="156" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow-blue)"/>
@@ -594,16 +601,16 @@
                             <rect x="40" y="160" width="880" height="90" rx="14" fill="url(#grad-orange)" filter="url(#cardShadow)"/>
                             <text x="80" y="190" fill="#fff" font-size="14" font-weight="800">阶段 3-4 · 后端与缓存</text>
                             <text x="80" y="212" fill="rgba(255,255,255,0.8)" font-size="12">40h + 5h = 45h</text>
-                            <rect x="300" y="178" width="155" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="378" y="206" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">Spring Boot</text>
+                            <rect x="300" y="178" width="155" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="378" y="206" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">Spring Boot</text>
                             <text x="378" y="224" text-anchor="middle" fill="#94a3b8" font-size="10">自动配置 · AOP · 事务</text>
                             <line x1="455" y1="203" x2="491" y2="203" stroke="#d97706" stroke-width="2" marker-end="url(#arrow-blue)"/>
-                            <rect x="495" y="178" width="155" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="573" y="206" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">芋道后端架构</text>
+                            <rect x="495" y="178" width="155" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="573" y="206" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">芋道后端架构</text>
                             <text x="573" y="224" text-anchor="middle" fill="#94a3b8" font-size="10">RBAC · 多租户 · 代码生成</text>
                             <line x1="650" y1="203" x2="686" y2="203" stroke="#d97706" stroke-width="2" marker-end="url(#arrow-blue)"/>
-                            <rect x="690" y="178" width="140" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="760" y="206" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">Redis 快速上手</text>
+                            <rect x="690" y="178" width="140" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="760" y="206" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">Redis 快速上手</text>
                             <text x="760" y="224" text-anchor="middle" fill="#94a3b8" font-size="10">缓存 · 场景 · 排错</text>
 
                             <line x1="480" y1="250" x2="480" y2="286" stroke="#d97706" stroke-width="2" marker-end="url(#arrow-blue)"/>
@@ -611,16 +618,16 @@
                             <rect x="40" y="290" width="880" height="90" rx="14" fill="url(#grad-purple)" filter="url(#cardShadow)"/>
                             <text x="80" y="320" fill="#fff" font-size="14" font-weight="800">阶段 5-6 · 前端与跨端</text>
                             <text x="80" y="342" fill="rgba(255,255,255,0.8)" font-size="12">35h + 12h = 47h</text>
-                            <rect x="300" y="308" width="155" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="378" y="336" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">Vue3 + TypeScript</text>
+                            <rect x="300" y="308" width="155" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="378" y="336" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">Vue3 + TypeScript</text>
                             <text x="378" y="354" text-anchor="middle" fill="#94a3b8" font-size="10">组合式 API · 芋道前端</text>
                             <line x1="455" y1="333" x2="491" y2="333" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-blue)"/>
-                            <rect x="495" y="308" width="155" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="573" y="336" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">芋道前端架构</text>
+                            <rect x="495" y="308" width="155" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="573" y="336" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">芋道前端架构</text>
                             <text x="573" y="354" text-anchor="middle" fill="#94a3b8" font-size="10">Vite · Ant Design · Axios</text>
                             <line x1="650" y1="333" x2="686" y2="333" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-blue)"/>
-                            <rect x="690" y="308" width="140" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="760" y="336" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">UniApp 跨端</text>
+                            <rect x="690" y="308" width="140" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="760" y="336" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">UniApp 跨端</text>
                             <text x="760" y="354" text-anchor="middle" fill="#94a3b8" font-size="10">小程序 · H5 · App</text>
 
                             <line x1="480" y1="380" x2="480" y2="416" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-blue)"/>
@@ -628,12 +635,12 @@
                             <rect x="40" y="420" width="880" height="90" rx="14" fill="url(#grad-green)" filter="url(#cardShadow)"/>
                             <text x="80" y="450" fill="#fff" font-size="14" font-weight="800">阶段 7-8 · 部署与整合</text>
                             <text x="80" y="472" fill="rgba(255,255,255,0.8)" font-size="12">25h + 15h = 40h</text>
-                            <rect x="300" y="438" width="170" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="385" y="466" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">部署运维</text>
+                            <rect x="300" y="438" width="170" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="385" y="466" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">部署运维</text>
                             <text x="385" y="484" text-anchor="middle" fill="#94a3b8" font-size="10">Linux · Docker · Nginx</text>
                             <line x1="470" y1="463" x2="506" y2="463" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-blue)"/>
-                            <rect x="510" y="438" width="170" height="50" rx="10" fill="#fff" filter="url(#cardShadow)"/>
-                            <text x="595" y="466" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="700">全栈整合与复盘</text>
+                            <rect x="510" y="438" width="170" height="50" rx="10" fill="#1a2440" filter="url(#cardShadow)"/>
+                            <text x="595" y="466" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">全栈整合与复盘</text>
                             <text x="595" y="484" text-anchor="middle" fill="#94a3b8" font-size="10">全链路调用 · 安全 · 代码互审</text>
                         </svg>
                     </div>
@@ -644,7 +651,7 @@
         <!-- 5. AI 高阶阶段（9-13） -->
         <section class="section-card">
             <div class="section-title">🤖 五、AI 工程化高阶学习（阶段 9-13）<small>不限学时</small></div>
-            <div style="background:#fff1e6; padding:0.7rem 1.5rem; border-radius:12px; margin-bottom:1.5rem;">
+            <div style="background:rgba(249,115,22,0.10); padding:0.7rem 1.5rem; border-radius:12px; margin-bottom:1.5rem;">
                 ⚠️ 前置条件：<strong>必须 100% 完成阶段 1-8</strong>。本阶段涉及 Agent、Harness、自进化等前沿领域。
             </div>
 
@@ -746,31 +753,31 @@
                     <div class="mermaid-wrap" id="chart3-wrap">
                         <svg viewBox="0 0 1020 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Segoe UI','PingFang SC',sans-serif;">
                             <defs>
-                                <marker id="arrL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1 L10,5 L0,9z" fill="#cbd5e1"/></marker>
+                                <marker id="arrL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1 L10,5 L0,9z" fill="#e2e8f0"/></marker>
                                 <filter id="gateShadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.1"/></filter>
                                 <filter id="boxShadow" x="-8%" y="-12%" width="116%" height="140%"><feDropShadow dx="0" dy="6" stdDeviated="10" flood-opacity="0.08"/></filter>
                             </defs>
 
-                            <rect x="10" y="30" width="360" height="200" rx="16" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.5" filter="url(#boxShadow)"/>
+                            <rect x="10" y="30" width="360" height="200" rx="16" fill="#0d1b2e" stroke="rgba(59,130,246,0.45)" stroke-width="1.5" filter="url(#boxShadow)"/>
                             <rect x="10" y="30" width="360" height="48" rx="16" fill="#0ea5e9"/>
                             <rect x="10" y="52" width="360" height="26" fill="#0ea5e9"/>
                             <text x="190" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">技术栈（≤200h）</text>
-                            <rect x="30" y="100" width="100" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
-                            <text x="80" y="122" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="700">Java / DB</text>
+                            <rect x="30" y="100" width="100" height="50" rx="10" fill="#1a2440" filter="url(#gateShadow)"/>
+                            <text x="80" y="122" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="700">Java / DB</text>
                             <text x="80" y="140" text-anchor="middle" fill="#94a3b8" font-size="10">阶段 1-2</text>
                             <line x1="130" y1="125" x2="154" y2="125" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrL)"/>
-                            <rect x="158" y="100" width="110" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
-                            <text x="213" y="122" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="700">Spring Boot</text>
+                            <rect x="158" y="100" width="110" height="50" rx="10" fill="#1a2440" filter="url(#gateShadow)"/>
+                            <text x="213" y="122" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">Spring Boot</text>
                             <text x="213" y="140" text-anchor="middle" fill="#94a3b8" font-size="10">芋道后端 · Redis</text>
                             <line x1="268" y1="125" x2="292" y2="125" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrL)"/>
-                            <rect x="296" y="100" width="54" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
-                            <text x="323" y="122" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="700">Vue</text>
+                            <rect x="296" y="100" width="54" height="50" rx="10" fill="#1a2440" filter="url(#gateShadow)"/>
+                            <text x="323" y="122" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">Vue</text>
                             <text x="323" y="140" text-anchor="middle" fill="#94a3b8" font-size="10">UniApp</text>
                             <line x1="350" y1="125" x2="374" y2="125" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrL)"/>
-                            <rect x="378" y="100" width="62" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
-                            <text x="409" y="122" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="700">部署</text>
+                            <rect x="378" y="100" width="62" height="50" rx="10" fill="#1a2440" filter="url(#gateShadow)"/>
+                            <text x="409" y="122" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">部署</text>
                             <text x="409" y="140" text-anchor="middle" fill="#94a3b8" font-size="10">整合</text>
-                            <text x="190" y="182" text-anchor="middle" fill="#475569" font-size="11">产出小项目项目①~⑥ · 全栈交付能力</text>
+                            <text x="190" y="182" text-anchor="middle" fill="#cbd5e1" font-size="11">产出小项目项目①~⑥ · 全栈交付能力</text>
 
                             <polygon points="520,78 580,130 520,182 460,130" fill="#ef4444" filter="url(#gateShadow)"/>
                             <text x="520" y="128" text-anchor="middle" fill="#fff" font-size="12" font-weight="800">硬性</text>
@@ -779,25 +786,25 @@
                             <line x1="440" y1="130" x2="460" y2="130" stroke="#cbd5e1" stroke-width="1.8" marker-end="url(#arrL)"/>
                             <line x1="580" y1="130" x2="600" y2="130" stroke="#cbd5e1" stroke-width="1.8" marker-end="url(#arrL)"/>
 
-                            <rect x="600" y="30" width="410" height="200" rx="16" fill="#fef7ee" stroke="#fed7aa" stroke-width="1.5" filter="url(#boxShadow)"/>
+                            <rect x="600" y="30" width="410" height="200" rx="16" fill="#1c1510" stroke="rgba(249,115,22,0.4)" stroke-width="1.5" filter="url(#boxShadow)"/>
                             <rect x="600" y="30" width="410" height="48" rx="16" fill="#f97316"/>
                             <rect x="600" y="52" width="410" height="26" fill="#f97316"/>
                             <text x="805" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">AI 工程化 & 产品落地（不限时）</text>
-                            <rect x="620" y="100" width="95" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
-                            <text x="668" y="122" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="700">AI 接管</text>
+                            <rect x="620" y="100" width="95" height="50" rx="10" fill="#1a2440" filter="url(#gateShadow)"/>
+                            <text x="668" y="122" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="700">AI 接管</text>
                             <text x="668" y="140" text-anchor="middle" fill="#94a3b8" font-size="10">DSPy · LangGraph</text>
                             <line x1="715" y1="125" x2="739" y2="125" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrL)"/>
-                            <rect x="743" y="100" width="80" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
-                            <text x="783" y="122" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="700">自循环</text>
+                            <rect x="743" y="100" width="80" height="50" rx="10" fill="#1a2440" filter="url(#gateShadow)"/>
+                            <text x="783" y="122" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="700">自循环</text>
                             <text x="783" y="140" text-anchor="middle" fill="#94a3b8" font-size="10">Harness</text>
                             <line x1="823" y1="125" x2="847" y2="125" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrL)"/>
-                            <rect x="851" y="100" width="95" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
-                            <text x="899" y="122" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="700">自我进化</text>
+                            <rect x="851" y="100" width="95" height="50" rx="10" fill="#1a2440" filter="url(#gateShadow)"/>
+                            <text x="899" y="122" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="700">自我进化</text>
                             <text x="899" y="140" text-anchor="middle" fill="#94a3b8" font-size="10">SCOPE · Evolver</text>
                             <line x1="946" y1="125" x2="970" y2="125" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrL)"/>
-                            <rect x="974" y="100" width="36" height="50" rx="10" fill="#fff" filter="url(#gateShadow)"/>
-                            <text x="992" y="122" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="700">产品</text>
-                            <text x="805" y="182" text-anchor="middle" fill="#475569" font-size="11">CrewAI · AgentEvolver · AI 全流程驱动</text>
+                            <rect x="974" y="100" width="36" height="50" rx="10" fill="#1a2440" filter="url(#gateShadow)"/>
+                            <text x="992" y="122" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">产品</text>
+                            <text x="805" y="182" text-anchor="middle" fill="#cbd5e1" font-size="11">CrewAI · AgentEvolver · AI 全流程驱动</text>
                         </svg>
                     </div>
                 </div>

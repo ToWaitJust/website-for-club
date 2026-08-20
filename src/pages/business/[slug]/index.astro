@@ -22,45 +22,63 @@ const { code: html } = await processor.render(content.markdown);
   title={`${line.name} · AI+CLUB`}
   description={line.desc}
 >
-  <!-- 业务线头部 -->
+  <!-- 业务线头部:below-nav 替代硬编码 pt-32,自动跟随导航高度 -->
   <section
-    class="relative overflow-hidden pt-32 pb-10 text-center"
-    style="background: radial-gradient(ellipse 90% 70% at 50% -30%, #16244d 0%, #0d1526 55%, #0a0f1e 100%)"
+    class="below-nav relative overflow-hidden text-center"
+    style="padding-bottom: var(--sp-10); background: radial-gradient(ellipse 90% 70% at 50% -30%, #16244d 0%, #0d1526 55%, #0a0f1e 100%)"
   >
     <div
       aria-hidden="true"
       class="pointer-events-none absolute inset-0 opacity-30"
-      style="background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, black 30%, transparent 75%);"
+      style="background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: clamp(32px, 7vw, 56px) clamp(32px, 7vw, 56px); mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, black 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, black 30%, transparent 75%);"
     ></div>
     <div
       aria-hidden="true"
-      class="pointer-events-none absolute left-1/2 top-0 h-64 w-[36rem] -translate-x-1/2 rounded-full blur-[110px]"
-      style={`background: radial-gradient(ellipse, ${line.accent}33 0%, transparent 70%)`}
+      class="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 rounded-full"
+      style={`width: min(90vw, 36rem); height: var(--orb-sm); filter: blur(clamp(70px, 15vw, 110px)); background: radial-gradient(ellipse, ${line.accent}33 0%, transparent 70%)`}
     ></div>
 
     <div class="relative container-site">
       <div
-        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl"
-        style={`background: ${line.accent}26; box-shadow: 0 0 36px ${line.accent}40`}
+        class="mx-auto flex items-center justify-center rounded-2xl"
+        style={`width: min(calc(128 * var(--rpx)), 112px); height: min(calc(128 * var(--rpx)), 112px); min-width: 52px; min-height: 52px; margin-bottom: var(--sp-5); font-size: var(--fs-h2); background: ${line.accent}26; box-shadow: 0 0 36px ${line.accent}40`}
       >
         {line.icon}
       </div>
-      <h1 class="font-display text-5xl font-bold tracking-tight text-white">
+      <h1
+        class="font-display font-bold tracking-tight text-white [text-wrap:balance]"
+        style="font-size: var(--fs-d2); overflow-wrap: break-word"
+      >
         {line.name}
       </h1>
-      <p class="mt-2 font-display text-lg text-slate-400">{line.tagline}</p>
+      <p
+        class="font-display text-slate-400"
+        style="font-size: var(--fs-h3); margin-top: var(--sp-2)"
+      >
+        {line.tagline}
+      </p>
     </div>
   </section>
 
   <!-- 正文 + CTA -->
-  <section class="container-site -mt-6 pb-8">
-    <article class="glass-card mx-auto max-w-3xl rounded-xl px-7 py-8 sm:px-10">
+  <section
+    class="container-site"
+    style="margin-top: calc(-1 * var(--sp-5)); padding-bottom: var(--sp-8)"
+  >
+    <article
+      class="glass-card mx-auto max-w-[var(--content-max)] rounded-xl"
+      style="padding: var(--sp-8) var(--sp-6)"
+    >
       <div class="md-prose" set:html={html} />
 
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-4 border-t border-white/10 pt-8">
+      <div
+        class="flex flex-wrap items-center justify-center gap-f4 border-t border-white/10"
+        style="margin-top: var(--sp-10); padding-top: var(--sp-8)"
+      >
         <a
           href={`/business/${line.slug}/register/`}
-          class="rounded-full bg-gradient-to-r from-accent to-accent-soft px-9 py-3 font-display text-sm font-semibold text-white transition hover:opacity-90 active:scale-95"
+          class="tap-target flex items-center justify-center rounded-full bg-gradient-to-r from-accent to-accent-soft font-display font-semibold text-white transition hover:opacity-90 active:scale-95"
+          style="padding: var(--sp-3) var(--sp-8); font-size: var(--fs-sm)"
         >
           Apply Now →
         </a>
@@ -68,7 +86,8 @@ const { code: html } = await processor.render(content.markdown);
           line.slug === 'ai-it' && (
             <a
               href="/docs/learning-plan.html"
-              class="rounded-full border border-white/15 bg-white/5 px-9 py-3 font-display text-sm font-medium text-white transition hover:bg-white/10"
+              class="tap-target flex items-center justify-center rounded-full border border-white/15 bg-white/5 font-display font-medium text-white transition hover:bg-white/10"
+              style="padding: var(--sp-3) var(--sp-8); font-size: var(--fs-sm)"
             >
               Learning Plan
             </a>
@@ -80,46 +99,82 @@ const { code: html } = await processor.render(content.markdown);
 </BaseLayout>
 
 <style>
+  /* 正文排版:字号全部走流式 token,窄屏自动收窄、宽屏自动放大 */
   .md-prose :global(h1) {
-    @apply font-display text-2xl font-semibold text-white;
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
+    @apply font-display font-semibold text-white;
+    font-size: var(--fs-h2);
+    margin-bottom: var(--sp-4);
+    padding-bottom: var(--sp-2);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-wrap: break-word;
   }
   .md-prose :global(h2) {
-    @apply font-display text-xl font-semibold text-white;
-    margin: 1.8rem 0 0.8rem;
+    @apply font-display font-semibold text-white;
+    font-size: var(--fs-h3);
+    margin: var(--sp-8) 0 var(--sp-3);
+    overflow-wrap: break-word;
   }
   .md-prose :global(h3) {
-    @apply text-lg font-semibold text-white;
-    margin: 1.4rem 0 0.6rem;
+    @apply font-semibold text-white;
+    font-size: var(--fs-base);
+    margin: var(--sp-6) 0 var(--sp-2);
   }
   .md-prose :global(p) {
-    @apply mb-3 text-[15px] leading-relaxed text-slate-300;
+    @apply leading-relaxed text-slate-300;
+    font-size: var(--fs-sm);
+    margin-bottom: var(--sp-3);
   }
   .md-prose :global(ul),
   .md-prose :global(ol) {
-    @apply mb-3 ml-5 text-[15px] text-slate-300;
+    @apply text-slate-300;
+    font-size: var(--fs-sm);
+    margin-bottom: var(--sp-3);
+    padding-left: var(--sp-5);
   }
   .md-prose :global(li) {
-    margin-bottom: 0.3rem;
+    margin-bottom: var(--sp-1);
   }
   .md-prose :global(strong) {
     @apply font-semibold text-white;
   }
   .md-prose :global(blockquote) {
-    @apply my-4 rounded-r-lg border-l-[3px] border-accent bg-white/5 px-4 py-3 text-sm text-slate-400;
+    @apply rounded-r-lg border-l-[3px] border-accent bg-white/5 text-slate-400;
+    font-size: var(--fs-sm);
+    margin: var(--sp-4) 0;
+    padding: var(--sp-3) var(--sp-4);
   }
+  /* 表格:窄屏包一层横向滚动,不撑破卡片 */
   .md-prose :global(table) {
-    @apply my-4 w-full border-collapse text-sm;
+    @apply w-full border-collapse;
+    font-size: var(--fs-xs);
+    margin: var(--sp-4) 0;
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .md-prose :global(th) {
-    @apply border border-white/10 bg-white/5 px-3 py-2 text-left font-semibold text-white;
+    @apply border border-white/10 bg-white/5 text-left font-semibold text-white;
+    padding: var(--sp-2) var(--sp-3);
   }
   .md-prose :global(td) {
-    @apply border border-white/10 px-3 py-2 text-slate-300;
+    @apply border border-white/10 text-slate-300;
+    padding: var(--sp-2) var(--sp-3);
+  }
+  /* 代码块横向滚动而非撑破布局 */
+  .md-prose :global(pre) {
+    max-width: 100%;
+    overflow-x: auto;
+    font-size: var(--fs-xs);
+    padding: var(--sp-3);
+    border-radius: 8px;
+  }
+  .md-prose :global(code) {
+    overflow-wrap: break-word;
+    font-size: 0.95em;
   }
   .md-prose :global(a) {
     @apply text-accent no-underline hover:underline;
+    overflow-wrap: break-word;
   }
 </style>

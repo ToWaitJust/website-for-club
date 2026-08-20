@@ -136,45 +136,68 @@ function switchTab(t: 'register' | 'feedback') {
 
 <template>
   <div v-if="authed" class="w-full max-w-5xl">
-    <!-- 顶栏 -->
-    <div class="flex flex-wrap items-center justify-between gap-4">
-      <div>
-        <h1 class="font-display text-2xl font-semibold text-white">Admin Console</h1>
-        <p class="mt-1 text-sm text-slate-400">AI+CLUB 运营管理端 · 报名与反馈数据实时同步自 yudao</p>
+    <!-- 顶栏:窄屏纵向堆叠,操作按钮不被标题挤压 -->
+    <div class="flex flex-wrap items-center justify-between gap-f4">
+      <div class="min-w-0">
+        <h1
+          class="font-display font-semibold text-white"
+          style="font-size: var(--fs-h2)"
+        >
+          Admin Console
+        </h1>
+        <p
+          class="text-slate-400"
+          style="font-size: var(--fs-sm); margin-top: var(--sp-1)"
+        >
+          AI+CLUB 运营管理端 · 报名与反馈数据实时同步自 yudao
+        </p>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex shrink-0 items-center gap-f3">
         <a
           href="/"
-          class="rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-slate-300 transition hover:bg-white/10 hover:text-white"
+          class="tap-target flex items-center rounded-full border border-white/15 bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white"
+          style="padding: var(--sp-2) var(--sp-4); font-size: var(--fs-sm)"
         >← Site</a>
         <button
           @click="logout"
-          class="rounded-full border border-rose-400/30 bg-rose-500/10 px-4 py-1.5 text-sm text-rose-300 transition hover:bg-rose-500/20"
+          class="tap-target flex items-center rounded-full border border-rose-400/30 bg-rose-500/10 text-rose-300 transition hover:bg-rose-500/20"
+          style="padding: var(--sp-2) var(--sp-4); font-size: var(--fs-sm)"
         >Sign Out</button>
       </div>
     </div>
 
-    <!-- Tab 切换 -->
-    <div class="mt-6 flex gap-2">
+    <!-- Tab 切换:窄屏可横向滚动 -->
+    <div
+      class="no-scrollbar flex gap-2 overflow-x-auto"
+      style="margin-top: var(--sp-6)"
+    >
       <button
         @click="switchTab('register')"
-        class="rounded-full px-5 py-2 text-sm font-medium transition"
+        class="tap-target shrink-0 whitespace-nowrap rounded-full font-medium transition"
+        style="padding: var(--sp-2) var(--sp-5); font-size: var(--fs-sm)"
         :class="tab === 'register' ? 'bg-white/15 text-white' : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'"
       >报名管理 ({{ registerTotal }})</button>
       <button
         @click="switchTab('feedback')"
-        class="rounded-full px-5 py-2 text-sm font-medium transition"
+        class="tap-target shrink-0 whitespace-nowrap rounded-full font-medium transition"
+        style="padding: var(--sp-2) var(--sp-5); font-size: var(--fs-sm)"
         :class="tab === 'feedback' ? 'bg-white/15 text-white' : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'"
       >反馈管理 ({{ feedbackTotal }})</button>
     </div>
 
     <!-- ─── 报名管理 ─── -->
-    <div v-if="tab === 'register'" class="glass-card mt-5 rounded-xl p-5 sm:p-6">
-      <div class="flex flex-wrap items-center gap-3">
+    <div
+      v-if="tab === 'register'"
+      class="glass-card rounded-xl"
+      style="margin-top: var(--sp-5); padding: var(--sp-5)"
+    >
+      <!-- 筛选器:窄屏两列平分,不再挤成一行 -->
+      <div class="flex flex-wrap items-center gap-f3">
         <select
           v-model="registerFilter.businessLine"
           @change="registerPage = 1; loadRegister()"
-          class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2 text-sm text-white outline-none focus:border-accent/60"
+          class="min-w-0 flex-1 rounded-lg border border-white/10 bg-[#101a2e] text-white outline-none focus:border-accent/60 sm:flex-none"
+          style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
         >
           <option value="">全部业务线</option>
           <option v-for="(name, slug) in BUSINESS_MAP" :key="slug" :value="slug">{{ name }}</option>
@@ -182,20 +205,32 @@ function switchTab(t: 'register' | 'feedback') {
         <select
           v-model="registerFilter.status"
           @change="registerPage = 1; loadRegister()"
-          class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2 text-sm text-white outline-none focus:border-accent/60"
+          class="min-w-0 flex-1 rounded-lg border border-white/10 bg-[#101a2e] text-white outline-none focus:border-accent/60 sm:flex-none"
+          style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
         >
           <option value="">全部状态</option>
           <option v-for="(label, st) in REGISTER_STATUS_MAP" :key="st" :value="Number(st)">{{ label }}</option>
         </select>
-        <span class="ml-auto text-sm text-slate-400">共 {{ registerTotal }} 条</span>
+        <span
+          class="w-full text-slate-400 sm:ml-auto sm:w-auto"
+          style="font-size: var(--fs-sm)"
+        >共 {{ registerTotal }} 条</span>
       </div>
 
-      <p v-if="registerError" class="mt-3 text-sm text-danger">{{ registerError }}</p>
+      <p
+        v-if="registerError"
+        class="text-danger"
+        style="font-size: var(--fs-sm); margin-top: var(--sp-3)"
+      >{{ registerError }}</p>
 
-      <div class="mt-4 overflow-x-auto">
-        <table class="w-full min-w-[760px] text-left text-sm">
+      <!-- ── 桌面(≥lg):表格 ── -->
+      <div class="hidden lg:block" style="margin-top: var(--sp-4)">
+        <table class="w-full text-left" style="font-size: var(--fs-sm)">
           <thead>
-            <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-slate-500">
+            <tr
+              class="border-b border-white/10 uppercase tracking-wider text-slate-500"
+              style="font-size: var(--fs-xs)"
+            >
               <th class="pb-2.5 pr-3 font-medium">姓名</th>
               <th class="pb-2.5 pr-3 font-medium">业务线</th>
               <th class="pb-2.5 pr-3 font-medium">学号</th>
@@ -214,7 +249,10 @@ function switchTab(t: 'register' | 'feedback') {
             >
               <td class="py-3 pr-3 font-medium text-white">{{ row.name }}</td>
               <td class="py-3 pr-3">
-                <span class="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-slate-300">
+                <span
+                  class="whitespace-nowrap rounded-full border border-white/10 bg-white/5 text-slate-300"
+                  style="padding: 2px var(--sp-2); font-size: var(--fs-xs)"
+                >
                   {{ BUSINESS_MAP[row.businessLine] || row.businessLine }}
                 </span>
               </td>
@@ -225,11 +263,17 @@ function switchTab(t: 'register' | 'feedback') {
                 <span v-if="row.wechat" class="text-slate-500"> ({{ row.wechat }})</span>
               </td>
               <td class="py-3 pr-3">
-                <span class="rounded-full border px-2 py-0.5 text-xs" :class="STATUS_BADGE[row.status] || 'border-white/10 text-slate-400'">
+                <span
+                  class="whitespace-nowrap rounded-full border"
+                  style="padding: 2px var(--sp-2); font-size: var(--fs-xs)"
+                  :class="STATUS_BADGE[row.status] || 'border-white/10 text-slate-400'"
+                >
                   {{ REGISTER_STATUS_MAP[row.status] || row.status }}
                 </span>
               </td>
-              <td class="py-3 pr-3 text-xs text-slate-500">{{ fmtTime(row.createTime) }}</td>
+              <td class="py-3 pr-3 text-slate-500" style="font-size: var(--fs-xs)">
+                {{ fmtTime(row.createTime) }}
+              </td>
               <td class="py-3">
                 <div class="flex flex-wrap gap-1">
                   <button
@@ -237,94 +281,220 @@ function switchTab(t: 'register' | 'feedback') {
                     :key="st"
                     @click="changeRegisterStatus(row, Number(st))"
                     :disabled="row.status === Number(st)"
-                    class="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-slate-300 transition hover:bg-white/15 hover:text-white disabled:cursor-default disabled:opacity-40"
+                    class="whitespace-nowrap rounded-md border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/15 hover:text-white disabled:cursor-default disabled:opacity-40"
+                    style="padding: 2px var(--sp-2); font-size: var(--fs-xs)"
                   >{{ label }}</button>
                 </div>
               </td>
-            </tr>
-            <tr v-if="!registerLoading && registers.length === 0">
-              <td colspan="8" class="py-10 text-center text-sm text-slate-500">暂无报名数据</td>
-            </tr>
-            <tr v-if="registerLoading">
-              <td colspan="8" class="py-10 text-center text-sm text-slate-400">加载中…</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div v-if="registerTotalPages > 1" class="mt-4 flex items-center justify-end gap-3 text-sm">
+      <!-- ── 窄屏(<lg):卡片式,替代 760px 横向滚动表格 ── -->
+      <div class="grid gap-f3 lg:hidden" style="margin-top: var(--sp-4)">
+        <div
+          v-for="row in registers"
+          :key="row.id"
+          class="rounded-lg border border-white/5 bg-white/[0.03]"
+          style="padding: var(--sp-4)"
+        >
+          <!-- 标题行:姓名 + 业务线/状态徽章 -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-medium text-white" style="font-size: var(--fs-base)">
+              {{ row.name }}
+            </span>
+            <span
+              class="whitespace-nowrap rounded-full border border-white/10 bg-white/5 text-slate-300"
+              style="padding: 2px var(--sp-2); font-size: var(--fs-xs)"
+            >
+              {{ BUSINESS_MAP[row.businessLine] || row.businessLine }}
+            </span>
+            <span
+              class="whitespace-nowrap rounded-full border"
+              style="padding: 2px var(--sp-2); font-size: var(--fs-xs)"
+              :class="STATUS_BADGE[row.status] || 'border-white/10 text-slate-400'"
+            >
+              {{ REGISTER_STATUS_MAP[row.status] || row.status }}
+            </span>
+          </div>
+
+          <!-- 字段区:标签 + 值,窄屏纵向,长内容自动换行 -->
+          <dl
+            class="grid gap-x-f4 gap-y-1 sm:grid-cols-2"
+            style="font-size: var(--fs-sm); margin-top: var(--sp-3)"
+          >
+            <div class="flex min-w-0 gap-2">
+              <dt class="shrink-0 text-slate-500">学号</dt>
+              <dd class="min-w-0 break-words text-slate-300">{{ row.studentId || '—' }}</dd>
+            </div>
+            <div class="flex min-w-0 gap-2">
+              <dt class="shrink-0 text-slate-500">学院</dt>
+              <dd class="min-w-0 break-words text-slate-300">
+                {{ row.college || '—' }}<span v-if="row.major"> / {{ row.major }}</span>
+              </dd>
+            </div>
+            <div class="flex min-w-0 gap-2">
+              <dt class="shrink-0 text-slate-500">联系</dt>
+              <dd class="min-w-0 break-words text-slate-300">
+                <span v-if="row.phone">{{ row.phone }}</span>
+                <span v-if="row.wechat" class="text-slate-500"> ({{ row.wechat }})</span>
+                <span v-if="!row.phone && !row.wechat">—</span>
+              </dd>
+            </div>
+            <div class="flex min-w-0 gap-2">
+              <dt class="shrink-0 text-slate-500">提交</dt>
+              <dd class="min-w-0 text-slate-400">{{ fmtTime(row.createTime) }}</dd>
+            </div>
+          </dl>
+
+          <!-- 操作:触摸目标放大到 44px -->
+          <div
+            class="flex flex-wrap gap-2 border-t border-white/5"
+            style="margin-top: var(--sp-3); padding-top: var(--sp-3)"
+          >
+            <button
+              v-for="(label, st) in REGISTER_STATUS_MAP"
+              :key="st"
+              @click="changeRegisterStatus(row, Number(st))"
+              :disabled="row.status === Number(st)"
+              class="tap-target flex flex-1 items-center justify-center whitespace-nowrap rounded-md border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/15 hover:text-white disabled:cursor-default disabled:opacity-40"
+              style="padding: var(--sp-2) var(--sp-3); font-size: var(--fs-xs)"
+            >{{ label }}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 空态 / 加载态(两种布局共用) -->
+      <p
+        v-if="!registerLoading && registers.length === 0"
+        class="text-center text-slate-500"
+        style="font-size: var(--fs-sm); padding: var(--sp-10) 0"
+      >暂无报名数据</p>
+      <p
+        v-if="registerLoading"
+        class="text-center text-slate-400"
+        style="font-size: var(--fs-sm); padding: var(--sp-10) 0"
+      >加载中…</p>
+
+      <div
+        v-if="registerTotalPages > 1"
+        class="flex items-center justify-end gap-f3"
+        style="margin-top: var(--sp-4); font-size: var(--fs-sm)"
+      >
         <button
           :disabled="registerPage <= 1"
           @click="registerPage--; loadRegister()"
-          class="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
+          class="tap-target flex items-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
+          style="padding: var(--sp-2) var(--sp-3)"
         >← Prev</button>
         <span class="text-slate-400">{{ registerPage }} / {{ registerTotalPages }}</span>
         <button
           :disabled="registerPage >= registerTotalPages"
           @click="registerPage++; loadRegister()"
-          class="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
+          class="tap-target flex items-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
+          style="padding: var(--sp-2) var(--sp-3)"
         >Next →</button>
       </div>
     </div>
 
     <!-- ─── 反馈管理 ─── -->
-    <div v-else class="glass-card mt-5 rounded-xl p-5 sm:p-6">
-      <div class="flex flex-wrap items-center gap-3">
+    <div
+      v-else
+      class="glass-card rounded-xl"
+      style="margin-top: var(--sp-5); padding: var(--sp-5)"
+    >
+      <div class="flex flex-wrap items-center gap-f3">
         <select
           v-model="feedbackFilter.status"
           @change="feedbackPage = 1; loadFeedback()"
-          class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2 text-sm text-white outline-none focus:border-accent/60"
+          class="min-w-0 flex-1 rounded-lg border border-white/10 bg-[#101a2e] text-white outline-none focus:border-accent/60 sm:flex-none"
+          style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
         >
           <option value="">全部状态</option>
           <option value="0">未处理</option>
           <option value="1">已处理</option>
         </select>
-        <span class="ml-auto text-sm text-slate-400">共 {{ feedbackTotal }} 条</span>
+        <span
+          class="w-full text-slate-400 sm:ml-auto sm:w-auto"
+          style="font-size: var(--fs-sm)"
+        >共 {{ feedbackTotal }} 条</span>
       </div>
 
-      <p v-if="feedbackError" class="mt-3 text-sm text-danger">{{ feedbackError }}</p>
+      <p
+        v-if="feedbackError"
+        class="text-danger"
+        style="font-size: var(--fs-sm); margin-top: var(--sp-3)"
+      >{{ feedbackError }}</p>
 
-      <div class="mt-4 space-y-3">
+      <div class="grid gap-f3" style="margin-top: var(--sp-4)">
+        <!-- 窄屏纵向堆叠(按钮占满宽),sm 起左右分栏 -->
         <div
           v-for="row in feedbacks"
           :key="row.id"
-          class="flex flex-wrap items-start justify-between gap-3 rounded-lg border border-white/5 bg-white/[0.03] p-4"
+          class="flex flex-col gap-f3 rounded-lg border border-white/5 bg-white/[0.03] sm:flex-row sm:items-start sm:justify-between"
+          style="padding: var(--sp-4)"
           :class="{ 'opacity-60': row.status === 1 }"
         >
           <div class="min-w-0 flex-1">
-            <div class="flex flex-wrap items-center gap-2 text-xs">
+            <div
+              class="flex flex-wrap items-center gap-2"
+              style="font-size: var(--fs-xs)"
+            >
               <span class="font-medium text-white">{{ row.name }}</span>
-              <span class="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-slate-400">来源:{{ row.page }}</span>
               <span
-                class="rounded-full border px-2 py-0.5"
+                class="min-w-0 break-all rounded-full border border-white/10 bg-white/5 text-slate-400"
+                style="padding: 2px var(--sp-2)"
+              >来源:{{ row.page }}</span>
+              <span
+                class="whitespace-nowrap rounded-full border"
+                style="padding: 2px var(--sp-2)"
                 :class="row.status === 1 ? 'border-emerald-400/30 bg-emerald-500/15 text-emerald-300' : 'border-amber-400/30 bg-amber-500/15 text-amber-300'"
               >{{ row.status === 1 ? '已处理' : '未处理' }}</span>
-              <span class="text-slate-500">{{ fmtTime(row.createTime) }}</span>
+              <span class="whitespace-nowrap text-slate-500">{{ fmtTime(row.createTime) }}</span>
             </div>
-            <p class="mt-2 break-words text-sm leading-relaxed text-slate-300">{{ row.content }}</p>
+            <p
+              class="break-words leading-relaxed text-slate-300"
+              style="font-size: var(--fs-sm); margin-top: var(--sp-2)"
+            >{{ row.content }}</p>
           </div>
           <button
             @click="toggleFeedbackRead(row)"
-            class="shrink-0 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs text-slate-300 transition hover:bg-white/15 hover:text-white"
+            class="tap-target flex w-full shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-white/15 bg-white/5 text-slate-300 transition hover:bg-white/15 hover:text-white sm:w-auto"
+            style="padding: var(--sp-2) var(--sp-4); font-size: var(--fs-xs)"
           >{{ row.status === 1 ? '标记未处理' : '标记已处理' }}</button>
         </div>
-        <p v-if="!feedbackLoading && feedbacks.length === 0" class="py-10 text-center text-sm text-slate-500">
+        <p
+          v-if="!feedbackLoading && feedbacks.length === 0"
+          class="text-center text-slate-500"
+          style="font-size: var(--fs-sm); padding: var(--sp-10) 0"
+        >
           暂无反馈数据
         </p>
-        <p v-if="feedbackLoading" class="py-10 text-center text-sm text-slate-400">加载中…</p>
+        <p
+          v-if="feedbackLoading"
+          class="text-center text-slate-400"
+          style="font-size: var(--fs-sm); padding: var(--sp-10) 0"
+        >加载中…</p>
       </div>
 
-      <div v-if="feedbackTotalPages > 1" class="mt-4 flex items-center justify-end gap-3 text-sm">
+      <div
+        v-if="feedbackTotalPages > 1"
+        class="flex items-center justify-end gap-f3"
+        style="margin-top: var(--sp-4); font-size: var(--fs-sm)"
+      >
         <button
           :disabled="feedbackPage <= 1"
           @click="feedbackPage--; loadFeedback()"
-          class="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
+          class="tap-target flex items-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
+          style="padding: var(--sp-2) var(--sp-3)"
         >← Prev</button>
         <span class="text-slate-400">{{ feedbackPage }} / {{ feedbackTotalPages }}</span>
         <button
           :disabled="feedbackPage >= feedbackTotalPages"
           @click="feedbackPage++; loadFeedback()"
-          class="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
+          class="tap-target flex items-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
+          style="padding: var(--sp-2) var(--sp-3)"
         >Next →</button>
       </div>
     </div>

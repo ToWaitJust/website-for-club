@@ -10,8 +10,8 @@ const { line } = Astro.props;
 
 <a
   href={line.path}
-  class="glass-card group relative block rounded-xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
-  style={`--card-accent: ${line.accent}`}
+  class="glass-card group relative block h-full rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+  style={`--card-accent: ${line.accent}; padding: var(--sp-6)`}
 >
   <!-- 顶部品牌色光条 -->
   <span
@@ -19,39 +19,60 @@ const { line } = Astro.props;
     style={`background: linear-gradient(90deg, transparent, ${line.accent}, transparent)`}
   ></span>
 
-  <!-- hover 品牌色光晕 -->
+  <!-- hover 品牌色光晕:尺寸随屏等比 -->
   <span
     aria-hidden="true"
-    class="pointer-events-none absolute -top-10 left-1/2 h-32 w-40 -translate-x-1/2 rounded-full opacity-0 blur-[60px] transition-opacity duration-500 group-hover:opacity-40"
-    style={`background: ${line.accent}`}
+    class="pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-40"
+    style={`top: calc(-1 * var(--sp-10)); width: clamp(120px, 28vw, 160px); height: clamp(96px, 22vw, 128px); filter: blur(60px); background: ${line.accent}`}
   ></span>
 
-  <!-- 报名状态徽章 -->
+  <!-- 报名状态徽章:定位用流式间距,窄屏不会压住标题 -->
   <span
-    class={`absolute right-5 top-5 rounded-full px-2.5 py-0.5 font-display text-[11px] font-semibold uppercase tracking-wider ${
+    class={`absolute rounded-full font-display font-semibold uppercase tracking-wider ${
       line.registerOpen
         ? 'border border-ai-embed/30 bg-ai-embed/10 text-ai-embed'
         : 'border border-white/10 bg-white/5 text-muted'
     }`}
+    style="right: var(--sp-5); top: var(--sp-5); padding: 2px var(--sp-2); font-size: var(--fs-xs)"
   >
     {line.registerOpen ? 'Open' : 'Soon'}
   </span>
 
+  <!-- 图标:rpx 等比(设计稿 96rpx) -->
   <div
-    class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg text-2xl"
-    style={`background: ${line.accent}26; box-shadow: 0 0 24px ${line.accent}33`}
+    class="flex items-center justify-center rounded-lg"
+    style={`width: min(calc(96 * var(--rpx)), 84px); height: min(calc(96 * var(--rpx)), 84px); min-width: 42px; min-height: 42px; margin-bottom: var(--sp-4); font-size: var(--fs-h2); background: ${line.accent}26; box-shadow: 0 0 24px ${line.accent}33`}
   >
     {line.icon}
   </div>
 
-  <h3 class="font-display text-xl font-semibold tracking-wide">{line.name}</h3>
-  <p class="mt-0.5 font-display text-sm text-slate-400">{line.tagline}</p>
-  <p class="mt-2.5 text-sm leading-relaxed text-slate-300">{line.desc}</p>
+  <!-- pr 给徽章留位,防长标题与徽章重叠 -->
+  <h3
+    class="font-display font-semibold tracking-wide"
+    style="font-size: var(--fs-h3); padding-right: calc(var(--sp-12))"
+  >
+    {line.name}
+  </h3>
+  <p
+    class="font-display text-slate-400"
+    style="font-size: var(--fs-sm); margin-top: 2px"
+  >
+    {line.tagline}
+  </p>
+  <p
+    class="leading-relaxed text-slate-300"
+    style="font-size: var(--fs-sm); margin-top: var(--sp-2)"
+  >
+    {line.desc}
+  </p>
 
-  <div class="mt-4 flex flex-wrap gap-1.5">
+  <div class="flex flex-wrap gap-1.5" style="margin-top: var(--sp-4)">
     {
       line.features.map((f) => (
-        <span class="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs text-slate-300">
+        <span
+          class="rounded-full border border-white/10 bg-white/5 text-slate-300"
+          style="padding: 2px var(--sp-2); font-size: var(--fs-xs)"
+        >
           {f}
         </span>
       ))
@@ -59,8 +80,8 @@ const { line } = Astro.props;
   </div>
 
   <div
-    class="mt-6 flex items-center gap-1 font-display text-sm font-medium transition-transform duration-300 group-hover:translate-x-1"
-    style={`color: ${line.accent}`}
+    class="flex items-center gap-1 font-display font-medium transition-transform duration-300 group-hover:translate-x-1"
+    style={`margin-top: var(--sp-5); font-size: var(--fs-sm); color: ${line.accent}`}
   >
     Explore <span aria-hidden="true">→</span>
   </div>

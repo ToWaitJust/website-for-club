@@ -2,15 +2,34 @@
 import { site } from '../data/site';
 ---
 
-<footer class="mt-20 border-t border-white/10 py-10 text-center text-xs text-muted">
+<!-- 底部:下内边距含移动端安全区(全面屏手势条) -->
+<footer
+  class="border-t border-white/10 text-center text-muted"
+  style="margin-top: var(--sp-16); padding-top: var(--sp-10); padding-bottom: calc(var(--sp-10) + var(--safe-b)); font-size: var(--fs-xs)"
+>
   <div class="container-site">
-    <p class="font-display tracking-[0.25em] uppercase text-slate-400">{site.brand}</p>
-    <div class="mt-2">
-      {site.school} · {site.brandZh} ｜ QQ 群 {site.contact.qqGroup} ｜ 微信 {site.contact.wechat}
+    <p
+      class="font-display uppercase text-slate-400"
+      style="letter-spacing: clamp(0.14em, 0.7vw, 0.25em)"
+    >
+      {site.brand}
+    </p>
+    <!-- 窄屏用 flex-wrap 换行,长文本不溢出 -->
+    <div
+      class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
+      style="margin-top: var(--sp-2)"
+    >
+      <span>{site.school} · {site.brandZh}</span>
+      <span class="opacity-40">｜</span>
+      <span>QQ 群 {site.contact.qqGroup}</span>
+      <span class="opacity-40">｜</span>
+      <span>微信 {site.contact.wechat}</span>
     </div>
-    <div class="mt-2 opacity-70">
+    <div class="opacity-70" style="margin-top: var(--sp-2)">
       Infinite Progress · Absolute Productivity · Create Value
     </div>
-    <div class="mt-2 opacity-60">© {new Date().getFullYear()} {site.brand}</div>
+    <div class="opacity-60" style="margin-top: var(--sp-2)">
+      © {new Date().getFullYear()} {site.brand}
+    </div>
   </div>
 </footer>

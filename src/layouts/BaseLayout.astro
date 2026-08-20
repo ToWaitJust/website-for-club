@@ -18,7 +18,11 @@ const pageKey = Astro.url.pathname;
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- viewport-fit=cover:启用 env(safe-area-inset-*),适配刘海/圆角屏 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
@@ -29,12 +33,15 @@ const pageKey = Astro.url.pathname;
       href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5/index.min.css"
     />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <!-- min-h-dvh:移动端地址栏伸缩时不跳动(vh 会) -->
+  <body class="flex min-h-dvh flex-col">
     <Nav />
     <main class="flex-1">
       <slot />
-      <!-- 全站统一反馈信箱 -->
-      <FeedbackBox client:load page={pageKey} apiBase={site.apiBase} />
+      <!-- 全站统一反馈信箱:必须套 container-site,否则窄屏贴边 -->
+      <div class="container-site">
+        <FeedbackBox client:load page={pageKey} apiBase={site.apiBase} />
+      </div>
     </main>
     <Footer />
   </body>

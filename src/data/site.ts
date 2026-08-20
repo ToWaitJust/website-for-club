@@ -23,7 +23,7 @@ export const site = {
   brand: 'AI+CLUB',
   brandZh: 'AI+社团',
   sloganEn: 'Infinite Progress · Absolute Productivity',
-  sloganZh: '创造价值,让每个想法成为现实',
+  sloganZh: '创造价值，经营未来',
   school: '福州大学',
   apiBase: '/yudao-api',
   contact: {

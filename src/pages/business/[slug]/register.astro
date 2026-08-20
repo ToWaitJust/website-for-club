@@ -21,26 +21,37 @@ const line = businessLines.find((l) => l.slug === content.slug)!;
   description={`${line.name} 业务线报名`}
 >
   <section
-    class="relative overflow-hidden pt-32 pb-14 text-center"
-    style="background: radial-gradient(ellipse 90% 70% at 50% -30%, #16244d 0%, #0d1526 55%, #0a0f1e 100%)"
+    class="below-nav relative overflow-hidden text-center"
+    style="padding-bottom: var(--sp-12); background: radial-gradient(ellipse 90% 70% at 50% -30%, #16244d 0%, #0d1526 55%, #0a0f1e 100%)"
   >
     <div
       aria-hidden="true"
-      class="pointer-events-none absolute left-1/2 top-0 h-60 w-[32rem] -translate-x-1/2 rounded-full blur-[100px]"
-      style={`background: radial-gradient(ellipse, ${line.accent}30 0%, transparent 70%)`}
+      class="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 rounded-full"
+      style={`width: min(90vw, 32rem); height: var(--orb-sm); filter: blur(clamp(60px, 13vw, 100px)); background: radial-gradient(ellipse, ${line.accent}30 0%, transparent 70%)`}
     ></div>
     <div class="relative container-site">
-      <p class="font-display text-sm uppercase tracking-[0.35em] text-slate-400">
+      <p
+        class="font-display uppercase text-slate-400"
+        style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.18em, 0.9vw, 0.35em)"
+      >
         Join {line.name}
       </p>
-      <h1 class="mt-2 font-display text-5xl font-bold tracking-tight text-white">
+      <h1
+        class="font-display font-bold tracking-tight text-white [text-wrap:balance]"
+        style="font-size: var(--fs-d2); margin-top: var(--sp-2); overflow-wrap: break-word"
+      >
         {line.name} · Register
       </h1>
-      <p class="mt-3 text-slate-400">{line.tagline}</p>
+      <p class="text-slate-400" style="font-size: var(--fs-sm); margin-top: var(--sp-3)">
+        {line.tagline}
+      </p>
     </div>
   </section>
 
-  <section class="container-site -mt-8 pb-6">
+  <section
+    class="container-site"
+    style="margin-top: calc(-1 * var(--sp-6)); padding-bottom: var(--sp-6)"
+  >
     <RegisterForm
       client:load
       businessLine={line.slug}
