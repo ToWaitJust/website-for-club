@@ -26,6 +26,7 @@ export const site = {
   sloganZh: '创造价值，经营未来',
   school: '福州大学',
   apiBase: '/yudao-api',
+  mockApi: true, // 无后端时设为 true 走模拟数据;部署联调时改为 false
   contact: {
     qqGroup: '待填写',
     wechat: '待填写',

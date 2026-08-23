@@ -3,6 +3,9 @@
 // yudao 统一响应: { code, data, msg },code === 0 为成功
 // 路径约定:统一走 /yudao-api 前缀(本地 dev 由 vite proxy 代理到 48080,生产由 Nginx 反代)
 
+import { site } from '../data/site';
+import { mockRequest } from './mock';
+
 const TENANT_ID = '1';
 
 interface ApiResult<T> {
@@ -15,6 +18,11 @@ async function request<T>(
   path: string,
   options: { method?: string; body?: unknown; token?: string } = {}
 ): Promise<T> {
+  // Mock 模式:不发实际请求,直接返回模拟数据(见 site.ts mockApi 开关)
+  if (site.mockApi) {
+    return mockRequest<T>(path, options);
+  }
+
   const { method = 'GET', body, token } = options;
   const headers: Record<string, string> = { 'tenant-id': TENANT_ID };
   if (body !== undefined) headers['Content-Type'] = 'application/json';
