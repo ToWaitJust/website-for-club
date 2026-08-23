@@ -179,3 +179,45 @@ export async function updateFeedbackStatus(id: number, status: number): Promise<
     token,
   });
 }
+
+// ─── 导出 Excel(管理端)──────────────────────────────────────────────
+async function requestBlob(path: string, token: string): Promise<Blob> {
+  const headers: Record<string, string> = {
+    'tenant-id': TENANT_ID,
+    Authorization: `Bearer ${token}`,
+  };
+  let res: Response;
+  try {
+    res = await fetch(path, { method: 'GET', headers });
+  } catch {
+    throw new Error('网络错误,请稍后再试');
+  }
+  if (!res.ok) throw new Error('导出失败,请稍后再试');
+  return res.blob();
+}
+
+export async function exportRegisters(params: {
+  businessLine?: string;
+  status?: number | '';
+}): Promise<Blob> {
+  const token = getToken();
+  if (!token) throw new Error('未登录');
+  const qs = new URLSearchParams();
+  if (params.businessLine) qs.set('businessLine', params.businessLine);
+  if (params.status !== undefined && params.status !== null && params.status !== '') {
+    qs.set('status', String(params.status));
+  }
+  return requestBlob(`/yudao-api/admin-api/club/register/export-excel?${qs}`, token);
+}
+
+export async function exportFeedbacks(params: {
+  status?: number | '';
+}): Promise<Blob> {
+  const token = getToken();
+  if (!token) throw new Error('未登录');
+  const qs = new URLSearchParams();
+  if (params.status !== undefined && params.status !== null && params.status !== '') {
+    qs.set('status', String(params.status));
+  }
+  return requestBlob(`/yudao-api/admin-api/club/feedback/export-excel?${qs}`, token);
+}

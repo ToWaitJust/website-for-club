@@ -4,6 +4,8 @@
 import { computed, onMounted, ref } from 'vue';
 import {
   clearToken,
+  exportFeedbacks,
+  exportRegisters,
   getFeedbackPage,
   getRegisterPage,
   getToken,
@@ -132,6 +134,47 @@ function switchTab(t: 'register' | 'feedback') {
   if (t === 'register') loadRegister();
   else loadFeedback();
 }
+
+// ─── 导出 ────────────────────────────────────────────────────────────
+const exporting = ref(false);
+
+function downloadBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function doExportRegister() {
+  exporting.value = true;
+  try {
+    const blob = await exportRegisters({
+      businessLine: registerFilter.value.businessLine || undefined,
+      status: registerFilter.value.status,
+    });
+    downloadBlob(blob, `报名记录_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  } catch (e) {
+    alert((e as Error).message);
+  } finally {
+    exporting.value = false;
+  }
+}
+
+async function doExportFeedback() {
+  exporting.value = true;
+  try {
+    const blob = await exportFeedbacks({
+      status: feedbackFilter.value.status,
+    });
+    downloadBlob(blob, `反馈记录_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  } catch (e) {
+    alert((e as Error).message);
+  } finally {
+    exporting.value = false;
+  }
+}
 </script>
 
 <template>
@@ -215,6 +258,12 @@ function switchTab(t: 'register' | 'feedback') {
           class="w-full text-slate-400 sm:ml-auto sm:w-auto"
           style="font-size: var(--fs-sm)"
         >共 {{ registerTotal }} 条</span>
+        <button
+          @click="doExportRegister"
+          :disabled="exporting || registerTotal === 0"
+          class="tap-target flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/15 bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+          style="padding: var(--sp-2) var(--sp-4); font-size: var(--fs-sm)"
+        >Export</button>
       </div>
 
       <p
@@ -419,6 +468,12 @@ function switchTab(t: 'register' | 'feedback') {
           class="w-full text-slate-400 sm:ml-auto sm:w-auto"
           style="font-size: var(--fs-sm)"
         >共 {{ feedbackTotal }} 条</span>
+        <button
+          @click="doExportFeedback"
+          :disabled="exporting || feedbackTotal === 0"
+          class="tap-target flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/15 bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+          style="padding: var(--sp-2) var(--sp-4); font-size: var(--fs-sm)"
+        >Export</button>
       </div>
 
       <p
