@@ -49,35 +49,75 @@ import { businessLines } from '../data/site';
         你访问的页面不存在或已移除,试试下面的链接吧。
       </p>
 
-      <!-- 引导卡片 -->
-      <div
-        class="glass-card mx-auto max-w-[var(--content-max)] rounded-xl"
-        style="margin-top: var(--sp-8); padding: var(--sp-6)"
-      >
+      <!-- 引导区:与首页 BizCard / Hero 设计语言一致 -->
+      <div style="margin-top: var(--sp-10)">
         <p
           class="font-display uppercase text-slate-400"
-          style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.16em, 0.8vw, 0.3em); margin-bottom: var(--sp-4)"
+          style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.16em, 0.8vw, 0.3em); margin-bottom: var(--sp-5)"
         >
           Explore
         </p>
 
-        <div class="flex flex-wrap items-center justify-center gap-f4">
-          <a
-            href="/"
-            class="tap-target flex items-center justify-center rounded-full bg-gradient-to-r from-accent to-accent-soft font-display font-semibold text-white transition hover:opacity-90 active:scale-95"
-            style="padding: var(--sp-3) var(--sp-6); font-size: var(--fs-sm)"
-          >
-            ← Home
-          </a>
+        <!-- Home 按钮:品牌多色渐变,与 text-gradient-brand 同款 -->
+        <a
+          href="/"
+          class="tap-target group mx-auto mb-8 inline-flex items-center justify-center gap-2 rounded-full font-display font-semibold text-white transition-all duration-300 hover:scale-105 active:scale-95"
+          style="padding: var(--sp-3) var(--sp-7); font-size: var(--fs-sm); background: linear-gradient(100deg, #38bdf8 0%, #818cf8 22%, #a78bfa 40%, #f472b6 58%, #fb923c 76%, #34d399 94%); background-size: 220% 100%; box-shadow: 0 0 24px rgba(99, 102, 241, 0.35)"
+        >
+          <span aria-hidden="true">←</span>
+          Home
+        </a>
+
+        <!-- 业务线卡片:与首页 BizCard 设计语言一致 -->
+        <div class="grid gap-f4" style="grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 28vw, 240px), 1fr))">
           {
             businessLines.map((line) => (
               <a
                 href={line.path}
-                class="tap-target flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 font-display font-medium text-white transition hover:bg-white/10 active:scale-95"
-                style="padding: var(--sp-3) var(--sp-5); font-size: var(--fs-sm)"
+                class="glass-card group relative block rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+                style={`--card-accent: ${line.accent}; padding: var(--sp-5)`}
               >
-                <span>{line.icon}</span>
-                {line.name}
+                <!-- 顶部品牌色光条 -->
+                <span
+                  class="absolute inset-x-0 top-0 h-[2px] rounded-t-xl transition-all duration-300 group-hover:h-[3px]"
+                  style={`background: linear-gradient(90deg, transparent, ${line.accent}, transparent)`}
+                ></span>
+
+                <!-- hover 品牌色光晕 -->
+                <span
+                  aria-hidden="true"
+                  class="pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-40"
+                  style={`top: calc(-1 * var(--sp-8)); width: clamp(80px, 20vw, 120px); height: clamp(64px, 16vw, 96px); filter: blur(40px); background: ${line.accent}`}
+                ></span>
+
+                <!-- 图标:带 accent 色背景和光晕 -->
+                <div
+                  class="mx-auto flex items-center justify-center rounded-lg"
+                  style={`width: min(calc(64 * var(--rpx)), 56px); height: min(calc(64 * var(--rpx)), 56px); min-width: 36px; min-height: 36px; margin-bottom: var(--sp-3); font-size: var(--fs-h3); background: ${line.accent}26; box-shadow: 0 0 16px ${line.accent}33`}
+                >
+                  {line.icon}
+                </div>
+
+                <h3
+                  class="font-display font-semibold tracking-wide text-white"
+                  style="font-size: var(--fs-h4)"
+                >
+                  {line.name}
+                </h3>
+                <p
+                  class="font-display text-slate-400"
+                  style="font-size: var(--fs-xs); margin-top: 2px"
+                >
+                  {line.tagline}
+                </p>
+
+                <!-- Explore 链接:与 BizCard 一致 -->
+                <div
+                  class="flex items-center justify-center gap-1 font-display font-medium transition-transform duration-300 group-hover:translate-x-1"
+                  style={`margin-top: var(--sp-3); font-size: var(--fs-xs); color: ${line.accent}`}
+                >
+                  Explore <span aria-hidden="true">→</span>
+                </div>
               </a>
             ))
           }
