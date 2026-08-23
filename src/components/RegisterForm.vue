@@ -2,12 +2,11 @@
 // ─── 报名表单(Vue 岛)────────────────────────────────────────────────
 // 提交: POST {apiBase}/admin-api/club/register (yudao 公开接口 @PermitAll)
 import { ref } from 'vue';
-import { post } from '../lib/api';
+import { api, type RegisterPayload } from '../lib/api';
 
 interface Props {
   businessLine: string;
   businessName: string;
-  apiBase: string;
   open?: boolean;
 }
 
@@ -38,9 +37,17 @@ async function submit() {
   submitting.value = true;
   msg.value = { type: 'info', text: '正在提交…' };
   try {
-    const payload: Record<string, string> = { businessLine: props.businessLine };
-    fields.forEach((f) => { payload[f.key] = (form.value[f.key] || '').trim(); });
-    await post(`${props.apiBase}/admin-api/club/register`, payload);
+    const payload: RegisterPayload = {
+      businessLine: props.businessLine,
+      name: (form.value['name'] || '').trim(),
+      studentId: (form.value['studentId'] || '').trim(),
+      college: (form.value['college'] || '').trim(),
+      major: (form.value['major'] || '').trim(),
+      phone: (form.value['phone'] || '').trim(),
+      wechat: (form.value['wechat'] || '').trim(),
+      motivation: (form.value['motivation'] || '').trim(),
+    };
+    await api.register(payload);
     msg.value = { type: 'success', text: '报名成功!我们会尽快联系你 🎉' };
     form.value = {};
   } catch (e) {

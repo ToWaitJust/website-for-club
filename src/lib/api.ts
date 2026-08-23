@@ -3,6 +3,8 @@
 // yudao 统一响应: { code, data, msg },code === 0 为成功
 // 路径约定:统一走 /yudao-api 前缀(本地 dev 由 vite proxy 代理到 48080,生产由 Nginx 反代)
 
+import { site } from '../data/site';
+
 const TENANT_ID = '1';
 
 interface ApiResult<T> {
@@ -44,6 +46,31 @@ async function request<T>(
 export async function post<T>(path: string, body: unknown): Promise<T> {
   return request<T>(path, { method: 'POST', body });
 }
+
+// ─── 统一入口(契约 §5)───────────────────────────────────────────────
+export interface RegisterPayload {
+  businessLine: string;
+  name: string;
+  studentId: string;
+  college: string;
+  major?: string;
+  phone: string;
+  wechat?: string;
+  motivation?: string;
+}
+
+export interface FeedbackPayload {
+  page: string;
+  name: string;
+  content: string;
+}
+
+export const api = {
+  register: (payload: RegisterPayload) =>
+    post<{ id: number }>(`${site.apiBase}/admin-api/club/register`, payload),
+  feedback: (payload: FeedbackPayload) =>
+    post<null>(`${site.apiBase}/admin-api/club/feedback`, payload),
+};
 
 // ─── token 管理(浏览器 localStorage)──────────────────────────────────
 const TOKEN_KEY = 'club_admin_token';

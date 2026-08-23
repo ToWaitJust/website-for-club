@@ -2,11 +2,10 @@
 // ─── 反馈信箱(Vue 岛)────────────────────────────────────────────────
 // 提交: POST {apiBase}/admin-api/club/feedback (yudao 公开接口 @PermitAll)
 import { ref } from 'vue';
-import { post } from '../lib/api';
+import { api } from '../lib/api';
 
 interface Props {
   page: string;
-  apiBase: string;
 }
 
 const props = defineProps<Props>();
@@ -29,7 +28,7 @@ async function submit() {
   submitting.value = true;
   msg.value = { type: 'info', text: '正在提交…' };
   try {
-    await post(`${props.apiBase}/admin-api/club/feedback`, {
+    await api.feedback({
       page: props.page,
       name: name.value.trim(),
       content: content.value.trim(),

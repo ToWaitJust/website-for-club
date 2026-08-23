@@ -3,7 +3,6 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import FeedbackBox from '../components/FeedbackBox.vue';
-import { site } from '../data/site';
 
 interface Props {
   title: string;
@@ -40,7 +39,7 @@ const pageKey = Astro.url.pathname;
       <slot />
       <!-- 全站统一反馈信箱:必须套 container-site,否则窄屏贴边 -->
       <div class="container-site">
-        <FeedbackBox client:load page={pageKey} apiBase={site.apiBase} />
+        <FeedbackBox client:load page={pageKey} />
       </div>
     </main>
     <Footer />
