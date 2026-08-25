@@ -22,27 +22,27 @@ const line = businessLines.find((l) => l.slug === content.slug)!;
 >
   <section
     class="below-nav relative overflow-hidden text-center"
-    style="padding-bottom: var(--sp-12); background: radial-gradient(ellipse 90% 70% at 50% -30%, #16244d 0%, #0d1526 55%, #0a0f1e 100%)"
+    style="padding-bottom: var(--sp-12); background: var(--head-grad)"
   >
     <div
       aria-hidden="true"
       class="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 rounded-full"
-      style={`width: min(90vw, 32rem); height: var(--orb-sm); filter: blur(clamp(60px, 13vw, 100px)); background: radial-gradient(ellipse, ${line.accent}30 0%, transparent 70%)`}
+      style={`width: min(90vw, 32rem); height: var(--orb-sm); filter: blur(clamp(60px, 13vw, 100px)); background: radial-gradient(ellipse, color-mix(in srgb, ${line.accent} 19%, transparent) 0%, transparent 70%)`}
     ></div>
     <div class="relative container-site">
       <p
-        class="font-display uppercase text-slate-400"
+        class="font-display uppercase text-muted"
         style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.18em, 0.9vw, 0.35em)"
       >
         Join {line.name}
       </p>
       <h1
-        class="font-display font-bold tracking-tight text-white [text-wrap:balance]"
+        class="font-display font-bold tracking-tight text-ink [text-wrap:balance]"
         style="font-size: var(--fs-d2); margin-top: var(--sp-2); overflow-wrap: break-word"
       >
         {line.name} · Register
       </h1>
-      <p class="text-slate-400" style="font-size: var(--fs-sm); margin-top: var(--sp-3)">
+      <p class="text-muted" style="font-size: var(--fs-sm); margin-top: var(--sp-3)">
         {line.tagline}
       </p>
     </div>

@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script>
+(function(){var r=document.documentElement;r.classList.add('js');
+try{var t=localStorage.getItem('wb-theme');if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);}
+else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches){r.setAttribute('data-theme','light');}}
+catch(e){r.setAttribute('data-theme','dark');}})();
+</script>
+<style>
+:root{color-scheme:dark;--bg:#0a0f1e;--bg2:#101a2e;--ink:#e2e8f0;--ink2:#cbd5e1;--muted:#94a3b8;--accent:#7dd3fc;--accent2:#8b9cf5;--line:rgba(255,255,255,0.10);--surface:rgba(255,255,255,0.05);--accent-soft:rgba(59,130,246,0.12);--accent2-soft:rgba(139,156,245,0.12);--shadow-sm:0 1px 2px rgba(0,0,0,0.40);--shadow-md:0 4px 8px rgba(0,0,0,0.5);}
+:root[data-theme='light']{color-scheme:light;--bg:#f5f7fb;--bg2:#ffffff;--ink:#1e293b;--ink2:#475569;--muted:#64748b;--accent:#2563eb;--accent2:#4f46e5;--line:rgba(15,23,42,0.10);--surface:rgba(255,255,255,0.85);--accent-soft:rgba(37,99,235,0.10);--accent2-soft:rgba(79,70,229,0.10);--shadow-sm:0 1px 2px rgba(15,23,42,0.06);--shadow-md:0 4px 10px rgba(15,23,42,0.10);}
+</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>团队 AI+IT 学习规划 · 正式版</title>
     
-    <style>
+    
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -13,8 +24,8 @@
         }
         body {
             font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, sans-serif;
-            background: #0a0f1e;
-            color: #dbe4f0;
+            background: var(--bg);
+            color: var(--ink);
             padding: calc(2rem + 48px) 1.5rem 2rem;
             line-height: 1.7;
         }
@@ -30,12 +41,12 @@
         .main-header h1 {
             font-size: 2.6rem;
             font-weight: 700;
-            color: #7dd3fc;
+            color: var(--accent);
             letter-spacing: -0.5px;
         }
         .main-header p {
             font-size: 1.15rem;
-            color: #94a3b8;
+            color: var(--muted);
             margin-top: 0.3rem;
         }
         .badge-time {
@@ -51,18 +62,18 @@
         }
 
         .section-card {
-            background: linear-gradient(180deg, #101a2e 0%, #0d1526 100%);
+            background: linear-gradient(180deg, var(--bg2) 0%, var(--bg2) 100%);
             border-radius: 24px;
             padding: 2rem 2.2rem;
             margin-bottom: 2.5rem;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--line);
         }
         .section-title {
             font-size: 1.7rem;
             font-weight: 700;
-            color: #7dd3fc;
-            border-left: 6px solid #3b82f6;
+            color: var(--accent);
+            border-left: 6px solid var(--accent);
             padding-left: 1rem;
             margin-bottom: 1.5rem;
             display: flex;
@@ -73,12 +84,12 @@
         .section-title small {
             font-size: 1rem;
             font-weight: 400;
-            color: #94a3b8;
+            color: var(--muted);
         }
         .sub-title {
             font-size: 1.25rem;
             font-weight: 600;
-            color: #e2e8f0;
+            color: var(--ink);
             margin: 1.8rem 0 1rem 0;
             padding-bottom: 0.25rem;
             border-bottom: 2px dashed rgba(255, 255, 255, 0.16);
@@ -87,7 +98,7 @@
             overflow-x: auto;
             margin: 0.8rem 0 1.2rem;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--line);
         }
         table {
             width: 100%;
@@ -96,18 +107,18 @@
             background: transparent;
         }
         th {
-            background: rgba(59, 130, 246, 0.14);
-            color: #bfdbfe;
+            background: color-mix(in srgb, var(--accent) 14%, transparent);
+            color: var(--accent);
             font-weight: 600;
             padding: 0.8rem 1rem;
             text-align: left;
-            border-bottom: 2px solid rgba(59, 130, 246, 0.35);
+            border-bottom: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
         }
         td {
             padding: 0.8rem 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             vertical-align: top;
-            color: #dbe4f0;
+            color: var(--ink);
         }
         tr:last-child td {
             border-bottom: none;
@@ -127,35 +138,35 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
         .resource-list a {
-            color: #7dd3fc;
+            color: var(--accent);
             text-decoration: none;
             font-weight: 500;
             border-bottom: 1px dotted transparent;
             transition: 0.2s;
         }
         .resource-list a:hover {
-            border-bottom-color: #7dd3fc;
-            color: #bfdbfe;
+            border-bottom-color: var(--accent);
+            color: var(--accent);
         }
 
         /* 衔接说明框 - 正式风格 */
         .transition-box {
             background: rgba(59, 130, 246, 0.09);
-            border-left: 5px solid #60a5fa;
+            border-left: 5px solid var(--accent);
             padding: 0.7rem 1.6rem;
             border-radius: 8px;
             margin: 1rem 0 1.2rem 0;
-            color: #cbd5e1;
+            color: var(--ink2);
             font-size: 0.98rem;
             line-height: 1.7;
         }
         .transition-box strong {
-            color: #7dd3fc;
+            color: var(--accent);
         }
 
         .tech-bg-box {
-            background: rgba(59, 130, 246, 0.1);
-            border-left: 6px solid #3b82f6;
+            background: var(--accent-soft);
+            border-left: 6px solid var(--accent);
             padding: 1rem 1.8rem;
             border-radius: 14px;
             margin: 1.2rem 0;
@@ -178,7 +189,7 @@
         .chart-container {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--line);
             padding: 1rem 1rem 0.5rem 1rem;
             margin: 1.5rem 0 0.5rem;
         }
@@ -191,7 +202,7 @@
         }
         .chart-header .chart-label {
             font-weight: 600;
-            color: #e2e8f0;
+            color: var(--ink);
             font-size: 1.05rem;
         }
         .zoom-controls {
@@ -200,14 +211,14 @@
             align-items: center;
         }
         .zoom-controls button {
-            background: #0d1526;
+            background: var(--bg2);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 30px;
             width: 32px;
             height: 32px;
             font-size: 1.1rem;
             font-weight: 600;
-            color: #e2e8f0;
+            color: var(--ink);
             cursor: pointer;
             transition: 0.15s;
             display: flex;
@@ -215,8 +226,8 @@
             justify-content: center;
         }
         .zoom-controls button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #60a5fa;
+            background: var(--line);
+            border-color: var(--accent);
         }
         .zoom-controls .zoom-reset {
             width: auto;
@@ -225,7 +236,7 @@
         }
         .zoom-controls span {
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: var(--muted);
             min-width: 38px;
             text-align: center;
         }
@@ -234,7 +245,7 @@
             width: 100%;
             min-height: 450px;
             max-height: 750px;
-            background: #0a0f1e;
+            background: var(--bg);
             border-radius: 12px;
         }
         .chart-scroll-box .mermaid-wrap {
@@ -283,26 +294,26 @@
         }
         .footer-note {
             text-align: center;
-            color: #94a3b8;
+            color: var(--muted);
             padding: 1.2rem 0 0.3rem;
             font-size: 0.9rem;
         }
 
         /* ===== Timeline（替换 Mermaid 图1） ===== */
         .timeline-cards { display: flex; align-items: stretch; gap: 0.6rem; padding: 0.5rem 0; }
-        .tl-card { flex: 1; background: #101a2e; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 1.2rem 1rem; min-width: 0; }
-        .tl-head { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+        .tl-card { flex: 1; background: var(--bg2); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1rem; min-width: 0; }
+        .tl-head { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--line); }
         .tl-badge { display: inline-block; padding: 0.25rem 0.9rem; border-radius: 20px; font-size: 0.82rem; font-weight: 600; }
-        .tl-badge.blue { background: rgba(14, 165, 233, 0.18); color: #7dd3fc; }
+        .tl-badge.blue { background: rgba(14, 165, 233, 0.18); color: var(--accent); }
         .tl-badge.orange { background: rgba(249, 115, 22, 0.18); color: #fdba74; }
         .tl-badge.purple { background: rgba(168, 85, 247, 0.18); color: #d8b4fe; }
-        .tl-label { font-size: 0.9rem; font-weight: 600; color: #7dd3fc; }
-        .tl-node { margin-bottom: 0.7rem; padding: 0.65rem 0.8rem; background: rgba(255, 255, 255, 0.045); border-radius: 10px; border-left: 3px solid #3b82f6; }
+        .tl-label { font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+        .tl-node { margin-bottom: 0.7rem; padding: 0.65rem 0.8rem; background: rgba(255, 255, 255, 0.045); border-radius: 10px; border-left: 3px solid var(--accent); }
         .tl-card:nth-child(5) .tl-node { border-left-color: #f97316; }
         .tl-card:nth-child(7) .tl-node { border-left-color: #a855f7; }
         .tl-node:last-child { margin-bottom: 0; }
-        .tl-node strong { display: block; font-size: 0.9rem; color: #7dd3fc; margin-bottom: 0.2rem; }
-        .tl-node span { display: block; font-size: 0.82rem; color: #94a3b8; line-height: 1.5; }
+        .tl-node strong { display: block; font-size: 0.9rem; color: var(--accent); margin-bottom: 0.2rem; }
+        .tl-node span { display: block; font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
         .tl-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #818cf8; font-weight: 700; flex-shrink: 0; }
         @media (max-width: 700px) {
             .timeline-cards { flex-direction: column; }
@@ -311,7 +322,11 @@
     </style>
     </head>
 <body>
-    <a href="/" style="position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 24px;background:rgba(10,15,30,.88);backdrop-filter:blur(12px);color:#94a3b8;font-size:13px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.08);font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;">
+<button id="theme-toggle" type="button" aria-label="切换深色/浅色主题">
+<svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+<svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+</button>
+    <a href="/" style="position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 24px;background:rgba(10,15,30,.88);backdrop-filter:blur(12px);color:var(--muted);font-size:13px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.08);font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;">
   <span>&larr; Back to AI+CLUB</span>
   <span>AI+CLUB</span>
 </a>
@@ -332,7 +347,7 @@
                 每个阶段既是对上一阶段的实践验证，又是下一阶段的必要前置。
                 各阶段之间的<strong>衔接说明</strong>阐释了知识依赖关系，确保学习过程平滑递进，避免跳跃。
             </p>
-            <div style="margin-top:1rem; background:#1a2440; padding:0.7rem 1.5rem; border-radius:14px;">
+            <div style="margin-top:1rem; background:var(--bg2); padding:0.7rem 1.5rem; border-radius:14px;">
                 <strong>🎯 最终目标：</strong> 从具备独立全栈开发能力，到能够运用 AI 工程化手段驱动产品持续迭代，形成完整的技术与工程化闭环。
             </div>
         </section>
@@ -346,7 +361,7 @@
 
             <div class="sub-title">1.2 技术栈学习阶段严格控制 AI 介入</div>
             <p style="margin-bottom:0.8rem; line-height:1.7;">在阶段 1-8 中，<strong>AI 仅作为辅助学习工具</strong>（答疑、解释概念、提示方向），不得进入“接管”级别。所有代码需手动编写，所有异常需亲手排查，以建立扎实的工程基础。</p>
-            <p style="background:rgba(59,130,246,0.10); padding:0.7rem 1.5rem; border-radius:12px; line-height:1.7;"><strong>✅ 实施方式</strong>：AI 充当 7×24 小时答疑助教，但核心技能必须通过手动编码和调试内化。</p>
+            <p style="background:var(--accent-soft); padding:0.7rem 1.5rem; border-radius:12px; line-height:1.7;"><strong>✅ 实施方式</strong>：AI 充当 7×24 小时答疑助教，但核心技能必须通过手动编码和调试内化。</p>
 
             <div class="sub-title">1.3 Redis 学习定位</div>
             <p style="line-height:1.7;">Redis 学习目标为 <strong>“理解用途、掌握基本用法、熟悉常见问题及排查方向”</strong>，不深入底层原理或源码分析。</p>
@@ -373,32 +388,32 @@
                 <div class="chart-scroll-box" id="chart1">
                     <div class="mermaid-wrap" id="chart1-wrap">
                         <div class="timeline-cards" style="display:flex;gap:18px;">
-                            <div class="tl-card" style="flex:1;background:#101a2e;border-radius:16px;padding:16px 18px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 6px 22px rgba(0,40,120,.08);">
+                            <div class="tl-card" style="flex:1;background:var(--bg2);border-radius:16px;padding:16px 18px;border:1px solid var(--line);box-shadow:0 6px 22px rgba(0,40,120,.08);">
                                 <div class="tl-head" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                                    <span style="background:#0071e3;color:#fff;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;">阶段 1-8</span>
-                                    <span style="font-weight:700;color:#93c5fd;font-size:15px;">技术栈学习</span>
+                                    <span style="background:var(--accent);color:#fff;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;">阶段 1-8</span>
+                                    <span style="font-weight:700;color:var(--accent);font-size:15px;">技术栈学习</span>
                                 </div>
-                                <div class="tl-node" style="background:#0a0f1e;border-left:4px solid #0071e3;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#93c5fd;margin-bottom:3px;">AI 辅助学习</strong><span style="display:block;color:#a8c0dd;font-size:13px;">7×24 答疑助教 · 解释概念、提示方向</span></div>
-                                <div class="tl-node" style="background:#0a0f1e;border-left:4px solid #0071e3;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#93c5fd;margin-bottom:3px;">代码手写</strong><span style="display:block;color:#a8c0dd;font-size:13px;">不进入"接管"级别</span></div>
+                                <div class="tl-node" style="background:var(--bg);border-left:4px solid var(--accent);padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:var(--accent);margin-bottom:3px;">AI 辅助学习</strong><span style="display:block;color:var(--muted);font-size:13px;">7×24 答疑助教 · 解释概念、提示方向</span></div>
+                                <div class="tl-node" style="background:var(--bg);border-left:4px solid var(--accent);padding:12px 14px;border-radius:10px;"><strong style="display:block;color:var(--accent);margin-bottom:3px;">代码手写</strong><span style="display:block;color:var(--muted);font-size:13px;">不进入"接管"级别</span></div>
                             </div>
                             <div class="tl-arrow" style="display:flex;align-items:center;justify-content:center;font-size:22px;color:#4f46e5;font-weight:800;">→</div>
-                            <div class="tl-card" style="flex:1;background:#101a2e;border-radius:16px;padding:16px 18px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 6px 22px rgba(0,40,120,.08);">
+                            <div class="tl-card" style="flex:1;background:var(--bg2);border-radius:16px;padding:16px 18px;border:1px solid var(--line);box-shadow:0 6px 22px rgba(0,40,120,.08);">
                                 <div class="tl-head" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
                                     <span style="background:#fff3e0;color:#b45309;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;">阶段 9-10</span>
-                                    <span style="font-weight:700;color:#93c5fd;font-size:15px;">AI 接管</span>
+                                    <span style="font-weight:700;color:var(--accent);font-size:15px;">AI 接管</span>
                                 </div>
-                                <div class="tl-node" style="background:rgba(217,119,6,0.14);border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#fdba74;margin-bottom:3px;">AI 部分接管</strong><span style="display:block;color:#e2e8f0;font-size:13px;">DSPy 生成 SQL/API · LangGraph 工作流编排</span></div>
-                                <div class="tl-node" style="background:rgba(217,119,6,0.14);border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#fdba74;margin-bottom:3px;">AI 全环节接管</strong><span style="display:block;color:#e2e8f0;font-size:13px;">CrewAI 多 Agent · 需求→代码→部署</span></div>
+                                <div class="tl-node" style="background:rgba(217,119,6,0.14);border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#fdba74;margin-bottom:3px;">AI 部分接管</strong><span style="display:block;color:var(--ink);font-size:13px;">DSPy 生成 SQL/API · LangGraph 工作流编排</span></div>
+                                <div class="tl-node" style="background:rgba(217,119,6,0.14);border-left:4px solid #d97706;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#fdba74;margin-bottom:3px;">AI 全环节接管</strong><span style="display:block;color:var(--ink);font-size:13px;">CrewAI 多 Agent · 需求→代码→部署</span></div>
                             </div>
                             <div class="tl-arrow" style="display:flex;align-items:center;justify-content:center;font-size:22px;color:#4f46e5;font-weight:800;">→</div>
-                            <div class="tl-card" style="flex:1;background:#101a2e;border-radius:16px;padding:16px 18px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 6px 22px rgba(0,40,120,.08);">
+                            <div class="tl-card" style="flex:1;background:var(--bg2);border-radius:16px;padding:16px 18px;border:1px solid var(--line);box-shadow:0 6px 22px rgba(0,40,120,.08);">
                                 <div class="tl-head" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
                                     <span style="background:#f5f3ff;color:#7c3aed;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;">阶段 11-13</span>
-                                    <span style="font-weight:700;color:#93c5fd;font-size:15px;">自我进化</span>
+                                    <span style="font-weight:700;color:var(--accent);font-size:15px;">自我进化</span>
                                 </div>
-                                <div class="tl-node" style="background:#141b31;border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#93c5fd;margin-bottom:3px;">AI 自循环</strong><span style="display:block;color:#a8c0dd;font-size:13px;">Harness 反馈闭环</span></div>
-                                <div class="tl-node" style="background:#141b31;border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:#93c5fd;margin-bottom:3px;">AI 自我进化</strong><span style="display:block;color:#a8c0dd;font-size:13px;">AgentEvolver / SCOPE</span></div>
-                                <div class="tl-node" style="background:#141b31;border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:#93c5fd;margin-bottom:3px;">产品落地</strong><span style="display:block;color:#a8c0dd;font-size:13px;">AI 全流程驱动</span></div>
+                                <div class="tl-node" style="background:var(--bg2);border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:var(--accent);margin-bottom:3px;">AI 自循环</strong><span style="display:block;color:var(--muted);font-size:13px;">Harness 反馈闭环</span></div>
+                                <div class="tl-node" style="background:var(--bg2);border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;margin-bottom:10px;"><strong style="display:block;color:var(--accent);margin-bottom:3px;">AI 自我进化</strong><span style="display:block;color:var(--muted);font-size:13px;">AgentEvolver / SCOPE</span></div>
+                                <div class="tl-node" style="background:var(--bg2);border-left:4px solid #8b5cf6;padding:12px 14px;border-radius:10px;"><strong style="display:block;color:var(--accent);margin-bottom:3px;">产品落地</strong><span style="display:block;color:var(--muted);font-size:13px;">AI 全流程驱动</span></div>
                             </div>
                         </div>
                     </div>
@@ -824,7 +839,7 @@
                     </tbody>
                 </table>
             </div>
-            <div style="margin-top:1.5rem; background:#1a2440; padding:0.8rem 1.8rem; border-radius:14px;">
+            <div style="margin-top:1.5rem; background:var(--bg2); padding:0.8rem 1.8rem; border-radius:14px;">
                 <p style="font-weight:500;">📌 总学习时长（含全部）：视团队消化能力，约 300h+。</p>
             </div>
         </section>
@@ -837,5 +852,11 @@
 
     </div>
 
-    </body>
+    <script>
+(function(){var b=document.getElementById('theme-toggle');if(!b)return;
+b.addEventListener('click',function(){var r=document.documentElement;
+var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);
+try{localStorage.setItem('wb-theme',n);}catch(e){}});})();
+</script>
+</body>
 </html>

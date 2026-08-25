@@ -40,13 +40,13 @@ async function submit() {
           style="width: min(calc(88 * var(--rpx)), 96px); height: min(calc(88 * var(--rpx)), 96px); min-width: 40px; min-height: 40px; font-size: var(--fs-d2)"
         >♾</span>
         <h1
-          class="font-display font-semibold text-white"
+          class="font-display font-semibold text-ink"
           style="font-size: var(--fs-h2); margin-top: var(--sp-4)"
         >
           Admin Login
         </h1>
         <p
-          class="text-slate-400"
+          class="text-muted"
           style="font-size: var(--fs-sm); margin-top: var(--sp-1)"
         >
           AI+CLUB 运营管理端
@@ -56,7 +56,7 @@ async function submit() {
       <form class="grid gap-f4" style="margin-top: var(--sp-6)" @submit.prevent="submit">
         <div>
           <label
-            class="block font-medium text-slate-300"
+            class="block font-medium text-ink-soft"
             style="font-size: var(--fs-sm); margin-bottom: var(--sp-1)"
           >
             用户名
@@ -66,13 +66,13 @@ async function submit() {
             type="text"
             autocomplete="username"
             placeholder="admin"
-            class="w-full rounded-lg border border-white/10 bg-white/5 text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            class="w-full rounded-lg border border-line bg-surface text-ink placeholder:text-muted outline-none transition focus:border-accent/60 focus:bg-surface-strong focus:ring-2 focus:ring-accent/20"
             style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
           />
         </div>
         <div>
           <label
-            class="block font-medium text-slate-300"
+            class="block font-medium text-ink-soft"
             style="font-size: var(--fs-sm); margin-bottom: var(--sp-1)"
           >
             密码
@@ -82,7 +82,7 @@ async function submit() {
             type="password"
             autocomplete="current-password"
             placeholder="••••••••"
-            class="w-full rounded-lg border border-white/10 bg-white/5 text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            class="w-full rounded-lg border border-line bg-surface text-ink placeholder:text-muted outline-none transition focus:border-accent/60 focus:bg-surface-strong focus:ring-2 focus:ring-accent/20"
             style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
           />
         </div>
@@ -90,7 +90,7 @@ async function submit() {
         <button
           type="submit"
           :disabled="submitting"
-          class="tap-target w-full rounded-full bg-gradient-to-r from-accent to-accent-soft font-display font-semibold text-white transition hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          class="btn-brand tap-target w-full rounded-full bg-gradient-to-r from-accent to-accent-soft font-display font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
           style="padding: var(--sp-3) var(--sp-4); font-size: var(--fs-sm)"
         >
           {{ submitting ? 'Signing in…' : 'Sign In' }}
@@ -100,14 +100,14 @@ async function submit() {
           v-if="msg"
           class="text-center"
           style="font-size: var(--fs-sm)"
-          :class="{ 'text-danger': msg.type === 'error', 'text-slate-400': msg.type === 'info' }"
+          :class="{ 'text-danger': msg.type === 'error', 'text-muted': msg.type === 'info' }"
         >{{ msg.text }}</p>
       </form>
     </div>
 
     <a
       href="/"
-      class="block text-center text-slate-400 transition hover:text-white"
+      class="block text-center text-muted transition hover:text-ink"
       style="font-size: var(--fs-sm); margin-top: var(--sp-5)"
     >← Back to AI+CLUB</a>
   </div>
