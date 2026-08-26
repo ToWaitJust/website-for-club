@@ -29,7 +29,7 @@ async function submit() {
   submitting.value = true;
   msg.value = { type: 'info', text: '正在提交…' };
   try {
-    await post(`${props.apiBase}/admin-api/club/feedback`, {
+    await post(`${props.apiBase}/club/feedback`, {
       page: props.page,
       name: name.value.trim(),
       content: content.value.trim(),

@@ -1,7 +1,11 @@
 // ─── yudao API 封装 ──────────────────────────────────────────────────
 // 契约依据: docs/04-API-CONTRACT.md
 // yudao 统一响应: { code, data, msg },code === 0 为成功
-// 路径约定:统一走 /yudao-api 前缀(本地 dev 由 vite proxy 代理到 48080,生产由 Nginx 反代)
+// 路径约定:统一走 /yudao-api 前缀,【不要再拼 /admin-api】——
+//   dev(vite proxy)与生产(nginx)都会自动补上 /admin-api 前缀。
+//   ✗ 错误示例:/yudao-api/admin-api/system/auth/login → 后端收到
+//     /admin-api/admin-api/... 双前缀 → Sa-Token 401「账号未登录」
+//   ✓ 正确示例:/yudao-api/system/auth/login → 后端 /admin-api/system/auth/login
 
 const TENANT_ID = '1';
 
@@ -78,7 +82,7 @@ export interface LoginResult {
 }
 
 export async function login(username: string, password: string): Promise<LoginResult> {
-  return request<LoginResult>('/yudao-api/admin-api/system/auth/login', {
+  return request<LoginResult>('/yudao-api/system/auth/login', {
     method: 'POST',
     body: { username, password },
   });
@@ -128,7 +132,7 @@ export async function getRegisterPage(params: {
   if (params.status !== undefined && params.status !== null && params.status !== '') {
     qs.set('status', String(params.status));
   }
-  return request<PageResult<RegisterRecord>>(`/yudao-api/admin-api/club/register/page?${qs}`, {
+  return request<PageResult<RegisterRecord>>(`/yudao-api/club/register/page?${qs}`, {
     token,
   });
 }
@@ -136,7 +140,7 @@ export async function getRegisterPage(params: {
 export async function updateRegisterStatus(id: number, status: number): Promise<boolean> {
   const token = getToken();
   if (!token) throw new Error('未登录');
-  return request<boolean>('/yudao-api/admin-api/club/register/update-status', {
+  return request<boolean>('/yudao-api/club/register/update-status', {
     method: 'PUT',
     body: { id, status },
     token,
@@ -165,7 +169,7 @@ export async function getFeedbackPage(params: {
   if (params.status !== undefined && params.status !== null && params.status !== '') {
     qs.set('status', String(params.status));
   }
-  return request<PageResult<FeedbackRecord>>(`/yudao-api/admin-api/club/feedback/page?${qs}`, {
+  return request<PageResult<FeedbackRecord>>(`/yudao-api/club/feedback/page?${qs}`, {
     token,
   });
 }
@@ -173,7 +177,7 @@ export async function getFeedbackPage(params: {
 export async function updateFeedbackStatus(id: number, status: number): Promise<boolean> {
   const token = getToken();
   if (!token) throw new Error('未登录');
-  return request<boolean>('/yudao-api/admin-api/club/feedback/update-status', {
+  return request<boolean>('/yudao-api/club/feedback/update-status', {
     method: 'PUT',
     body: { id, status },
     token,

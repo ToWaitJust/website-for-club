@@ -1,11 +1,12 @@
 // ─── Astro 中间件:本地联调 API 代理 ─────────────────────────────────
 // 作用:dev/preview 模式下,将 /yudao-api/* 请求转发到本机 yudao 后端(48080),
-//      并去掉 /yudao-api 前缀(后端路由是 /admin-api/...)。
-//      使前端统一走 /yudao-api 前缀,与生产 Nginx 反代行为一致。
+//      并把 /yudao-api 前缀替换为 /admin-api(后端路由是 /admin-api/...),
+//      与生产 Nginx 反代(location /yudao-api/ → proxy_pass .../admin-api/)
+//      语义一致。
+// 路径约定:前端统一写 /yudao-api/xxx,【不要再拼 /admin-api】;
+//      若拼了,后端会收到 /admin-api/admin-api/... 双前缀 → Sa-Token 401「账号未登录」。
 // 注意:门户为静态构建(SSG),本中间件不会进入生产产物;
 //      生产环境由 Nginx 将 /yudao-api 反代到后端(见 docs/DEPLOY.md)。
-// 注意:不要再用 astro.config.mjs 的 vite.server.proxy 配 /yudao-api 代理!
-//      那会与这里的 middleware 冲突(proxy 优先,且不带去前缀逻辑,导致 401)。
 import { defineMiddleware } from 'astro:middleware';
 
 const BACKEND = 'http://localhost:48080';
@@ -16,8 +17,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
   try {
-    // 去掉 /yudao-api 前缀后转发到后端(后端路由是 /admin-api/...)
-    const targetPath = url.pathname.replace(/^\/yudao-api/, '') + url.search;
+    // 把 /yudao-api 前缀替换为 /admin-api 后转发到后端
+    const targetPath = url.pathname.replace(/^\/yudao-api/, '/admin-api') + url.search;
     const target = new URL(targetPath, BACKEND);
     // 显式构造转发头:确保 tenant-id / Authorization / Content-Type 完整送达
     const headers = new Headers();

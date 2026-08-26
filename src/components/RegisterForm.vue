@@ -40,7 +40,7 @@ async function submit() {
   try {
     const payload: Record<string, string> = { businessLine: props.businessLine };
     fields.forEach((f) => { payload[f.key] = (form.value[f.key] || '').trim(); });
-    await post(`${props.apiBase}/admin-api/club/register`, payload);
+    await post(`${props.apiBase}/club/register`, payload);
     msg.value = { type: 'success', text: '报名成功!我们会尽快联系你 🎉' };
     form.value = {};
   } catch (e) {
