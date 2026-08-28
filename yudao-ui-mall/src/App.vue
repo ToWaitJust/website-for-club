@@ -18,9 +18,6 @@
           <el-button type="primary" link @click="$router.push('/order')">
             <el-icon><Document /></el-icon> 我的订单
           </el-button>
-          <el-button type="success" link @click="$router.push('/dashboard')">
-            <el-icon><DataAnalysis /></el-icon> 数据大盘
-          </el-button>
         </div>
       </div>
     </header>

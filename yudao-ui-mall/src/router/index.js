@@ -3,7 +3,6 @@ import Home from '../views/Home.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import Cart from '../views/Cart.vue'
 import Order from '../views/Order.vue'
-import Dashboard from '../views/Dashboard.vue'
 import NotFound from '../views/NotFound.vue'
 
 const routes = [
@@ -26,11 +25,6 @@ const routes = [
     path: '/order',
     name: 'Order',
     component: Order
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard
   },
   {
     path: '/:pathMatch(.*)*',
