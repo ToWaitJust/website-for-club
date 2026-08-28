@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { businessLines } from '../data/site';
+---
+
+<BaseLayout
+  title="404 · Page Not Found · AI+CLUB"
+  description="页面不存在或已移除"
+>
+  <section
+    class="below-nav relative flex flex-col items-center justify-center overflow-hidden text-center"
+    style="min-height: 80dvh; background: radial-gradient(ellipse 120% 80% at 50% -20%, #16244d 0%, #0d1526 45%, #0a0f1e 100%)"
+  >
+    <!-- 网格背景:与 Hero 一致 -->
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 opacity-30"
+      style="background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: clamp(32px, 7vw, 56px) clamp(32px, 7vw, 56px); mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%);"
+    >
+    </div>
+
+    <!-- 品牌光斑 -->
+    <div
+      aria-hidden="true"
+      class="orb animate-pulse-slow"
+      style="width: var(--orb-md); height: var(--orb-md); left: 50%; top: 30%; transform: translate(-50%, -50%); filter: blur(clamp(60px, 13vw, 100px)); background: radial-gradient(circle, rgba(59,130,246,.28) 0%, transparent 70%)"
+    >
+    </div>
+
+    <div class="relative container-site" style="padding-top: var(--sp-10); padding-bottom: var(--sp-10)">
+      <!-- 404 巨字:品牌渐变 -->
+      <p
+        class="font-display font-bold text-gradient-brand"
+        style="font-size: var(--fs-d1); line-height: 1; overflow-wrap: break-word"
+      >
+        404
+      </p>
+
+      <h1
+        class="font-display font-semibold tracking-tight text-white"
+        style="font-size: var(--fs-h2); margin-top: var(--sp-4)"
+      >
+        Page Not Found
+      </h1>
+      <p
+        class="text-slate-400"
+        style="font-size: var(--fs-sm); margin-top: var(--sp-3)"
+      >
+        你访问的页面不存在或已移除,试试下面的链接吧。
+      </p>
+
+      <!-- 引导区:与首页 BizCard / Hero 设计语言一致 -->
+      <div style="margin-top: var(--sp-10)">
+        <p
+          class="font-display uppercase text-slate-400"
+          style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.16em, 0.8vw, 0.3em); margin-bottom: var(--sp-5)"
+        >
+          Explore
+        </p>
+
+        <!-- Home 按钮:品牌多色渐变,与 text-gradient-brand 同款 -->
+        <a
+          href="/"
+          class="tap-target group mx-auto mb-8 inline-flex items-center justify-center gap-2 rounded-full font-display font-semibold text-white transition-all duration-300 hover:scale-105 active:scale-95"
+          style="padding: var(--sp-3) var(--sp-7); font-size: var(--fs-sm); background: linear-gradient(100deg, #38bdf8 0%, #818cf8 22%, #a78bfa 40%, #f472b6 58%, #fb923c 76%, #34d399 94%); background-size: 220% 100%; box-shadow: 0 0 24px rgba(99, 102, 241, 0.35)"
+        >
+          <span aria-hidden="true">←</span>
+          Home
+        </a>
+
+        <!-- 业务线卡片:与首页 BizCard 设计语言一致 -->
+        <div class="grid gap-f4" style="grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 28vw, 240px), 1fr))">
+          {
+            businessLines.map((line) => (
+              <a
+                href={line.path}
+                class="glass-card group relative block rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+                style={`--card-accent: ${line.accent}; padding: var(--sp-5)`}
+              >
+                <!-- 顶部品牌色光条 -->
+                <span
+                  class="absolute inset-x-0 top-0 h-[2px] rounded-t-xl transition-all duration-300 group-hover:h-[3px]"
+                  style={`background: linear-gradient(90deg, transparent, ${line.accent}, transparent)`}
+                ></span>
+
+                <!-- hover 品牌色光晕 -->
+                <span
+                  aria-hidden="true"
+                  class="pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-40"
+                  style={`top: calc(-1 * var(--sp-8)); width: clamp(80px, 20vw, 120px); height: clamp(64px, 16vw, 96px); filter: blur(40px); background: ${line.accent}`}
+                ></span>
+
+                <!-- 图标:带 accent 色背景和光晕 -->
+                <div
+                  class="mx-auto flex items-center justify-center rounded-lg"
+                  style={`width: min(calc(64 * var(--rpx)), 56px); height: min(calc(64 * var(--rpx)), 56px); min-width: 36px; min-height: 36px; margin-bottom: var(--sp-3); font-size: var(--fs-h3); background: ${line.accent}26; box-shadow: 0 0 16px ${line.accent}33`}
+                >
+                  {line.icon}
+                </div>
+
+                <h3
+                  class="font-display font-semibold tracking-wide text-white"
+                  style="font-size: var(--fs-h4)"
+                >
+                  {line.name}
+                </h3>
+                <p
+                  class="font-display text-slate-400"
+                  style="font-size: var(--fs-xs); margin-top: 2px"
+                >
+                  {line.tagline}
+                </p>
+
+                <!-- Explore 链接:与 BizCard 一致 -->
+                <div
+                  class="flex items-center justify-center gap-1 font-display font-medium transition-transform duration-300 group-hover:translate-x-1"
+                  style={`margin-top: var(--sp-3); font-size: var(--fs-xs); color: ${line.accent}`}
+                >
+                  Explore <span aria-hidden="true">→</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

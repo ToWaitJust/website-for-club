@@ -1,0 +1,18 @@
+'Log files:
+D:\git\website-for-club\yudao-backend\yudao-ui\yudao-ui-admin-vue3\.npm-cache\_logs\2026-08-25T13_48_48_977Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: yudao-ui-admin-vue3@2026.07-snapshot
+Found: video.js@8.24.0
+node_modules/video.js
+  video.js@"^8.23.8" from the root project
+
+Could not resolve dependency:
+peer video.js@"7.x" from @videojs-player/vue@1.0.0
+node_modules/@videojs-player/vue
+  @videojs-player/vue@"^1.0.0" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.
