@@ -32,6 +32,26 @@ const pageKey = Astro.url.pathname;
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5/index.min.css"
     />
+    <!-- 首绘前应用主题(防闪烁):读 localStorage,缺省跟随系统偏好 -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        try {
+          var t = localStorage.getItem('wb-theme');
+          if (t === 'light' || t === 'dark') {
+            root.setAttribute('data-theme', t);
+          } else if (
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: light)').matches
+          ) {
+            root.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {
+          root.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
   <!-- min-h-dvh:移动端地址栏伸缩时不跳动(vh 会) -->
   <body class="flex min-h-dvh flex-col">
@@ -44,5 +64,31 @@ const pageKey = Astro.url.pathname;
       </div>
     </main>
     <Footer />
+    <!-- 全局滚动显现:进入视口才显示,交错延迟用 style="--reveal-delay" -->
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('[data-reveal]');
+        if (!('IntersectionObserver' in window) || !els.length) {
+          els.forEach(function (el) {
+            el.classList.add('is-in');
+          });
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (en) {
+              if (en.isIntersecting) {
+                en.target.classList.add('is-in');
+                io.unobserve(en.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
+        );
+        els.forEach(function (el) {
+          io.observe(el);
+        });
+      })();
+    </script>
   </body>
 </html>

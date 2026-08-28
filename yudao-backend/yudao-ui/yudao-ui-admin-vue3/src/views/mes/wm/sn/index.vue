@@ -1,4 +1,9 @@
 <template>
+  <doc-alert
+    title="【仓库】仓库与库区库位、条码赋码、SN码"
+    url="https://doc.iocoder.cn/mes/wm/warehouse-setup/"
+  />
+
   <ContentWrap>
     <!-- 搜索工作栏 -->
     <el-form
@@ -8,23 +13,17 @@
       :inline="true"
       label-width="68px"
     >
-      <el-form-item label="SN 码" prop="snCode">
+      <el-form-item label="SN 码" prop="code">
         <el-input
-          v-model="queryParams.snCode"
+          v-model="queryParams.code"
           placeholder="请输入 SN 码"
           clearable
           @keyup.enter="handleQuery"
           class="!w-240px"
         />
       </el-form-item>
-      <el-form-item label="物料ID" prop="itemId">
-        <el-input
-          v-model="queryParams.itemId"
-          placeholder="请输入物料ID"
-          clearable
-          @keyup.enter="handleQuery"
-          class="!w-240px"
-        />
+      <el-form-item label="物料" prop="itemId">
+        <MdItemSelect v-model="queryParams.itemId" class="!w-240px" />
       </el-form-item>
       <el-form-item label="批次号" prop="batchCode">
         <el-input
@@ -49,12 +48,7 @@
       <el-form-item>
         <el-button @click="handleQuery"><Icon icon="ep:search" class="mr-5px" /> 搜索</el-button>
         <el-button @click="resetQuery"><Icon icon="ep:refresh" class="mr-5px" /> 重置</el-button>
-        <el-button
-          type="primary"
-          plain
-          @click="openForm()"
-          v-hasPermi="['mes:wm-sn:create']"
-        >
+        <el-button type="primary" plain @click="openForm()" v-hasPermi="['mes:wm-sn:create']">
           <Icon icon="ep:plus" class="mr-5px" /> 生成 SN 码
         </el-button>
         <el-button
@@ -73,11 +67,23 @@
   <!-- 列表 -->
   <ContentWrap>
     <el-table v-loading="loading" :data="list" stripe>
-      <el-table-column label="SN 码" align="center" prop="snCode" min-width="180" />
       <el-table-column label="物料编码" align="center" prop="itemCode" min-width="120" />
       <el-table-column label="物料名称" align="center" prop="itemName" min-width="150" />
       <el-table-column label="规格型号" align="center" prop="specification" min-width="120" />
+      <el-table-column label="单位" align="center" prop="unitName" min-width="80" />
       <el-table-column label="批次号" align="center" prop="batchCode" min-width="120" />
+      <el-table-column label="SN 码数量" align="center" prop="count" min-width="100">
+        <template #default="scope">
+          <el-button
+            link
+            type="primary"
+            @click="openDetail(scope.row)"
+            v-hasPermi="['mes:wm-sn:query']"
+          >
+            {{ scope.row.count }}
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column
         label="生成时间"
         align="center"
@@ -85,12 +91,28 @@
         :formatter="dateFormatter"
         width="180px"
       />
-      <el-table-column label="操作" align="center" width="120" fixed="right">
+      <el-table-column label="操作" align="center" width="240" fixed="right">
         <template #default="scope">
           <el-button
             link
+            type="primary"
+            @click="openDetail(scope.row)"
+            v-hasPermi="['mes:wm-sn:query']"
+          >
+            查看明细
+          </el-button>
+          <el-button
+            link
+            type="primary"
+            @click="handleExportDetail(scope.row.uuid)"
+            v-hasPermi="['mes:wm-sn:export']"
+          >
+            导出明细
+          </el-button>
+          <el-button
+            link
             type="danger"
-            @click="handleDelete(scope.row.id)"
+            @click="handleDelete(scope.row.uuid)"
             v-hasPermi="['mes:wm-sn:delete']"
           >
             删除
@@ -107,54 +129,46 @@
     />
   </ContentWrap>
 
-  <!-- 生成对话框 -->
-  <el-dialog :title="'生成 SN 码'" v-model="dialogVisible" width="600px">
-    <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px">
-      <el-form-item label="物料ID" prop="itemId">
-        <el-input-number v-model="formData.itemId" :min="1" controls-position="right" class="!w-full" />
-      </el-form-item>
-      <el-form-item label="批次号" prop="batchCode">
-        <el-input v-model="formData.batchCode" placeholder="请输入批次号" maxlength="100" />
-      </el-form-item>
-      <el-form-item label="生成数量" prop="snNum">
-        <el-input-number v-model="formData.snNum" :min="1" :max="1000" />
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <el-button @click="dialogVisible = false">取消</el-button>
-      <el-button type="primary" @click="submitForm" :loading="formLoading">确定</el-button>
-    </template>
-  </el-dialog>
+  <!-- 表单弹窗：生成 SN 码 -->
+  <WmSnGenerateForm ref="formRef" @success="getList" />
+
+  <!-- SN 码明细弹窗 -->
+  <WmSnDetailDialog ref="detailRef" />
 </template>
 
 <script setup lang="ts">
 import { dateFormatter } from '@/utils/formatTime'
-import { WmSnApi, WmSnVO, WmSnGenerateVO } from '@/api/mes/wm/sn'
+import download from '@/utils/download'
+import * as WmSnApi from '@/api/mes/wm/sn'
+import MdItemSelect from '@/views/mes/md/item/components/MdItemSelect.vue'
+import WmSnGenerateForm from './WmSnGenerateForm.vue'
+import WmSnDetailDialog from './WmSnDetailDialog.vue'
 
 defineOptions({ name: 'MesWmSn' })
 
-const message = useMessage()
-const { t } = useI18n()
+const message = useMessage() // 消息弹窗
 
-const loading = ref(true)
-const list = ref<WmSnVO[]>([])
-const total = ref(0)
+const loading = ref(true) // 列表的加载中
+const list = ref<WmSnApi.WmSnGroupVO[]>([]) // 列表的数据
+const total = ref(0) // 列表的总页数
 const queryParams = reactive({
+  // 查询参数
   pageNo: 1,
   pageSize: 10,
-  snCode: undefined,
+  uuid: undefined,
+  code: undefined,
   itemId: undefined,
   batchCode: undefined,
   createTime: []
 })
-const queryFormRef = ref()
-const exportLoading = ref(false)
+const queryFormRef = ref() // 搜索的表单
+const exportLoading = ref(false) // 导出的加载中
 
 /** 查询列表 */
 const getList = async () => {
   loading.value = true
   try {
-    const data = await WmSnApi.getSnPage(queryParams)
+    const data = await WmSnApi.getSnGroupPage(queryParams)
     list.value = data.list
     total.value = data.total
   } finally {
@@ -174,74 +188,55 @@ const resetQuery = () => {
   handleQuery()
 }
 
-/** 生成对话框 */
-const dialogVisible = ref(false)
-const formLoading = ref(false)
-const formData = ref<WmSnGenerateVO>({
-  itemId: undefined,
-  batchCode: undefined,
-  workOrderId: undefined,
-  snNum: 100
-})
-const formRules = reactive({
-  itemId: [{ required: true, message: '物料不能为空', trigger: 'change' }],
-  snNum: [{ required: true, message: '生成数量不能为空', trigger: 'blur' }]
-})
-const formRef = ref()
-
-/** 打开生成对话框 */
+/** 添加/修改操作 */
+const formRef = ref() // 表单 Ref
 const openForm = () => {
-  dialogVisible.value = true
-  resetForm()
+  formRef.value.open()
 }
 
-/** 重置表单 */
-const resetForm = () => {
-  formData.value = {
-    itemId: undefined,
-    batchCode: undefined,
-    workOrderId: undefined,
-    snNum: 100
-  }
-  formRef.value?.resetFields()
-}
-
-/** 提交表单 */
-const submitForm = async () => {
-  await formRef.value.validate()
-  formLoading.value = true
-  try {
-    await WmSnApi.generateSnCodes(formData.value)
-    message.success('生成成功')
-    dialogVisible.value = false
-    await getList()
-  } finally {
-    formLoading.value = false
-  }
+/** 查看 SN 码明细 */
+const detailRef = ref()
+const openDetail = (row: WmSnApi.WmSnGroupVO) => {
+  detailRef.value.open(row)
 }
 
 /** 删除按钮操作 */
-const handleDelete = async (id: number) => {
+const handleDelete = async (uuid: string) => {
   try {
     await message.delConfirm()
-    await WmSnApi.deleteSnBatch(String(id))
+    await WmSnApi.deleteSnBatch(uuid)
     message.success('删除成功')
     await getList()
   } catch {}
 }
 
-/** 导出按钮操作 */
+/** 导出分组按钮操作 */
 const handleExport = async () => {
   try {
+    // 导出的二次确认
     await message.exportConfirm()
+    // 发起导出
     exportLoading.value = true
-    await WmSnApi.exportSnExcel(queryParams)
+    const data = await WmSnApi.exportSnGroupExcel(queryParams)
+    download.excel(data, 'SN码分组.xls')
   } catch {
   } finally {
     exportLoading.value = false
   }
 }
 
+/** 导出批次明细按钮操作 */
+const handleExportDetail = async (uuid: string) => {
+  try {
+    // 导出的二次确认
+    await message.exportConfirm()
+    // 发起导出
+    const data = await WmSnApi.exportSnDetailExcel(uuid)
+    download.excel(data, 'SN码明细.xls')
+  } catch {}
+}
+
+/** 初始化 **/
 onMounted(() => {
   getList()
 })

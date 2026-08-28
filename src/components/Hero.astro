@@ -5,13 +5,13 @@ import { site } from '../data/site';
 <!-- Hero:min-h 用 dvh(移动端地址栏伸缩不跳动),高度为固定导航留白 -->
 <section
   class="relative flex flex-col items-center justify-center overflow-hidden text-center"
-  style="min-height: 92dvh; padding: calc(var(--nav-h) + var(--sp-12)) var(--container-px) var(--sp-12); background: radial-gradient(ellipse 120% 80% at 50% -20%, #16244d 0%, #0d1526 45%, #0a0f1e 100%)"
+  style="min-height: 92dvh; padding: calc(var(--nav-h) + var(--sp-12)) var(--container-px) var(--sp-12); background: var(--hero-grad)"
 >
   <!-- 网格背景:网格尺寸随屏幕缩放,窄屏不会显得过密 -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute inset-0 opacity-40"
-    style="background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: clamp(32px, 7vw, 56px) clamp(32px, 7vw, 56px); mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%);"
+    class="pointer-events-none absolute inset-0"
+    style="background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); background-size: clamp(32px, 7vw, 56px) clamp(32px, 7vw, 56px); mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 25%, transparent 75%);"
   ></div>
 
   <!-- 粒子画布:漂浮光点 + 星座连线 + 鼠标吸引 + 点击爆发 -->
@@ -39,39 +39,39 @@ import { site } from '../data/site';
     style="width: var(--orb-sm); height: var(--orb-sm); left: 28%; bottom: 10%; transform: translate(-30%, 20%); filter: blur(clamp(65px, 14vw, 110px)); background: radial-gradient(circle, rgba(52,211,153,.18) 0%, transparent 70%); animation-delay: -4s"
   ></div>
 
-  <!-- 内容:content-max 随屏放大铺满,大屏封顶防行长过长 -->
-  <div class="relative w-full max-w-[var(--content-max)] animate-fade-up">
-    <!-- 徽标:纯无限符号,多色渐变文字,尺寸随屏等比 -->
+  <!-- 内容:content-max 随屏放大铺满,大屏封顶防行长过长;阶梯入场 -->
+  <div class="relative w-full max-w-[var(--content-max)]">
+    <!-- 徽标:纯无限符号,多色渐变文字,尺寸随屏等比;入场后持续渐变流动 -->
     <div
       class="mx-auto flex items-center justify-center font-bold text-gradient-brand"
-      style="margin-bottom: var(--sp-6); font-size: clamp(64px, calc(140 * var(--rpx)), 120px); line-height: 1"
+      style="margin-bottom: var(--sp-6); font-size: clamp(64px, calc(140 * var(--rpx)), 120px); line-height: 1; animation: fadeUp 0.6s ease both, text-gradient-flow 7s ease-in-out infinite; animation-delay: 0.05s"
     >
       ♾
     </div>
 
     <p
-      class="font-display uppercase text-slate-400"
-      style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.18em, 0.9vw, 0.35em); margin-bottom: var(--sp-2)"
+      class="animate-fade-up font-display uppercase text-muted"
+      style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.18em, 0.9vw, 0.35em); margin-bottom: var(--sp-2); animation-delay: 0.15s"
     >
       {site.school} · {site.brandZh}
     </p>
 
-    <!-- 巨标题:流式字号 40→76px;break-words 防超长英文撑破窄屏 -->
+    <!-- 巨标题:与左上角 logo 同款多色渐变,持续流动;break-words 防超长英文撑破窄屏 -->
     <h1
-      class="font-display font-bold tracking-tight text-white [text-wrap:balance]"
-      style="font-size: var(--fs-d1); line-height: 1.05; overflow-wrap: break-word"
+      class="font-display font-bold tracking-tight text-gradient-brand [text-wrap:balance]"
+      style="font-size: var(--fs-d1); line-height: 1.05; overflow-wrap: break-word; animation: fadeUp 0.6s ease both, text-gradient-flow 7s ease-in-out infinite; animation-delay: 0.25s"
     >
       {site.brand}
     </h1>
 
     <p
-      class="font-display font-medium text-gradient-brand [text-wrap:balance]"
-      style="font-size: var(--fs-h2); letter-spacing: 0.02em; margin-top: var(--sp-4)"
+      class="animate-fade-up font-display font-medium text-gradient-brand [text-wrap:balance]"
+      style="font-size: var(--fs-h2); letter-spacing: 0.02em; margin-top: var(--sp-4); animation-delay: 0.38s"
     >
       {site.sloganEn}
     </p>
 
-    <p class="text-slate-400" style="font-size: var(--fs-sm); margin-top: var(--sp-3)">
+    <p class="animate-fade-up text-muted" style="font-size: var(--fs-sm); margin-top: var(--sp-3); animation-delay: 0.5s">
       {site.sloganZh}
     </p>
   </div>
@@ -88,7 +88,12 @@ import { site } from '../data/site';
     let W = 0;
     let H = 0;
     let dpr = 1;
-    const COLORS = ['#60a5fa', '#a78bfa', '#34d399', '#f472b6', '#fbbf24'];
+    // 深/浅主题各一套配色:浅色下用深饱和色保证可见
+    const COLORS_DARK = ['#60a5fa', '#a78bfa', '#34d399', '#f472b6', '#fbbf24'];
+    const COLORS_LIGHT = ['#2563eb', '#7c3aed', '#059669', '#db2777', '#d97706'];
+    const isLight = () => document.documentElement.getAttribute('data-theme') === 'light';
+    const lineRGB = () => (isLight() ? '37,99,235' : '147,197,253');
+    let COLORS = isLight() ? COLORS_LIGHT : COLORS_DARK;
     const parts = [];
     const bursts = [];
     let mouse = { x: -1e4, y: -1e4 };
@@ -154,7 +159,7 @@ import { site } from '../data/site';
           const d = Math.hypot(dx, dy);
           if (d < LINK) {
             const a = (1 - d / LINK) * 0.4;
-            ctx.strokeStyle = `rgba(147,197,253,${a})`;
+            ctx.strokeStyle = `rgba(${lineRGB()},${a})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
@@ -274,6 +279,11 @@ import { site } from '../data/site';
       canvas.addEventListener('pointermove', onMove);
       canvas.addEventListener('pointerdown', onDown);
       canvas.addEventListener('pointerleave', onLeave);
+      // 主题切换时换配色并重建粒子
+      new MutationObserver(() => {
+        COLORS = isLight() ? COLORS_LIGHT : COLORS_DARK;
+        init();
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
       loop();
     }
   })();

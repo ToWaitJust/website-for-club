@@ -57,24 +57,28 @@ export default {
         site: 'var(--container-max)',
       },
       colors: {
+        // 全部引用 global.css 的语义变量 → 深/浅主题自动切换
         ink: {
-          DEFAULT: '#f5f5f7',
-          soft: '#a1a1aa',
+          DEFAULT: 'var(--ink)',
+          soft: 'var(--ink-2)',
         },
-        muted: '#71717a',
-        bg: '#0a0f1e',
-        surface: 'rgba(255,255,255,0.05)',
-        line: 'rgba(255,255,255,0.10)',
+        muted: 'var(--muted)',
+        bg: 'var(--bg)',
+        'bg-2': 'var(--bg-2)',
+        surface: 'var(--surface)',
+        'surface-strong': 'var(--surface-strong)',
+        line: 'var(--line)',
+        'line-strong': 'var(--line-strong)',
         accent: {
-          DEFAULT: '#3b82f6',
-          soft: '#a78bfa',
+          DEFAULT: 'var(--accent)',
+          soft: 'var(--accent-2)',
         },
-        'ai-it': '#3b82f6',
-        'ai-biz': '#a78bfa',
-        'ai-embed': '#34d399',
-        success: '#34d399',
-        danger: '#f87171',
-        warning: '#fbbf24',
+        'ai-it': 'var(--it)',
+        'ai-biz': 'var(--biz)',
+        'ai-embed': 'var(--embed)',
+        success: 'var(--success)',
+        danger: 'var(--danger)',
+        warning: 'var(--warning)',
       },
       fontFamily: {
         sans: [
@@ -95,9 +99,8 @@ export default {
         xl: '24px',
       },
       boxShadow: {
-        card: '0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35)',
-        'card-hover':
-          '0 2px 4px rgba(0,0,0,.45), 0 16px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06)',
+        card: 'var(--shadow-card)',
+        'card-hover': 'var(--shadow-hover)',
       },
       animation: {
         'fade-up': 'fadeUp 0.6s ease both',

@@ -47,7 +47,8 @@ spring:
       primary: master
       datasource:
         master:
-          url: jdbc:mysql://127.0.0.1:3306/yudao_club?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true # 社团项目专用库(2026-08-19 新建)
+          # 数据库连接:默认本地 dev 库;通过 .env / 环境变量 MYSQL_URL 等覆盖可指向服务器(如 web_for_club)。密钥不入库
+          url: ${MYSQL_URL:jdbc:mysql://127.0.0.1:3306/yudao_club?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true}
           #          url: jdbc:mysql://127.0.0.1:3306/ruoyi-vue-pro?useSSL=true&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true # MySQL Connector/J 5.X 连接的示例
           #          url: jdbc:postgresql://127.0.0.1:5432/ruoyi-vue-pro # PostgreSQL 连接的示例
           #          url: jdbc:oracle:thin:@127.0.0.1:1521:xe # Oracle 连接的示例
@@ -56,8 +57,8 @@ spring:
           #          url: jdbc:kingbase8://127.0.0.1:54321/test  # 人大金仓 KingbaseES 连接的示例
           #          url: jdbc:postgresql://127.0.0.1:5432/postgres # OpenGauss 连接的示例
           #          url: jdbc:postgresql://127.0.0.1:5866/ruoyi-vue-pro # 瀚高 HighGo 连接的示例
-          username: root
-          password: 123456
+          username: ${MYSQL_USERNAME:root}
+          password: ${MYSQL_PASSWORD:1234}
           #          username: sa # SQL Server 连接的示例
           #          password: Yudao@2024 # SQL Server 连接的示例
           #          username: SYSDBA # DM 连接的示例
@@ -70,7 +71,7 @@ spring:
           lazy: true # 开启懒加载，保证启动速度
           url: jdbc:mysql://127.0.0.1:3306/ruoyi-vue-pro?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&nullCatalogMeansCurrent=true
           username: root
-          password: 123456
+          password: 1234
 #        tdengine: # IoT 数据库（需要 IoT 物联网再开启噢！）
 #          lazy: true # 开启懒加载，保证启动速度
 #          url: jdbc:TAOS-WS://127.0.0.1:6041/ruoyi_vue_pro?varcharAsString=true&enableAutoReconnect=true # 参见：https://t.zsxq.com/qaX9c，开启 TDengine WebSocket 自动重连
@@ -83,10 +84,11 @@ spring:
   # Redis 配置。Redisson 默认的配置足够使用，一般不需要进行调优
   data:
     redis:
-      host: 127.0.0.1 # 地址
-      port: 6379 # 端口
-      database: 0 # 数据库索引
-#      password: dev # 密码，建议生产环境开启
+      host: ${REDIS_HOST:127.0.0.1} # 地址
+      port: ${REDIS_PORT:6379} # 端口
+      database: ${REDIS_DATABASE:0} # 数据库索引
+      # username: ${REDIS_USERNAME:} # 用户名,服务器 Redis(ACL)通过 .env 设置
+      password: ${REDIS_PASSWORD:123456} # 密码,通过 .env / 环境变量覆盖(生产建议开启)
 
 --- #################### 定时任务相关配置 ####################
 
@@ -172,7 +174,7 @@ spring:
 # 日志文件配置
 logging:
   file:
-    name: ${user.home}/logs/${spring.application.name}.log # 日志文件名，全路径
+    name: ./logs/${spring.application.name}.log # 日志文件名，全路径
   level:
     # 配置自己写的 MyBatis Mapper 打印日志
     cn.iocoder.yudao.module.bpm.dal.mysql: debug
@@ -238,6 +240,9 @@ yudao:
     enable: false # 本地环境，暂时关闭图片验证码，方便登录等接口的测试；
   security:
     mock-enable: true
+    permit-all-urls:
+      - /admin-api/mall/app/**
+      - /admin-api/mall/statistics/**
   pay:
     order-notify-url: https://yutou.mynatapp.cc/admin-api/pay/notify/order # 支付渠道的【支付】回调地址
     refund-notify-url: https://yutou.mynatapp.cc/admin-api/pay/notify/refund # 支付渠道的【退款】回调地址

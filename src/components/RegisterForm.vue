@@ -58,13 +58,13 @@ async function submit() {
   >
     <template v-if="props.open">
       <h2
-        class="font-display font-semibold text-white"
+        class="font-display font-semibold text-ink"
         style="font-size: var(--fs-h2)"
       >
         Join {{ props.businessName }}
       </h2>
       <p
-        class="text-slate-400"
+        class="text-muted"
         style="font-size: var(--fs-sm); margin-top: var(--sp-1)"
       >
         填写信息提交后,我们会在招新周期内通过微信 / 短信联系你。
@@ -83,7 +83,7 @@ async function submit() {
           :class="{ 'sm:col-span-2': f.area }"
         >
           <label
-            class="block font-medium text-slate-300"
+            class="block font-medium text-ink-soft"
             style="font-size: var(--fs-sm); margin-bottom: var(--sp-1)"
           >
             {{ f.label }} <span v-if="f.required" class="text-danger">*</span>
@@ -95,7 +95,7 @@ async function submit() {
             :placeholder="f.placeholder"
             :maxlength="f.max"
             rows="3"
-            class="w-full resize-y rounded-lg border border-white/10 bg-white/5 text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            class="w-full resize-y rounded-lg border border-line bg-surface text-ink placeholder:text-muted outline-none transition focus:border-accent/60 focus:bg-surface-strong focus:ring-2 focus:ring-accent/20"
             style="padding: var(--sp-3) var(--sp-3); min-height: calc(var(--tap) * 1.8)"
           ></textarea>
           <input
@@ -104,7 +104,7 @@ async function submit() {
             type="text"
             :placeholder="f.placeholder"
             :maxlength="f.max"
-            class="w-full rounded-lg border border-white/10 bg-white/5 text-white placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+            class="w-full rounded-lg border border-line bg-surface text-ink placeholder:text-muted outline-none transition focus:border-accent/60 focus:bg-surface-strong focus:ring-2 focus:ring-accent/20"
             style="padding: var(--sp-2) var(--sp-3); min-height: var(--tap)"
           />
         </div>
@@ -125,7 +125,7 @@ async function submit() {
             v-if="msg"
             class="min-w-0"
             style="font-size: var(--fs-sm)"
-            :class="{ 'text-success': msg.type === 'success', 'text-danger': msg.type === 'error', 'text-slate-400': msg.type === 'info' }"
+            :class="{ 'text-success': msg.type === 'success', 'text-danger': msg.type === 'error', 'text-muted': msg.type === 'info' }"
           >{{ msg.text }}</span>
         </div>
       </form>
@@ -133,13 +133,13 @@ async function submit() {
 
     <template v-else>
       <p
-        class="text-center font-display text-white"
+        class="text-center font-display text-ink"
         style="font-size: var(--fs-h3)"
       >
         Registration Closed
       </p>
       <p
-        class="text-center text-slate-400"
+        class="text-center text-muted"
         style="font-size: var(--fs-sm); margin-top: var(--sp-2)"
       >
         {{ props.businessName }} 的报名通道当前关闭,请关注公告或加入咨询群。

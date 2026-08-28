@@ -28,3 +28,11 @@ logs/
 
 # 本地临时文件
 temp_screenshot.png
+
+# 大文件 / 误生成文件
+website.zip
+*.zip
+Test-NetConnection
+
+# 含真实服务器凭据的配置文件(已改用 .env 注入,勿提交)
+yudao-backend/yudao-server/src/main/resources/application-dev.yaml

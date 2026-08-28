@@ -14,27 +14,28 @@ import { businessLines, notices } from '../data/site';
 
   <!-- 业务线:负上边距用 --sp-* 流式,窄屏不会与 Hero 重叠过多 -->
   <section
-    class="container-site relative"
+    id="tracks"
+    class="container-site relative scroll-mt-24"
     style="margin-top: calc(-1 * var(--sp-10)); padding-bottom: var(--sp-6)"
   >
     <!-- 区域光晕:让卡片毛玻璃有内容可模糊 -->
     <div
       aria-hidden="true"
       class="pointer-events-none absolute inset-x-0 mx-auto rounded-full opacity-60"
-      style="top: calc(-1 * var(--sp-12)); height: var(--orb-sm); max-width: 42rem; filter: blur(clamp(70px, 15vw, 120px)); background: radial-gradient(ellipse, rgba(59,130,246,.16) 0%, transparent 70%)"
+      style="top: calc(-1 * var(--sp-12)); height: var(--orb-sm); max-width: 42rem; filter: blur(clamp(70px, 15vw, 120px)); background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 70%)"
     >
     </div>
 
     <div class="relative">
-      <div class="text-center" style="margin-bottom: var(--sp-6)">
+      <div class="text-center" data-reveal style="margin-bottom: var(--sp-8)">
         <h2
-          class="font-display uppercase text-slate-400"
+          class="font-display uppercase text-muted"
           style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.16em, 0.8vw, 0.3em)"
         >
           Our Tracks
         </h2>
         <p
-          class="font-semibold text-white"
+          class="font-semibold text-ink"
           style="font-size: var(--fs-h2); margin-top: var(--sp-1)"
         >
           AI+Everything
@@ -42,10 +43,13 @@ import { businessLines, notices } from '../data/site';
       </div>
 
       <!-- 单列 → md 三列;gap 流式(加大间距,保证三卡清晰隔开) -->
-      <div class="grid gap-f12 md:grid-cols-3">
+      <div class="grid gap-f6 md:grid-cols-3">
         {
           businessLines.map((line, i) => (
-            <div class="animate-fade-up" style={`animation-delay: ${i * 100}ms`}>
+            <div
+              data-reveal
+              style={`--reveal-delay: ${i * 110}ms`}
+            >
               <BizCard line={line} />
             </div>
           ))
@@ -54,15 +58,159 @@ import { businessLines, notices } from '../data/site';
     </div>
   </section>
 
-  <!-- 公告 -->
-  <section class="container-site" style="margin-top: var(--sp-16)">
+  <!-- 关于我们:拆分多卡,呼吸感 -->
+  <section class="container-site" style="margin-top: var(--sp-20)">
+    <div class="text-center" data-reveal style="margin-bottom: var(--sp-10)">
+      <h2 class="font-display uppercase text-muted" style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.16em,0.8vw,0.3em)">About Us</h2>
+      <p class="font-semibold text-ink" style="font-size: var(--fs-h2); margin-top: var(--sp-1)">关于我们</p>
+    </div>
+
+    <!-- 简介大卡:全宽,与各卡片边界对齐 -->
+    <div class="glass-card card-lift rounded-xl" data-reveal style="padding: var(--sp-10) var(--sp-8)">
+      <p class="text-ink-soft" style="font-size: var(--fs-base); line-height: 1.9">
+        AI+创新实践协会是面向全校学生开展 AI 应用学习、跨专业协作和真实项目实践的创新型学生社团。协会围绕
+        <span class="font-semibold text-ink">AI+业务、AI+IT、AI+嵌入式</span>
+        三个方向，通过公开活动、基础训练、校园实践和项目选拔，帮助成员找到 AI 应用方向、掌握实践方法、参与真实项目，并逐步形成可展示、可验证的个人成果。
+      </p>
+      <div class="mt-f6 flex flex-wrap items-center gap-f2">
+        <span class="rounded-full border border-line bg-surface px-f4 py-f1 font-display text-ink-soft" style="font-size: var(--fs-xs)">找到方向</span>
+        <span class="rounded-full border border-line bg-surface px-f4 py-f1 font-display text-ink-soft" style="font-size: var(--fs-xs)">学会应用</span>
+        <span class="rounded-full border border-line bg-surface px-f4 py-f1 font-display text-ink-soft" style="font-size: var(--fs-xs)">进入项目</span>
+        <span class="rounded-full border border-line bg-surface px-f4 py-f1 font-display text-ink-soft" style="font-size: var(--fs-xs)">形成成果</span>
+      </div>
+    </div>
+
+    <!-- 使命 / 愿景 -->
+    <div class="grid gap-f6 md:grid-cols-2" style="margin-top: var(--sp-6)">
+      <div class="glass-card card-lift rounded-xl" data-reveal style="padding: var(--sp-8)">
+        <p class="font-display font-semibold text-accent" style="font-size: var(--fs-h3); margin-bottom: var(--sp-3)">使命</p>
+        <p class="text-ink-soft" style="font-size: var(--fs-sm); line-height: 1.8">降低大学生参与 AI 实践和真实项目的门槛，帮助不同专业的学生将 AI 转化为解决实际问题的能力。</p>
+      </div>
+      <div class="glass-card card-lift rounded-xl" data-reveal style="--reveal-delay: 120ms; padding: var(--sp-8)">
+        <p class="font-display font-semibold text-accent-soft" style="font-size: var(--fs-h3); margin-bottom: var(--sp-3)">愿景</p>
+        <p class="text-ink-soft" style="font-size: var(--fs-sm); line-height: 1.8">搭建可持续产出人才、项目、成果的校园 AI 创新实践生态，助力成员沉淀竞赛、科研、创新创业成果。</p>
+      </div>
+    </div>
+
+    <!-- 社团文化:5 个关键词小卡 -->
+    <div class="glass-card rounded-xl" data-reveal style="margin-top: var(--sp-6); padding: var(--sp-8)">
+      <p class="font-display font-semibold text-ink" style="font-size: var(--fs-base); margin-bottom: var(--sp-5)">社团文化</p>
+      <div class="grid grid-cols-2 gap-f4 sm:grid-cols-3 md:grid-cols-5">
+        {
+          [
+            { k: '真实', e: 'Real' },
+            { k: '主动', e: 'Active' },
+            { k: '协作', e: 'Collaborate' },
+            { k: '沉淀', e: 'Accumulate' },
+            { k: '可信', e: 'Trustworthy' },
+          ].map((c, i) => (
+            <div
+              class="card-lift rounded-lg border border-line bg-surface text-center"
+              data-reveal
+              style={`--reveal-delay: ${i * 80}ms; padding: var(--sp-5) var(--sp-3)`}
+            >
+              <p class="font-display font-bold text-accent" style="font-size: var(--fs-h3)">{c.k}</p>
+              <p class="mt-f1 font-display uppercase text-muted" style="font-size: var(--fs-xs); letter-spacing: 0.12em">{c.e}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- 差异化优势 -->
+    <div
+      class="card-lift rounded-xl border"
+      data-reveal
+      style="margin-top: var(--sp-6); padding: var(--sp-8); background: color-mix(in srgb, var(--accent) 6%, var(--surface)); border-color: color-mix(in srgb, var(--accent) 25%, var(--line))"
+    >
+      <p class="text-ink-soft" style="font-size: var(--fs-sm); line-height: 1.8">
+        <span class="font-semibold text-ink">差异化优势：</span>区别于纯理论学习、赛事突击、宣讲分享类社团，本社团不围绕 AI 办活动，而是围绕真实项目系统性培养 AI+ 复合型人才，先积累实战能力与项目沉淀，再转化为各类科创成果，成长路径更扎实、成果更真实。
+      </p>
+    </div>
+  </section>
+
+  <!-- 成长路径 -->
+  <section class="container-site" style="margin-top: var(--sp-20)">
+    <div class="text-center" data-reveal style="margin-bottom: var(--sp-10)">
+      <h2 class="font-display uppercase text-muted" style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.16em,0.8vw,0.3em)">Growth Path</h2>
+      <p class="font-semibold text-ink" style="font-size: var(--fs-h2); margin-top: var(--sp-1)">成长路径</p>
+      <p class="text-muted" style="font-size: var(--fs-sm); margin-top: var(--sp-3)">找到方向 · 学会应用 · 进入项目 · 形成成果</p>
+    </div>
+
+    <div class="grid gap-f6 md:grid-cols-4">
+      {
+        [
+          { n:'01', t:'认识 AI+', d:'了解 AI 能做什么，找到与自己专业结合的可能性。' },
+          { n:'02', t:'选择方向', d:'在 AI+业务 / AI+IT / AI+嵌入式 中确定你的切入点。' },
+          { n:'03', t:'完成实践', d:'通过入门课程与小型项目，把知识变成可展示的成果。' },
+          { n:'04', t:'进入项目', d:'加入社团重点项目团队，参与真实科创项目历练。' },
+        ].map((s, i) => (
+          <div
+            class="glass-card card-lift rounded-xl"
+            data-reveal
+            style={`--reveal-delay: ${i * 110}ms; padding: var(--sp-6); border-top: 3px solid var(--accent)`}
+          >
+            <p class="font-display font-bold text-accent" style="font-size: var(--fs-d2); opacity: .65">{s.n}</p>
+            <p class="font-semibold text-ink" style="font-size: var(--fs-h3); margin-top: var(--sp-3)">{s.t}</p>
+            <p class="text-ink-soft" style="font-size: var(--fs-sm); line-height: 1.75; margin-top: var(--sp-2)">{s.d}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- 招新CTA -->
+  <section class="container-site" style="margin-top: var(--sp-20)">
+    <div
+      class="glass-card card-lift mx-auto rounded-xl text-center"
+      data-reveal
+      style="padding: var(--sp-12) var(--sp-8); background: radial-gradient(ellipse 80% 120% at 50% 0%, var(--bg-glow) 0%, var(--bg-2) 60%, var(--bg) 100%)"
+    >
+      <p class="font-display uppercase text-muted" style="font-size: var(--fs-eyebrow); letter-spacing: clamp(0.16em,0.8vw,0.3em)">Join Us</p>
+      <h2 class="font-display font-bold text-ink [text-wrap:balance]" style="font-size: var(--fs-d2); margin-top: var(--sp-2)">你的专业，如何与 AI 连接？</h2>
+      <p class="text-ink-soft mx-auto" style="font-size: var(--fs-sm); line-height: 1.85; margin-top: var(--sp-4); max-width: 42rem">
+        协会采用分批报名、任务初筛、分层面试、方向分流、进阶培养的灵活招新模式，整体节奏宽松人性化，适配新生入门节奏。
+      </p>
+
+      <div class="grid gap-f4 text-left sm:grid-cols-2" style="margin-top: var(--sp-10)">
+        {
+          [
+            { n:'1', t:'开放报名引流', d:'新学期开学四至五周为集中招新周期，全程分批开放报名，无硬性截止时间。' },
+            { n:'2', t:'入门任务初筛', d:'入群后一周内完成基础通用任务，依学习态度与完成质量综合初筛。' },
+            { n:'3', t:'分层面试与方向分流', d:'每批次初筛结束后两周内开展专场面试，分流至三大方向，定额培养。' },
+            { n:'4', t:'课程学习与项目进阶', d:'分流后参与零基础入门课程，通过小型实践项目二次考核即可加入重点项目。' },
+          ].map((s, i) => (
+            <div
+              class="card-lift flex gap-f3 rounded-lg border border-line bg-surface"
+              data-reveal
+              style={`--reveal-delay: ${i * 100}ms; padding: var(--sp-5)`}
+            >
+              <span class="font-display font-bold text-accent shrink-0" style="font-size: var(--fs-h3); min-width: 1.6em">{s.n}</span>
+              <div>
+                <p class="font-semibold text-ink" style="font-size: var(--fs-base)">{s.t}</p>
+                <p class="text-ink-soft" style="font-size: var(--fs-sm); line-height: 1.65; margin-top: var(--sp-1)">{s.d}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-f4" style="margin-top: var(--sp-10)">
+        <a href="#tracks" class="btn-brand tap-target flex items-center justify-center rounded-full bg-gradient-to-r from-accent to-accent-soft font-display font-semibold text-white" style="padding: var(--sp-3) var(--sp-8); font-size: var(--fs-sm)">选择方向，立即报名 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 公告:与上方卡片同宽,左右对齐 -->
+  <section class="container-site" style="margin-top: var(--sp-20)">
     <h2
-      class="font-display uppercase text-slate-400"
+      class="font-display uppercase text-muted"
+      data-reveal
       style="font-size: var(--fs-h3); letter-spacing: clamp(0.12em, 0.6vw, 0.22em); margin-bottom: var(--sp-4)"
     >
       Announcements
     </h2>
-    <div class="ml-auto max-w-[var(--content-max)]">
+    <div data-reveal>
       <NoticeList notices={notices} />
     </div>
   </section>

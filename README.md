@@ -39,8 +39,9 @@ projects/                    # 门户前端 (Astro 工程)
 
 - Node.js 18+
 - JDK 21 + Maven 3.9
-- MySQL 8.0 (库 `yudao_club`)
+- MySQL 8.0 (本地默认连 `yudao_club`,亦可指向服务器) 
 - Redis 5
+- (可选) `.env` 文件提供数据库/Redis 连接信息(用于指向服务器,见下方「密钥处理」)
 
 ### 启动 (本地开发)
 
@@ -60,6 +61,12 @@ D:\dev-tools\redis\redis-server.exe
 **3. 后端**
 
 ```powershell
+# 使用 .env 中的连接配置启动(推荐,见「密钥处理」)
+cd yudao-backend
+.\start-server.ps1
+
+# 或使用本地默认配置直接启动
+cd yudao-backend
 mvn spring-boot:run -pl yudao-server -Dspring-boot.run.arguments="--server.port=48080"
 ```
 
@@ -90,6 +97,19 @@ npm run preview:proxy    # 静态文件 + API 代理,http://localhost:4321
 | `npm run build` | 生产构建 → `dist/` |
 | `npm run preview` | Astro 原生预览 (不含 API 代理) |
 | `npm run preview:proxy` | 预览 + API 代理 (后端联调必用) |
+
+## 密钥处理 (避免泄露到仓库)
+
+> 数据库/Redis 的连接信息属于敏感信息,**绝不提交到 Git**。
+
+- 后端 `application-local.yaml` 里 MySQL/Redis 连接使用**环境变量占位符**(`${MYSQL_URL:默认值}` 等),仓库内**不含任何服务器真实密钥**。
+- 真实连接信息放在 `yudao-backend/.env`(**已被 .gitignore 忽略**),通过 `yudao-backend/start-server.ps1` 启动时读入环境变量。
+- 提交前可用配置模板从 `yudao-backend\.env.example` 复制得到。
+- 如需指向服务器,按需在 `.env` 覆盖:
+  - `MYSQL_URL` / `MYSQL_USERNAME` / `MYSQL_PASSWORD`
+  - `REDIS_HOST` / `REDIS_PORT` / `REDIS_DATABASE` / `REDIS_USERNAME` / `REDIS_PASSWORD`
+
+> ⚠️ 服务器默认不开放外网直连安全组时,本地无法 `telnet` 到数据库/Redis 端口,需在云控制台放行来源 IP,或把后端部署到同一服务器/内网。
 
 ## 架构
 
