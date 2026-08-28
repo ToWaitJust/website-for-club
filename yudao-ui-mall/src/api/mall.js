@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { ElMessage, ElLoading } from 'element-plus'
 
 let loadingInstance = null
@@ -106,32 +105,5 @@ export const cancelOrder = (id) => request.put('/order/cancel', null, { params: 
 export const payOrder = (id) => request.put('/order/pay', null, { params: { id } })
 export const confirmReceipt = (id) => request.put('/order/confirm', null, { params: { id } })
 export const deleteOrder = (id) => request.delete('/order/delete', { params: { id } })
-
-// ========== 统计 API ==========
-// 统计接口路径不在 /app 下，使用独立请求实例
-const statsRequest = axios.create({
-  baseURL: '/admin-api/mall',
-  timeout: 15000,
-  headers: {
-    'tenant-id': '1'
-  }
-})
-
-statsRequest.interceptors.response.use(
-  response => {
-    const res = response.data
-    if (res.code !== 0) {
-      ElMessage.error(res.msg || '请求失败')
-      return Promise.reject(new Error(res.msg || '请求失败'))
-    }
-    return res.data
-  },
-  error => {
-    ElMessage.error('获取统计数据失败')
-    return Promise.reject(error)
-  }
-)
-
-export const getStatistics = () => statsRequest.get('/statistics/overview')
 
 export default request
